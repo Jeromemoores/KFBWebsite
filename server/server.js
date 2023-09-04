@@ -17,6 +17,9 @@ app.use('/*', function (req, res, next) {
 	next()
 })
 
+const AccountsRouter = require('./routes/accounts')
+app.use('/account', AccountsRouter)
+
 db.sequelize.sync().then(() => {
 	app.listen(PORT, () => {
 		console.log(`Server Running on ${PORT}`)

@@ -28,6 +28,7 @@ export class MainNavbar extends Component {
 								<>
 									<NavDropdown.Item href='/my-account'>View Account</NavDropdown.Item>
 									<NavDropdown.Item href='/my-settings'>Settings</NavDropdown.Item>
+									<NavDropdown.Divider />
 									<NavDropdown.Item href='/sign-out'>Sign Out</NavDropdown.Item>
 								</>
 							)}
