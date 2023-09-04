@@ -1,3 +1,3 @@
 export { LandingPage } from './landing'
-export { SignUp } from './account/signUp'
-export { SignInPage } from './account/signIn'
+export { SignupPage } from './account/signup'
+export { SigninPage } from './account/signin'

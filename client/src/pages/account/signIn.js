@@ -1,11 +1,11 @@
 import { Component } from 'react'
 import { Navigate } from 'react-router-dom'
 
-import { SignInForm, Loader } from '../../components'
+import { SigninForm, Loader } from '../../components'
 import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
 
-export class SignInPage extends Component {
+export class SigninPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -56,7 +56,7 @@ export class SignInPage extends Component {
 				{account ? (
 					<Navigate to='/' replace={true} />
 				) : (
-					<SignInForm values={values} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+					<SigninForm values={values} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
 				)}
 			</>
 		)

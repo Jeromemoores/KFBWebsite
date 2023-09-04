@@ -4,7 +4,7 @@ import { Eye, EyeFill } from 'react-bootstrap-icons'
 
 import '../../style/signup.css'
 
-export class SignInForm extends Component {
+export class SigninForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {

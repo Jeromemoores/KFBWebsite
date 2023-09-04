@@ -4,7 +4,7 @@ import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
 import { Navigate } from 'react-router-dom'
 
-export class SignOut extends Component {
+export class Signout extends Component {
 	async componentDidMount() {
 		if (sessionStorage.getItem('token') !== null) {
 			try {

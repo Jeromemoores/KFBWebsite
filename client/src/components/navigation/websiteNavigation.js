@@ -1,8 +1,8 @@
 import { Component } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { Loader, MainNavbar, SignOut } from '../../components'
-import { LandingPage, SignUp, SignInPage } from '../../pages'
+import { Loader, MainNavbar, Signout } from '../../components'
+import { LandingPage, SignupPage, SigninPage } from '../../pages'
 
 import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
@@ -64,9 +64,9 @@ export class WebsiteNavigation extends Component {
 				<section id='PageElements'>
 					<Routes>
 						<Route path='/' element={<LandingPage />} />
-						<Route path='/sign-up' element={<SignUp account={account} />} />
-						<Route path='/sign-in' element={<SignInPage account={account} />} />
-						<Route path='/sign-out' element={<SignOut account={account} />} />
+						<Route path='/sign-up' element={<SignupPage account={account} />} />
+						<Route path='/sign-in' element={<SigninPage account={account} />} />
+						<Route path='/sign-out' element={<Signout account={account} />} />
 					</Routes>
 				</section>
 			</Router>

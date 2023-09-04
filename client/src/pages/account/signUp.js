@@ -1,12 +1,12 @@
 import { Component } from 'react'
 
-import { SignUpForm, Loader } from '../../components'
+import { SignupForm, Loader } from '../../components'
 
 import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
 import { Navigate } from 'react-router-dom'
 
-export class SignUp extends Component {
+export class SignupPage extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -59,7 +59,7 @@ export class SignUp extends Component {
 				{account ? (
 					<Navigate to='/' replace={true} />
 				) : (
-					<SignUpForm values={values} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+					<SignupForm values={values} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
 				)}
 			</>
 		)
