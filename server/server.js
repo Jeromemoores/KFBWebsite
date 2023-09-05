@@ -23,6 +23,9 @@ app.use('/account', AccountsRouter)
 const CompanyRouter = require('./routes/companies')
 app.use('/company', CompanyRouter)
 
+const LoadsRouter = require('./routes/loads')
+app.use('/load', LoadsRouter)
+
 db.sequelize.sync().then(() => {
 	app.listen(PORT, () => {
 		console.log(`Server Running on ${PORT}`)
