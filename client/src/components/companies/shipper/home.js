@@ -3,6 +3,7 @@ import { Component } from 'react'
 import { Employees } from './employees'
 import { AuthCode } from './authCode'
 import { NewLoad } from './newLoad'
+import { LoadsList } from './loads'
 import '../../../style/shipperhome.css'
 
 export class ShipperHomeComponent extends Component {
@@ -42,6 +43,7 @@ export class ShipperHomeComponent extends Component {
 					{values.viewEmployees ? <Employees company={company} /> : <></>}{' '}
 					{values.showAuthCode ? <AuthCode company={company} /> : <></>}
 					{values.newLoad ? <NewLoad /> : <></>}
+					{values.showLoads ? <LoadsList company={company} /> : <></>}
 				</div>
 			</div>
 		)

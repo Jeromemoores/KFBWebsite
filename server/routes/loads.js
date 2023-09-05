@@ -43,4 +43,18 @@ router.post('/create/:token', checkAccountandToken, async (req, res) => {
 	}
 })
 
+router.get('/companyId/:companyId', async (req, res) => {
+	const { companyId } = req.params
+	try {
+		const company = await Companies.findOne({ where: { id: companyId } })
+		if (!company) {
+			return res.status(404).json({ error: `No company found with that id` })
+		}
+		const listOfLoads = await Loads.findAll({ where: { companyId } })
+		res.status(200).json(listOfLoads)
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong getting loads :${error}` })
+	}
+})
+
 module.exports = router
