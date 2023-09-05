@@ -1,6 +1,7 @@
 import { Component } from 'react'
 
 import { Employees } from './employees'
+import { AuthCode } from './authCode'
 
 import '../../../style/shipperhome.css'
 
@@ -37,7 +38,10 @@ export class ShipperHomeComponent extends Component {
 					<button onClick={() => this.toggleState('showLoads')}>View Loads</button>
 					<button onClick={() => this.toggleState('showAuthCode')}>Show Invitation Code</button>
 				</div>
-				<div className='shipperContent'>{values.viewEmployees ? <Employees company={company} /> : <></>}</div>
+				<div className='shipperContent'>
+					{values.viewEmployees ? <Employees company={company} /> : <></>}{' '}
+					{values.showAuthCode ? <AuthCode company={company} /> : <></>}
+				</div>
 			</div>
 		)
 	}

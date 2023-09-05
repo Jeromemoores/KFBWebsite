@@ -15,7 +15,7 @@ export class SignupPage extends Component {
 			email: '',
 			password: '',
 			passwordConfirm: '',
-			companyAuthCode: '',
+			companyAuth: '',
 			loading: false,
 		}
 	}
@@ -33,7 +33,7 @@ export class SignupPage extends Component {
 			name: values.firstName + ' ' + values.lastName,
 			email: values.email,
 			password: values.password,
-			companyAuthCode: values.companyAuthCode,
+			companyAuth: values.companyAuth,
 		}
 		const response = await Api.post(`${AccountURL}/signup`, newAccount)
 		if (response.status === 200) {

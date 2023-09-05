@@ -3,13 +3,23 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const { Accounts } = require('../models')
+const { Accounts, Companies } = require('../models')
 const { SECRET } = require('../config')
 
 router.post('/signup', async (req, res) => {
-	const { name, email, password } = req.body
+	const { name, email, password, companyAuth } = req.body
 	try {
 		const existingEmail = await Accounts.findOne({ where: { email } })
+		let companyId = null
+		let companyEmployees = []
+		if (companyAuth) {
+			const company = await Companies.findOne({ where: { authCode: companyAuth } })
+			if (!company) {
+				return res.status(409).json({ error: `Invalid authentication code.` })
+			}
+			companyId = company.id
+			companyEmployees = JSON.parse(company.employees)
+		}
 		if (existingEmail) {
 			return res.status(409).json({ error: `Email already in use. Contant support if someone is using your email.` })
 		}
@@ -20,7 +30,19 @@ router.post('/signup', async (req, res) => {
 			email,
 			password: hashedPassword,
 			ipAddress: '0.0.0.0:0000',
+			companyId: companyId,
 		})
+		if (companyId) {
+			const newEmployee = {
+				id: companyEmployees.length + 1,
+				accountId: newAccount.id,
+				name: newAccount.name,
+				email: newAccount.email,
+				type: 'Employee',
+			}
+			const updatedEmployee = [...companyEmployees, newEmployee]
+			await Companies.update({ employees: updatedEmployee }, { where: { id: companyId } })
+		}
 		const auth = newAccount.authId
 		const token = jwt.sign({ auth }, SECRET, { expiresIn: '1d' })
 		await Accounts.update({ token }, { where: { email } })
