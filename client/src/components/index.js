@@ -7,4 +7,6 @@ export { SigninForm } from './account/signin'
 
 export { CompanySignupForm } from './companies/companySignupForm'
 
+export { ShipperHomeComponent } from './companies/shipper/home'
+
 export { Loader } from './loader'

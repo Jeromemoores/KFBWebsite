@@ -38,4 +38,14 @@ router.post('/create/:token', checkAccountandToken, async (req, res) => {
 	}
 })
 
+router.get('/findById/:id', async (req, res) => {
+	const { id } = req.params
+	try {
+		const company = await Companies.findOne({ where: { id } })
+		res.status(200).json(company)
+	} catch (error) {
+		res.status(500).json({ erorr: `Something went wrong finding that company : ${error}` })
+	}
+})
+
 module.exports = router
