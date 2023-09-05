@@ -14,7 +14,7 @@ export class MainNavbar extends Component {
 					<Nav className='me-auto'>
 						<NavDropdown title='Shippers' align='end'>
 							<NavDropdown.Item href='/shipping-home'>Shipping Home</NavDropdown.Item>
-							<NavDropdown.Item href='/shipping-join'>Ship With Us</NavDropdown.Item>
+							<NavDropdown.Item href='/shipper/sign-up'>Ship With Us</NavDropdown.Item>
 						</NavDropdown>
 					</Nav>
 					<Nav className='ms-auto'>

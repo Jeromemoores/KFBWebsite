@@ -22,7 +22,7 @@ router.post('/signup', async (req, res) => {
 			ipAddress: '0.0.0.0:0000',
 		})
 		const auth = newAccount.authId
-		const token = jwt.sign({ auth }, SECRET, { expiresIn: '1h' })
+		const token = jwt.sign({ auth }, SECRET, { expiresIn: '1d' })
 		await Accounts.update({ token }, { where: { email } })
 		res.status(200).json({ data: token })
 	} catch (error) {
@@ -38,7 +38,7 @@ router.put('/signin', async (req, res) => {
 			return res.status(403).json({ error: `Invalid Credentials` })
 		} else {
 			const auth = account.authId
-			const token = jwt.sign({ auth }, SECRET, { expiresIn: '1h' })
+			const token = jwt.sign({ auth }, SECRET, { expiresIn: '1d' })
 			await Accounts.update({ token }, { where: { email } })
 			res.status(200).json({ data: token })
 		}

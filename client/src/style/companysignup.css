@@ -1,0 +1,32 @@
+.companySignup {
+  margin: 5% 30%;
+  display: flex;
+  flex-direction: column;
+  color: #b9b8b8!important;
+}
+.companySignup input {
+  margin-bottom: 2%;
+  background-color: #121212;
+  color: white!important;
+  background-color: transparent;
+  border: 2px solid #333333;
+}
+.companySignup input:focus, .companySignup input:focus {
+  color: #b9b8b8!important;
+  background-color: transparent!important;
+}
+.companySignup button {
+  width: 100%;
+  height: 50px;
+  background-color: #1d1d1d;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  color: #b9b8b8;
+  transition-duration: 0.3s;
+}
+.companySignup button:hover {
+  color: rgb(2, 223, 2);
+  background-color: #17281a;
+  border: 2px solid rgb(0, 61, 0);
+  transition-duration: 0.3s;
+}
