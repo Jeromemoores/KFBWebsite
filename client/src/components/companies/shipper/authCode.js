@@ -16,7 +16,7 @@ export class AuthCode extends Component {
 		return (
 			<div className='authCodeWrapper'>
 				<h5>Invitation Code</h5>
-				<hr />
+				<hr className='styledHr' />
 				<div className='authCode'>
 					<p>{company.authCode}</p>
 					<button onClick={this.copyToClip}>Copy Code</button>

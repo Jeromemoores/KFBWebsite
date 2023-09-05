@@ -12,6 +12,10 @@
   display: flex;
   flex-direction: row;
 }
+.styledHr {
+  border: 2px solid #b9b8b8;
+  border-radius: 3px;
+}
 .authCode p {
   margin: auto;
 }
