@@ -46,11 +46,18 @@ export class MainNavbar extends Component {
 						) : (
 							<></>
 						)}
+						{account?.companyType !== 'shipper' && account?.companyType !== 'carrier' ? (
+							<NavDropdown title='Owner Operator' align='end'>
+								{account?.companyType !== 'ownerop' ? (
+									<NavDropdown.Item href='/ownerop/sign-up'>Haul For Us</NavDropdown.Item>
+								) : (
+									<NavDropdown.Item href='ownerop/home'>Home</NavDropdown.Item>
+								)}
+							</NavDropdown>
+						) : (
+							<></>
+						)}
 
-						<NavDropdown title='Owner Operator' align='end'>
-							<NavDropdown.Item href=''>Haul For Us</NavDropdown.Item>
-							<NavDropdown.Item href=''>Home</NavDropdown.Item>
-						</NavDropdown>
 						<Nav.Link href='/loadboard'>Load Board</Nav.Link>
 					</Nav>
 					<Nav className='ms-auto'>

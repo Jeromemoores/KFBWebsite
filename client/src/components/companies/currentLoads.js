@@ -1,7 +1,7 @@
 import { Component } from 'react'
 
-import Api from '../../../api/axios'
-import { LoadsURL } from '../../../api/config'
+import Api from '../../api/axios'
+import { LoadsURL } from '../../api/config'
 
 import { ViewLoad } from './viewLoad'
 

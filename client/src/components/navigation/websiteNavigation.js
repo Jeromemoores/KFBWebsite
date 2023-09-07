@@ -6,11 +6,13 @@ import {
 	LandingPage,
 	SignupPage,
 	SigninPage,
-	ShipperJoin,
 	ShipperHome,
 	CarrierHome,
+	OwneropHome,
+	ShipperJoin,
 	CarrierJoin,
 	LoadboardPage,
+	OwneropJoin,
 } from '../../pages'
 
 import Api from '../../api/axios'
@@ -82,6 +84,9 @@ export class WebsiteNavigation extends Component {
 
 						<Route path='/carrier/sign-up' element={<CarrierJoin account={account} />} />
 						<Route path='/carrier/home' element={<CarrierHome account={account} />} />
+
+						<Route path='/ownerop/sign-up' element={<OwneropJoin />} />
+						<Route path='/ownerop/home' element={<OwneropHome />} />
 
 						<Route path='/loadboard' element={<LoadboardPage />} />
 					</Routes>

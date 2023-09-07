@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { Modal, Card } from 'react-bootstrap'
 
-import '../../../style/viewLoad.css'
+import '../../style/viewLoad.css'
 
 export class ViewLoad extends Component {
 	constructor(props) {
