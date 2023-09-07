@@ -1,10 +1,10 @@
 import { Component } from 'react'
 
-import { Employees } from './employees'
-import { AuthCode } from './authCode'
+import { AuthCode } from '../authCode'
+import { Employees } from '../employees'
 import { NewLoad } from './newLoad'
 import { LoadsList } from './loads'
-import '../../../style/shipperhome.css'
+import '../../../style/home.css'
 
 export class ShipperHomeComponent extends Component {
 	constructor(props) {
@@ -32,14 +32,14 @@ export class ShipperHomeComponent extends Component {
 		const { ...values } = this.state
 		const { company } = this.props
 		return (
-			<div className='shipperHomeWrapper'>
-				<div className='shipperSide'>
+			<div className='homeWrapper'>
+				<div className='homeSide'>
 					<button onClick={() => this.toggleState('viewEmployees')}>View Employees</button>
 					<button onClick={() => this.toggleState('newLoad')}>Post a new load</button>
 					<button onClick={() => this.toggleState('showLoads')}>View Loads</button>
 					<button onClick={() => this.toggleState('showAuthCode')}>Show Invitation Code</button>
 				</div>
-				<div className='shipperContent'>
+				<div className='homeContent'>
 					{values.viewEmployees ? <Employees company={company} /> : <></>}{' '}
 					{values.showAuthCode ? <AuthCode company={company} /> : <></>}
 					{values.newLoad ? <NewLoad /> : <></>}

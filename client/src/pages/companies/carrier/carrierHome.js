@@ -1,11 +1,10 @@
 import { Component } from 'react'
 
-import { ShipperHomeComponent } from '../../../components'
-
 import Api from '../../../api/axios'
 import { CompanyURL } from '../../../api/config'
+import { CarrierHomeComponent } from '../../../components'
 
-export class ShipperHome extends Component {
+export class CarrierHome extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -26,6 +25,6 @@ export class ShipperHome extends Component {
 	}
 	render() {
 		const { company } = this.state
-		return <ShipperHomeComponent company={company} />
+		return <CarrierHomeComponent company={company} />
 	}
 }

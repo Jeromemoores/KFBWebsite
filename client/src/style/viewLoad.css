@@ -1,0 +1,49 @@
+.modal-content {
+  background-color: #121212;
+}
+.modal-header {
+  border: 0;
+  color: white;
+  margin: 0 2%;
+}
+.modal-header .btn-close {
+  background-color: white!important;
+}
+.modal-footer {
+  border: 0;
+}
+.modal-footer button {
+  width: 50%;
+  height: 50px;
+  background-color: #1d1d1d;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  transition-duration: 0.3s;
+  margin-right: 25%;
+}
+.modal-footer button:hover {
+  color: rgb(2, 223, 2);
+  background-color: #17281a;
+  border: 2px solid rgb(0, 61, 0);
+  transition-duration: 0.3s;
+}
+.loadModalWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 5%;
+  margin-left: 5%;
+}
+.loadModalWrapper .loadCard {
+  background-color: transparent;
+  color: #b9b8b8;
+  border: 0;
+} 
+.loadModalWrapper .loadCard span {
+  color: white!important;
+}
+.loadModalWrapper .card-header {
+  border: 0;
+  font-size: large;
+  font-weight: bold;
+}

@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { PencilFill, TrashFill } from 'react-bootstrap-icons'
 
-import '../../../style/employees.css'
+import '../../style/employees.css'
 
 export class Employees extends Component {
 	constructor(props) {
@@ -13,10 +13,11 @@ export class Employees extends Component {
 	}
 	async componentDidMount() {
 		const { company } = this.props
+
 		this.setState({
 			company: company,
 		})
-		const parsedEmplopyees = JSON.parse(company.employees)
+		const parsedEmplopyees = JSON.parse(company?.employees)
 		this.setState({
 			listOfEmployees: parsedEmplopyees,
 		})
