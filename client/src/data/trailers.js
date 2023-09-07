@@ -16,7 +16,7 @@ export const ListOfTrailerTypes = [
 	},
 	{
 		id: 4,
-		name: `53' Dry Van`,
+		name: `53' Refrigerated`,
 		type: `53Reefer`,
 	},
 	{
