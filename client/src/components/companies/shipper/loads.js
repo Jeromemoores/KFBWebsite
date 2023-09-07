@@ -1,5 +1,8 @@
 import { Component } from 'react'
-import { PencilFill, TrashFill } from 'react-bootstrap-icons'
+import { Badge } from 'react-bootstrap'
+import { PencilFill, TrashFill, EyeFill } from 'react-bootstrap-icons'
+
+import { ViewLoadShipper } from './viewLoadShipper'
 
 import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
@@ -11,7 +14,25 @@ export class LoadsList extends Component {
 		super(props)
 		this.state = {
 			loadList: [],
+			selectedLoad: {},
+			show: false,
 		}
+	}
+	setSelectedLoad = (load) => {
+		this.setState({
+			selectedLoad: load,
+		})
+	}
+	close = () => {
+		this.setState({
+			selectedLoad: {},
+			show: false,
+		})
+	}
+	show = () => {
+		this.setState({
+			show: true,
+		})
 	}
 	async componentDidMount() {
 		const { company } = this.props
@@ -47,7 +68,12 @@ export class LoadsList extends Component {
 									<td>{pPUD.loadNumber ? pPUD.loadNumber : '-'}</td>
 									<td>{load.trackingNumber}</td>
 									<td>{pDD.name}</td>
-									<td>{load.loadStatus}</td>
+									<td>
+										{load.loadStatus === 'loading' && <Badge variant='primary'>Loading</Badge>}
+										{load.loadStatus === 'departed' && <Badge variant='info'>In Transit</Badge>}
+										{load.loadStatus === 'unloading' && <Badge variant='warning'>Unloading</Badge>}
+										{load.loadStatus === 'completed' && <Badge variant='success'>Completed</Badge>}
+									</td>
 									<td>{pLI.miles}</td>
 									<td>{pLI.rate}</td>
 									<td>{pLI.miles * pLI.rate}</td>
@@ -58,12 +84,20 @@ export class LoadsList extends Component {
 										<button>
 											<TrashFill />
 										</button>
+										<button onClick={() => this.setSelectedLoad(load)}>
+											<EyeFill />
+										</button>
 									</td>
 								</tr>
 							)
 						})}
 					</tbody>
 				</table>
+				{this.state.selectedLoad.id ? (
+					<ViewLoadShipper selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} />
+				) : (
+					<></>
+				)}
 			</div>
 		)
 	}

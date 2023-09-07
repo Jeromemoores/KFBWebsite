@@ -58,17 +58,15 @@ router.put('/updateStatus/:loadNumber/:token', checkAccountandToken, async (req,
 	}
 	const date = new Date().toISOString()
 	try {
-		const updatedLog = {
-			loadLog: {
-				id: parsedLog.length + 1,
-				event: `Load status changed`,
-				date: date,
-				account: { id: account.id, name: account.name, email: account.email },
-				company: company.id,
-			},
+		const newLoadLog = {
+			id: parsedLog.length + 1,
+			event: `Load status changed to ${loadStatus}`,
+			date: date,
+			account: { id: account.id, name: account.name, email: account.email },
+			company: company.id,
 		}
 		const fullUpdate = {
-			loadLog: [...parsedLog, updatedLog],
+			loadLog: [...parsedLog, newLoadLog],
 			loadStatus,
 			claimerStatus,
 		}
@@ -91,19 +89,17 @@ router.put('/unclaim/:loadNumber/:token', checkAccountandToken, async (req, res)
 	}
 	const date = new Date().toISOString()
 	try {
-		const updatedLog = {
-			loadLog: {
-				id: parsedLog.length + 1,
-				event: `Load was unclaimed`,
-				date: date,
-				account: { id: account.id, name: account.name, email: account.email },
-				company: company.id,
-			},
+		const newLoadLog = {
+			id: parsedLog.length + 1,
+			event: `Load was unclaimed`,
+			date: date,
+			account: { id: account.id, name: account.name, email: account.email },
+			company: company.id,
 		}
 		const fullUpdate = {
 			claimedBy: null,
 			claimedOn: null,
-			loadLog: [...parsedLog, updatedLog],
+			loadLog: [...parsedLog, newLoadLog],
 			available: 'true',
 			loadStatus: 'available',
 		}
@@ -128,19 +124,17 @@ router.put('/claim/:loadNumber/:token', checkAccountandToken, async (req, res) =
 	}
 	const date = new Date().toISOString()
 	try {
-		const updateLog = {
-			loadLog: {
-				id: parsedLog.length + 1,
-				event: 'Load was claimed',
-				date: date,
-				account: { id: account.id, name: account.name, email: account.email },
-				company: company.id,
-			},
+		const newLoadLog = {
+			id: parsedLog.length + 1,
+			event: 'Load was claimed',
+			date: date,
+			account: { id: account.id, name: account.name, email: account.email },
+			company: company.id,
 		}
 		const fullUpdate = {
 			claimedBy: company.id,
 			claimedOn: date,
-			loadLog: [...parsedLog, updateLog],
+			loadLog: [...parsedLog, newLoadLog],
 			available: 'false',
 			loadStatus: 'claimed',
 		}

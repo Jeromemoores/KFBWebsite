@@ -1,12 +1,10 @@
 import { Component } from 'react'
 import { Modal, Card } from 'react-bootstrap'
 
-import Api from '../../api/axios'
-import { LoadsURL } from '../../api/config'
+import Api from '../../../api/axios'
+import { LoadsURL } from '../../../api/config'
 
-import '../../style/viewLoad.css'
-
-export class ViewLoad extends Component {
+export class ViewLoadShipper extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -42,6 +40,7 @@ export class ViewLoad extends Component {
 			companyDirections: '',
 			companyComments: '',
 			available: '',
+			loadLog: [],
 		}
 	}
 	async componentDidMount() {
@@ -85,46 +84,14 @@ export class ViewLoad extends Component {
 				companyDirections: pPD.directions,
 				companyComments: pPD.comments,
 				available: selectedLoad.available,
+				loadLog: JSON.parse(selectedLoad.loadLog),
 			})
 		}
 	}
-
-	handleUpdateStatus = async (status, claimerStatus) => {
-		const update = {
-			loadStatus: status,
-			claimerStatus: claimerStatus,
-		}
-		try {
-			const res = await Api.put(
-				`${LoadsURL}/updateStatus/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`,
-				update
-			)
-			if (res.status === 200) {
-				window.location.reload()
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
-	handleUnclaim = async () => {
-		try {
-			const res = await Api.put(
-				`${LoadsURL}/unclaim/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`
-			)
-			if (res.status === 200) {
-				window.location.reload()
-			} else {
-				console.log(res)
-			}
-		} catch (error) {
-			console.log(error)
-		}
-	}
-
 	render() {
 		const { ...values } = this.state
 		const { show, close } = this.props
+		console.log(values.loadLog)
 		return (
 			<Modal show={show} onHide={close} fullscreen className='loadModal'>
 				<Modal.Header closeButton>
@@ -248,19 +215,23 @@ export class ViewLoad extends Component {
 								</div>
 							</Card.Body>
 						</Card>
+						<Card className='loadCard'>
+							<Card.Header>Load Log</Card.Header>
+							<Card.Body>
+								{values.loadLog.map((log) => {
+									return (
+										<div key={log.id}>
+											<label htmlFor={log.event}>Event: </label>
+											<span id={log.event}>
+												{log.event} by {log.account.email} at {log.date}
+											</span>
+										</div>
+									)
+								})}
+							</Card.Body>
+						</Card>
 					</div>
 				</Modal.Body>
-				<div className='loadButtonWrapper'>
-					<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
-					<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>
-						Departed From Shipper
-					</button>
-					<button onClick={() => this.handleUpdateStatus('unloading', 'At Consignee')}>Arrived At Consignee</button>
-					<button onClick={() => this.handleUpdateStatus('completed', 'Unloaded')}>Departed From Consignee</button>
-					<button className='red' onClick={this.handleUnclaim}>
-						Unclaim this load
-					</button>
-				</div>
 			</Modal>
 		)
 	}
