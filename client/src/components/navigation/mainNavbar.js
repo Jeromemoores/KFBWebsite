@@ -20,7 +20,7 @@ export class MainNavbar extends Component {
 		const { account } = this.state
 		return (
 			<Navbar collapseOnSelect expand='lg' className='MainNavbar'>
-				<Navbar.Brand>Kindred Freight Brokerage</Navbar.Brand>
+				<Navbar.Brand href='/'>Kindred Freight Brokerage</Navbar.Brand>
 				<Navbar.Toggle aria-controls='MainNav' />
 				<Navbar.Collapse id='MainNav'>
 					<Nav className='me-auto'>

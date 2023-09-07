@@ -4,6 +4,7 @@ import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
 
 import { ViewLoad } from './viewLoad'
+import { Loader } from '../loader'
 
 export class CurrentLoads extends Component {
 	constructor(props) {
@@ -12,6 +13,7 @@ export class CurrentLoads extends Component {
 			loads: [],
 			selectedLoad: {},
 			show: false,
+			loading: false,
 		}
 	}
 	setSelectedLoad = (load) => {
@@ -31,17 +33,28 @@ export class CurrentLoads extends Component {
 		})
 	}
 	async componentDidMount() {
+		this.setState({
+			loading: true,
+		})
 		try {
 			const res = await Api.get(`${LoadsURL}/claimedBy/${sessionStorage.getItem('token')}`)
 			this.setState({
 				loads: res.data,
 			})
+			setTimeout(() => {
+				this.setState({
+					loading: false,
+				})
+			}, 2000)
 		} catch (error) {
 			console.log(error)
 		}
 	}
 	render() {
-		const { loads } = this.state
+		const { loads, loading } = this.state
+		if (loading) {
+			return <Loader message={'Loading load list...'} />
+		}
 		return (
 			<div className='loadListWrapper'>
 				<table className='loadListTable'>

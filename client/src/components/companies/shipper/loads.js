@@ -8,6 +8,7 @@ import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
 
 import '../../../style/loadsList.css'
+import { Loader } from '../../loader'
 
 export class LoadsList extends Component {
 	constructor(props) {
@@ -16,6 +17,7 @@ export class LoadsList extends Component {
 			loadList: [],
 			selectedLoad: {},
 			show: false,
+			loading: false,
 		}
 	}
 	setSelectedLoad = (load) => {
@@ -35,14 +37,25 @@ export class LoadsList extends Component {
 		})
 	}
 	async componentDidMount() {
+		this.setState({
+			loading: true,
+		})
 		const { company } = this.props
 		const response = await Api.get(`${LoadsURL}/companyId/${company?.id}`)
 		this.setState({
 			loadList: response.data,
 		})
+		setTimeout(() => {
+			this.setState({
+				loading: false,
+			})
+		}, 2000)
 	}
 	render() {
-		const { loadList } = this.state
+		const { loadList, loading } = this.state
+		if (loading) {
+			return <Loader message={'Loading list of loads.'} />
+		}
 		return (
 			<div className='loadListWrapper'>
 				<table className='loadListTable'>
