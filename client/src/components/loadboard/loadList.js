@@ -43,7 +43,7 @@ export class LoadList extends Component {
 		const { loads } = this.state
 		const { account } = this.props
 		return (
-			<div className='loadListWrapper'>
+			<div className='loadListWrapper' style={{ margin: '2%' }}>
 				<table className='loadListTable'>
 					<thead>
 						<tr>
@@ -85,7 +85,7 @@ export class LoadList extends Component {
 						})}
 					</tbody>
 				</table>
-				{this.state.selectedLoad.id ? (
+				{account?.id && this.state.selectedLoad.id ? (
 					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} account={account} />
 				) : (
 					<></>
