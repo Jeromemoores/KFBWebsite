@@ -2,6 +2,8 @@ import { Component } from 'react'
 import { FloatingLabel, Form } from 'react-bootstrap'
 import { AddressAutofill } from '@mapbox/search-js-react'
 
+import { Loader } from '../../components'
+
 import Api from '../../api/axios'
 import { CompanyURL } from '../../api/config'
 
@@ -30,6 +32,7 @@ export class CompanySignupForm extends Component {
 			additional6: '',
 			additional7: '',
 			additional8: '',
+			loading: false,
 		}
 	}
 	componentDidMount() {
@@ -55,6 +58,12 @@ export class CompanySignupForm extends Component {
 	}
 	handleSubmit = async (e) => {
 		e.preventDefault()
+		this.setState({
+			loading: true,
+		})
+		if (e.key === 'Enter') {
+			e.preventDefault()
+		}
 		this.setState({ loading: true })
 		const { ...values } = this.state
 		const newCompany = {
@@ -89,6 +98,7 @@ export class CompanySignupForm extends Component {
 				this.setState({
 					loading: false,
 				})
+				window.location.href = '/'
 			}, 2000)
 		} else {
 			console.log(response)
@@ -99,6 +109,9 @@ export class CompanySignupForm extends Component {
 	}
 	render() {
 		const { ...values } = this.state
+		if (values.loading === true) {
+			return <Loader message={'Awaiting Company Creation'} />
+		}
 		return (
 			<div className='companySignup'>
 				<Form>

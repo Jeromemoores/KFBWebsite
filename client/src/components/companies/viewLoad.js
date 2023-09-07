@@ -1,6 +1,9 @@
 import { Component } from 'react'
 import { Modal, Card } from 'react-bootstrap'
 
+import Api from '../../api/axios'
+import { LoadsURL } from '../../api/config'
+
 import '../../style/viewLoad.css'
 
 export class ViewLoad extends Component {
@@ -83,6 +86,39 @@ export class ViewLoad extends Component {
 				companyComments: pPD.comments,
 				available: selectedLoad.available,
 			})
+		}
+	}
+
+	handleUpdateStatus = async (status, claimerStatus) => {
+		const update = {
+			loadStatus: status,
+			claimerStatus: claimerStatus,
+		}
+		try {
+			const res = await Api.put(
+				`${LoadsURL}/updateStatus/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`,
+				update
+			)
+			if (res.status === 200) {
+				window.location.reload()
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	handleUnclaim = async () => {
+		try {
+			const res = await Api.put(
+				`${LoadsURL}/unclaim/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`
+			)
+			if (res.status === 200) {
+				window.location.reload()
+			} else {
+				console.log(res)
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	}
 
@@ -214,12 +250,17 @@ export class ViewLoad extends Component {
 						</Card>
 					</div>
 				</Modal.Body>
-				<Modal.Footer>
-					<button>Arrived At Shipper</button>
-					<button>Departed From Shipper</button>
-					<button>Arrived At Consignee</button>
-					<button>Deliverd From Consignee</button>
-				</Modal.Footer>
+				<div className='loadButtonWrapper'>
+					<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
+					<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>
+						Departed From Shipper
+					</button>
+					<button onClick={() => this.handleUpdateStatus('unloading', 'At Consignee')}>Arrived At Consignee</button>
+					<button onClick={() => this.handleUpdateStatus('departed', 'Unloaded')}>Departed From Consignee</button>
+					<button className='red' onClick={this.handleUnclaim}>
+						Unclaim this load
+					</button>
+				</div>
 			</Modal>
 		)
 	}

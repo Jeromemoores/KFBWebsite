@@ -42,6 +42,7 @@ export class SignupPage extends Component {
 				this.setState({
 					loading: false,
 				})
+				window.location.href = '/'
 			}, 2000)
 		} else {
 			console.log('Something went wrong')

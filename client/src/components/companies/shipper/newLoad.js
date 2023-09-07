@@ -81,13 +81,10 @@ export class NewLoad extends Component {
 			available: values.available,
 		}
 		try {
-			await Api.post(`${LoadsURL}/create/${sessionStorage.getItem('token')}`, newLoad)
-				.then((res) => {
-					console.log(res)
-				})
-				.catch((err) => {
-					console.log(err)
-				})
+			const res = await Api.post(`${LoadsURL}/create/${sessionStorage.getItem('token')}`, newLoad)
+			if (res.status === 200) {
+				window.location.href = '/shipper/home'
+			}
 		} catch (error) {
 			console.log(`Something went wrong ${error}`)
 		}
@@ -319,7 +316,7 @@ export class NewLoad extends Component {
 								placeholder=''
 							/>
 						</FloatingLabel>
-						<FloatingLabel label='Pick-up Date'>
+						<FloatingLabel label='Delivery Date'>
 							<Form.Control
 								type='date'
 								name='deliveryDate'
@@ -328,7 +325,7 @@ export class NewLoad extends Component {
 								placeholder=''
 							/>
 						</FloatingLabel>
-						<FloatingLabel label='Pick-up Time'>
+						<FloatingLabel label='Delivery Time'>
 							<Form.Control
 								type='time'
 								name='deliveryTime'

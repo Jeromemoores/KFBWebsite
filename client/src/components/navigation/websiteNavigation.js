@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { Loader, MainNavbar, Signout } from '../../components'
+import { Loader, MainNavbar, Signout, CompanySignupForm } from '../../components'
 import {
 	LandingPage,
 	SignupPage,
@@ -79,16 +79,22 @@ export class WebsiteNavigation extends Component {
 						<Route path='/sign-in' element={<SigninPage account={account} />} />
 						<Route path='/sign-out' element={<Signout account={account} />} />
 
-						<Route path='/shipper/sign-up' element={<ShipperJoin account={account} />} />
+						<Route
+							path='/shipper/sign-up'
+							element={<CompanySignupForm account={account} applicationType='shipper' />}
+						/>
 						<Route path='/shipper/home' element={<ShipperHome account={account} />} />
 
-						<Route path='/carrier/sign-up' element={<CarrierJoin account={account} />} />
+						<Route
+							path='/carrier/sign-up'
+							element={<CompanySignupForm account={account} applicationType='carrier' />}
+						/>
 						<Route path='/carrier/home' element={<CarrierHome account={account} />} />
 
-						<Route path='/ownerop/sign-up' element={<OwneropJoin />} />
+						<Route path='/ownerop/sign-up' element={<CompanySignupForm applicationType='ownerop' />} />
 						<Route path='/ownerop/home' element={<OwneropHome />} />
 
-						<Route path='/loadboard' element={<LoadboardPage />} />
+						<Route path='/loadboard' element={<LoadboardPage account={account} />} />
 					</Routes>
 				</section>
 			</Router>

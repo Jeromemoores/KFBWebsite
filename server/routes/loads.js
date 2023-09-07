@@ -28,6 +28,7 @@ router.post('/create/:token', checkAccountandToken, async (req, res) => {
 				postal: companyAddress.postal,
 			},
 			deliveryDetails,
+			loadStatus: 'Available',
 			loadLog: [
 				{
 					id: 1,
@@ -42,6 +43,74 @@ router.post('/create/:token', checkAccountandToken, async (req, res) => {
 		res.status(200).json({ data: newLoad })
 	} catch (error) {
 		console.log(`Something went wrong creating a load. ${error}`)
+	}
+})
+
+router.put('/updateStatus/:loadNumber/:token', checkAccountandToken, async (req, res) => {
+	const { loadNumber } = req.params
+	const { loadStatus, claimerStatus } = req.body
+	const account = await req.account
+	const company = await Companies.findOne({ where: { id: account.companyId } })
+	const load = await Loads.findOne({ where: { loadNumber } })
+	const parsedLog = JSON.parse(load.loadLog)
+	if (!load) {
+		return res.status(404).json({ error: `No load found with that load number` })
+	}
+	const date = new Date().toISOString()
+	try {
+		const updatedLog = {
+			loadLog: {
+				id: parsedLog.length + 1,
+				event: `Load status changed`,
+				date: date,
+				account: { id: account.id, name: account.name, email: account.email },
+				company: company.id,
+			},
+		}
+		const fullUpdate = {
+			loadLog: [...parsedLog, updatedLog],
+			loadStatus,
+			claimerStatus,
+		}
+
+		const updatedLoad = await Loads.update(fullUpdate, { returning: true, where: { loadNumber } })
+		res.status(200).json({ message: `Status was changed.`, data: updatedLoad })
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong changing the status on this load : ${error}` })
+	}
+})
+
+router.put('/unclaim/:loadNumber/:token', checkAccountandToken, async (req, res) => {
+	const { loadNumber } = req.params
+	const account = await req.account
+	const company = await Companies.findOne({ where: { id: account.companyId } })
+	const load = await Loads.findOne({ where: { loadNumber } })
+	const parsedLog = JSON.parse(load.loadLog)
+	if (!load) {
+		return res.status(404).json({ error: `No load found with that load number` })
+	}
+	const date = new Date().toISOString()
+	try {
+		const updatedLog = {
+			loadLog: {
+				id: parsedLog.length + 1,
+				event: `Load was unclaimed`,
+				date: date,
+				account: { id: account.id, name: account.name, email: account.email },
+				company: company.id,
+			},
+		}
+		const fullUpdate = {
+			claimedBy: null,
+			claimedOn: null,
+			loadLog: [...parsedLog, updatedLog],
+			available: 'true',
+			loadStatus: 'available',
+		}
+		const updatedLoad = await Loads.update(fullUpdate, { returning: true, where: { loadNumber } })
+		res.status(200).json({ message: `Load was unclaimed.`, data: updatedLoad })
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong unclaiming this load : ${error}` })
 	}
 })
 
@@ -75,8 +144,8 @@ router.put('/claim/:loadNumber/:token', checkAccountandToken, async (req, res) =
 			available: 'false',
 			loadStatus: 'claimed',
 		}
-		const updatedLog = await Loads.update(fullUpdate, { returning: true, where: { loadNumber } })
-		res.status(200).json({ message: `It worked`, data: updatedLog })
+		const updatedLoad = await Loads.update(fullUpdate, { returning: true, where: { loadNumber } })
+		res.status(200).json({ message: `It worked`, data: updatedLoad })
 	} catch (error) {
 		res.status(500).json({ error: `Something went wrong claiming the load.. ${error}` })
 	}

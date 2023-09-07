@@ -1,5 +1,8 @@
 import { Component } from 'react'
 
+import Api from '../../api/axios'
+import { LoadsURL } from '../../api/config'
+
 import { ViewLoad } from './viewLoad'
 
 export class LoadList extends Component {
@@ -12,9 +15,12 @@ export class LoadList extends Component {
 		}
 	}
 	async componentDidMount() {
-		const loads = await this.props.loads
+		await this.fetchLoads()
+	}
+	async fetchLoads() {
+		const res = await Api.get(`${LoadsURL}/available`)
 		this.setState({
-			loads: loads,
+			loads: res.data,
 		})
 	}
 	setSelectedLoad = (load) => {
@@ -35,6 +41,7 @@ export class LoadList extends Component {
 	}
 	render() {
 		const { loads } = this.state
+		const { account } = this.props
 		return (
 			<div className='loadListWrapper'>
 				<table className='loadListTable'>
@@ -79,7 +86,7 @@ export class LoadList extends Component {
 					</tbody>
 				</table>
 				{this.state.selectedLoad.id ? (
-					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} />
+					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} account={account} />
 				) : (
 					<></>
 				)}

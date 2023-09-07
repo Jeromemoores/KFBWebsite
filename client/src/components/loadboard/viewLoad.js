@@ -92,14 +92,16 @@ export class ViewLoad extends Component {
 	handleClaim = async (loadId) => {
 		try {
 			const res = await Api.put(`${LoadsURL}/claim/${loadId}/${sessionStorage.getItem('token')}`)
-			console.log(res)
+			if (res.status === 200) {
+				window.location.href = '/loadboard'
+			}
 		} catch (error) {
 			console.log(error)
 		}
 	}
 	render() {
 		const { ...values } = this.state
-		const { show, close } = this.props
+		const { show, close, account } = this.props
 		return (
 			<Modal show={show} onHide={close} fullscreen className='loadModal'>
 				<Modal.Header closeButton>
@@ -225,9 +227,13 @@ export class ViewLoad extends Component {
 						</Card>
 					</div>
 				</Modal.Body>
-				<Modal.Footer>
-					<button onClick={() => this.handleClaim(this.props.selectedLoad.loadNumber)}>Claim Load</button>
-				</Modal.Footer>
+				{account?.companyType != null && account?.companyType !== 'shipper' ? (
+					<Modal.Footer>
+						<button onClick={() => this.handleClaim(this.props.selectedLoad.loadNumber)}>Claim Load</button>
+					</Modal.Footer>
+				) : (
+					<></>
+				)}
 			</Modal>
 		)
 	}
