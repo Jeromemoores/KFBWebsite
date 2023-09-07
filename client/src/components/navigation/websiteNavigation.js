@@ -1,19 +1,8 @@
 import { Component } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { Loader, MainNavbar, Signout, CompanySignupForm } from '../../components'
-import {
-	LandingPage,
-	SignupPage,
-	SigninPage,
-	ShipperHome,
-	CarrierHome,
-	OwneropHome,
-	ShipperJoin,
-	CarrierJoin,
-	LoadboardPage,
-	OwneropJoin,
-} from '../../pages'
+import { Loader, MainNavbar, Signout, CompanySignupForm, InviteCode } from '../../components'
+import { LandingPage, SignupPage, SigninPage, ShipperHome, CarrierHome, OwneropHome, LoadboardPage } from '../../pages'
 
 import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
@@ -95,6 +84,8 @@ export class WebsiteNavigation extends Component {
 						<Route path='/ownerop/home' element={<OwneropHome />} />
 
 						<Route path='/loadboard' element={<LoadboardPage account={account} />} />
+
+						{account?.level === 100 ? <Route path='/kfb/inviteCompany' element={<InviteCode />} /> : <></>}
 					</Routes>
 				</section>
 			</Router>

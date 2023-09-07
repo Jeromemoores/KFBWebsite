@@ -14,3 +14,5 @@ export { OwneropHomeComponent } from './companies/ownerop/home'
 export { LoadList } from './loadboard/loadList'
 
 export { Loader } from './loader'
+
+export { InviteCode } from './kfb/inviteCode'

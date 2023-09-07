@@ -83,6 +83,7 @@ router.get('/byToken/:token', async (req, res) => {
 				email: account.email,
 				company: account.companyId,
 				companyType: account.companyType,
+				level: account.level,
 			}
 			res.status(200).json(response)
 		}

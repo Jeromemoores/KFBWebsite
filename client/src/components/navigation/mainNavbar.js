@@ -61,6 +61,14 @@ export class MainNavbar extends Component {
 						<Nav.Link href='/loadboard'>Load Board</Nav.Link>
 					</Nav>
 					<Nav className='ms-auto'>
+						{account?.level === 100 ? (
+							<NavDropdown title='KFB Quick Options' align='end'>
+								<NavDropdown.Item href='/kfb/inviteCompany'>Create Company Invite Code</NavDropdown.Item>
+							</NavDropdown>
+						) : (
+							<></>
+						)}
+
 						<NavDropdown title={account ? account.name : 'Account'} align='end'>
 							{account === null ? (
 								<>

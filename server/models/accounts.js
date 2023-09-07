@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(),
 			allowNull: true,
 		},
+		level: {
+			type: DataTypes.INTEGER(),
+			allowNull: false,
+			defaultValue: 1,
+		},
 	})
 	return Accounts
 }

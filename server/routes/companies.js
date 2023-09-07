@@ -1,17 +1,21 @@
 const express = require('express')
 const router = express.Router()
 
-const { Accounts, Companies } = require('../models')
+const { Accounts, Companies, Auth } = require('../models')
 const { checkAccountandToken } = require('../middleware/account')
 
-router.post('/create/:token', checkAccountandToken, async (req, res) => {
+router.post('/create/:authCode/:token', checkAccountandToken, async (req, res) => {
 	const account = await req.account
-	const { token } = req.params
+	const { token, authCode } = req.params
 	const { name, type, address, contact, additionalInformation } = req.body
 	try {
 		const existingCompany = await Companies.findOne({ where: { name } })
+		const auth = await Auth.findOne({ where: { code: authCode } })
 		if (existingCompany) {
 			return res.status(409).json({ error: `Company already exists with that name` })
+		}
+		if (!auth) {
+			return res.status(403).json({ error: `Invite code doesn't exist.` })
 		}
 		const newCompany = await Companies.create({
 			name,

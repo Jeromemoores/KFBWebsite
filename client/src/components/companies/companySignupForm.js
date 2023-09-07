@@ -92,7 +92,10 @@ export class CompanySignupForm extends Component {
 				additional8: values.additional8,
 			},
 		}
-		const response = await Api.post(`${CompanyURL}/create/${sessionStorage.getItem('token')}`, newCompany)
+		const response = await Api.post(
+			`${CompanyURL}/create/${values.authCode}/${sessionStorage.getItem('token')}`,
+			newCompany
+		)
 		if (response.status === 200) {
 			setTimeout(() => {
 				this.setState({
@@ -195,6 +198,15 @@ export class CompanySignupForm extends Component {
 							placeholder=''
 						/>
 					</FloatingLabel>
+					<FloatingLabel label='Paste Auth Code'>
+						<Form.Control
+							type='text'
+							name='authCode'
+							value={values.authCode}
+							onChange={this.handleChange('authCode')}
+							placeholder=''
+						/>
+					</FloatingLabel>
 					{values.applicationType !== 'shipper' ? (
 						<>
 							<FloatingLabel label='DOT Number | MC Number'>
@@ -253,7 +265,9 @@ export class CompanySignupForm extends Component {
 						<></>
 					)}
 				</Form>
-				<button onClick={this.handleSubmit}>Submit Application</button>
+				<button onClick={this.handleSubmit} disabled={values.authCode !== '' ? false : true}>
+					Submit
+				</button>
 			</div>
 		)
 	}
