@@ -4,7 +4,7 @@ import { Modal, Card } from 'react-bootstrap'
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
 
-import '../../style/newViewLoad.css'
+import '../../style/viewLoad.css'
 
 export class ViewLoad extends Component {
 	constructor(props) {
