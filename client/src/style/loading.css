@@ -1,8 +1,0 @@
-.loadingMessage {
-  display: flex;
-  flex-direction: row;
-}
-.loadingMessage p {
-  padding: 40px;
-  padding-right: 0;
-}

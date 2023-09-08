@@ -28,7 +28,7 @@ export class CarrierHomeComponent extends Component {
 	}
 	render() {
 		const { ...values } = this.state
-		const { company } = this.props
+		const { company, account } = this.props
 		return (
 			<div className='homeWrapper'>
 				<div className='homeSide'>
@@ -40,7 +40,7 @@ export class CarrierHomeComponent extends Component {
 				<div className='homeContent'>
 					{values.employees ? <Employees company={company} /> : <></>}
 					{values.inviteCode ? <AuthCode company={company} /> : <></>}
-					{values.currentLoads ? <CurrentLoads /> : <></>}
+					{values.currentLoads ? <CurrentLoads company={company} account={account} /> : <></>}
 				</div>
 			</div>
 		)

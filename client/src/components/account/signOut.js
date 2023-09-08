@@ -2,7 +2,6 @@ import { Component } from 'react'
 
 import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
-import { Navigate } from 'react-router-dom'
 
 export class Signout extends Component {
 	async componentDidMount() {

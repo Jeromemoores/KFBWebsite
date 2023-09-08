@@ -1,0 +1,46 @@
+.newTableWrapper {
+  margin-top: 2%;
+  border-radius: 3px;
+  border: 3px solid #333333;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+}
+.newTable {
+  width: 100%; 
+  color: #b9b8b8; 
+}
+.newTable thead {
+  border-bottom: 2px solid #333333;
+}
+.newTable tbody tr{
+  transition-duration: 0.35s;
+}
+.newTable tbody .hoverable:hover {
+  cursor: pointer;
+  color: #121212;
+  background-color: #b9b8b8;
+  transition-duration: 0.35s;
+}
+.newTable tbody tr:nth-child(even) {
+  border-bottom: 2px solid #333333;
+}
+.newTable td, th {
+  padding: 8px;
+}
+.newTable th {
+  color: white;
+}
+.newTable .tdButton button {
+  background-color: transparent;
+  color: #b9b8b8;
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin-right: 5px;
+  transition-duration: 0.5s;
+}
+.newTable .tdButton button:hover{
+  background-color: #886420;
+  transition-duration: 0.5s;
+  color: white;
+}

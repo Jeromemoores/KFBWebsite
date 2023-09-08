@@ -25,6 +25,7 @@ export class CarrierHome extends Component {
 	}
 	render() {
 		const { company } = this.state
-		return <CarrierHomeComponent company={company} />
+		const { account } = this.props
+		return <CarrierHomeComponent company={company} account={account} />
 	}
 }

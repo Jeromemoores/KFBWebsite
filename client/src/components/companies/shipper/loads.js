@@ -2,13 +2,12 @@ import { Component } from 'react'
 import { Badge } from 'react-bootstrap'
 import { PencilFill, TrashFill, EyeFill } from 'react-bootstrap-icons'
 
-import { ViewLoadShipper } from './viewLoadShipper'
+import { ViewLoad } from '../../loadboard/viewLoad'
+import { EditLoad } from './editLoad'
+import { Loader } from '../../loader'
 
 import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
-
-import '../../../style/loadsList.css'
-import { Loader } from '../../loader'
 
 export class LoadsList extends Component {
 	constructor(props) {
@@ -16,7 +15,9 @@ export class LoadsList extends Component {
 		this.state = {
 			loadList: [],
 			selectedLoad: {},
+			editLoad: {},
 			show: false,
+			setShow: false,
 			loading: false,
 		}
 	}
@@ -25,15 +26,31 @@ export class LoadsList extends Component {
 			selectedLoad: load,
 		})
 	}
+	setEditedLoad = (load) => {
+		this.setState({
+			editLoad: load,
+		})
+	}
 	close = () => {
 		this.setState({
 			selectedLoad: {},
 			show: false,
 		})
 	}
+	setClose = () => {
+		this.setState({
+			editLoad: {},
+			setShow: false,
+		})
+	}
 	show = () => {
 		this.setState({
 			show: true,
+		})
+	}
+	setShow = () => {
+		this.setState({
+			setShow: true,
 		})
 	}
 	async componentDidMount() {
@@ -51,14 +68,31 @@ export class LoadsList extends Component {
 			})
 		}, 2000)
 	}
+	handleArchive = async (load) => {
+		this.setState({
+			loading: true,
+		})
+		const response = await Api.put(`${LoadsURL}/archive/${load.loadNumber}/${sessionStorage.getItem('token')}`)
+		if (response.status === 200) {
+			setTimeout(() => {
+				this.setState({
+					loading: false,
+				})
+			}, 2000)
+			window.location.reload()
+		} else {
+			console.log(response)
+		}
+	}
 	render() {
-		const { loadList, loading } = this.state
+		const { loadList, loading, selectedLoad, editLoad } = this.state
+		const { account } = this.props
 		if (loading) {
 			return <Loader message={'Loading list of loads.'} />
 		}
 		return (
-			<div className='loadListWrapper'>
-				<table className='loadListTable'>
+			<div className='newTableWrapper'>
+				<table className='newTable'>
 					<thead>
 						<tr>
 							<th>Load Number</th>
@@ -82,6 +116,7 @@ export class LoadsList extends Component {
 									<td>{load.trackingNumber}</td>
 									<td>{pDD.name}</td>
 									<td>
+										{load.loadStatus === 'Available' && <Badge variant='info'>Available</Badge>}
 										{load.loadStatus === 'loading' && <Badge variant='primary'>Loading</Badge>}
 										{load.loadStatus === 'departed' && <Badge variant='info'>In Transit</Badge>}
 										{load.loadStatus === 'unloading' && <Badge variant='warning'>Unloading</Badge>}
@@ -90,12 +125,12 @@ export class LoadsList extends Component {
 									<td>{pLI.miles}</td>
 									<td>{pLI.rate}</td>
 									<td>{pLI.miles * pLI.rate}</td>
-									<td>
+									<td className='tdButton'>
 										<button>
-											<PencilFill />
+											<PencilFill onClick={() => this.setEditedLoad(load)} />
 										</button>
 										<button>
-											<TrashFill />
+											<TrashFill onClick={() => this.handleArchive(load)} />
 										</button>
 										<button onClick={() => this.setSelectedLoad(load)}>
 											<EyeFill />
@@ -106,8 +141,13 @@ export class LoadsList extends Component {
 						})}
 					</tbody>
 				</table>
-				{this.state.selectedLoad.id ? (
-					<ViewLoadShipper selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} />
+				{selectedLoad?.id ? (
+					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} account={account} />
+				) : (
+					<></>
+				)}
+				{editLoad?.id ? (
+					<EditLoad editLoad={this.state.editLoad} setClose={this.setClose} setShow={this.setShow} account={account} />
 				) : (
 					<></>
 				)}

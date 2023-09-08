@@ -46,6 +46,45 @@ router.post('/create/:token', checkAccountandToken, async (req, res) => {
 	}
 })
 
+router.put('/update/:loadNumber/:token', checkAccountandToken, async (req, res) => {
+	const { loadNumber } = req.params
+	const { loadInformation, pickupDetails, pickupLocation, deliveryDetails, available } = req.body
+	const account = await req.account
+	const company = await Companies.findOne({ where: account.companyId })
+	const load = await Loads.findOne({ where: { loadNumber } })
+	const parsedLog = JSON.parse(load.loadLog)
+	if (!load) {
+		return res.status(404).json({ error: `No load found with that load number` })
+	}
+	const date = new Date().toISOString()
+	if ((load.claimedBy = null)) {
+		return res.status(403).json({
+			error: `You cannot update a load while it is clamied. Please contact support & the carrier / owner operator`,
+		})
+	}
+	try {
+		const newLoadLog = {
+			id: parsedLog.length + 1,
+			event: `Load has been updated`,
+			date,
+			account: { id: account.id, name: account.name, email: account.email },
+			company: company.id,
+		}
+		const fullUpdate = {
+			loadLog: [...parsedLog, newLoadLog],
+			loadInformation,
+			pickupDetails,
+			pickupLocation,
+			deliveryDetails,
+			available,
+		}
+		const updatedLoad = await Loads.update(fullUpdate, { returning: true, where: { loadNumber } })
+		res.status(200).json({ message: `Load was updated`, data: updatedLoad })
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong updating the load :${error}` })
+	}
+})
+
 router.put('/updateStatus/:loadNumber/:token', checkAccountandToken, async (req, res) => {
 	const { loadNumber } = req.params
 	const { loadStatus, claimerStatus } = req.body
@@ -61,7 +100,7 @@ router.put('/updateStatus/:loadNumber/:token', checkAccountandToken, async (req,
 		const newLoadLog = {
 			id: parsedLog.length + 1,
 			event: `Load status changed to ${loadStatus}`,
-			date: date,
+			date,
 			account: { id: account.id, name: account.name, email: account.email },
 			company: company.id,
 		}
@@ -162,6 +201,39 @@ router.get('/claimedBy/:token', checkAccountandToken, async (req, res) => {
 		res.status(200).json(loads)
 	} catch (error) {
 		res.status(500).json({ error: `Something went wrong getting claimed loads : ${error}` })
+	}
+})
+
+router.put('/archive/:loadNumber/:token', checkAccountandToken, async (req, res) => {
+	const account = await req.account
+	const { loadNumber } = req.params
+	const company = await Companies.findOne({ where: { id: account.companyId } })
+	const date = new Date().toISOString()
+
+	try {
+		const load = await Loads.findOne({ where: { loadNumber } })
+		const parsedLog = JSON.parse(load.loadLog)
+		const updatedLog = {
+			id: parsedLog.length + 1,
+			event: 'Load was archived',
+			date,
+			account: { id: account.id, name: account.name, email: account.email },
+			company: company.id,
+		}
+		const update = {
+			companyId: 0,
+			available: false,
+			loadStatus: null,
+			claimedBy: 'KFB_Archive',
+			claimedOn: date,
+			claimerStatus: null,
+			trackingNumber: null,
+			loadLog: [...parsedLog, updatedLog],
+		}
+		const updatedLoad = await Loads.update(update, { returning: true, where: { loadNumber } })
+		res.status(200).json({ message: 'Load as been archieved.', data: updatedLoad })
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong archiving that load. ${error}` })
 	}
 })
 

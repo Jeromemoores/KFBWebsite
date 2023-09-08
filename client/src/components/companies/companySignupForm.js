@@ -32,7 +32,6 @@ export class CompanySignupForm extends Component {
 			additional6: '',
 			additional7: '',
 			additional8: '',
-			loading: false,
 		}
 	}
 	componentDidMount() {

@@ -26,6 +26,7 @@ export class ShipperHome extends Component {
 	}
 	render() {
 		const { company } = this.state
-		return <ShipperHomeComponent company={company} />
+		const { account } = this.props
+		return <ShipperHomeComponent company={company} account={account} />
 	}
 }

@@ -4,7 +4,6 @@ import { AuthCode } from '../authCode'
 import { Employees } from '../employees'
 import { NewLoad } from './newLoad'
 import { LoadsList } from './loads'
-import '../../../style/home.css'
 
 export class ShipperHomeComponent extends Component {
 	constructor(props) {
@@ -30,7 +29,7 @@ export class ShipperHomeComponent extends Component {
 	}
 	render() {
 		const { ...values } = this.state
-		const { company } = this.props
+		const { company, account } = this.props
 		return (
 			<div className='homeWrapper'>
 				<div className='homeSide'>
@@ -43,7 +42,7 @@ export class ShipperHomeComponent extends Component {
 					{values.viewEmployees ? <Employees company={company} /> : <></>}{' '}
 					{values.showAuthCode ? <AuthCode company={company} /> : <></>}
 					{values.newLoad ? <NewLoad /> : <></>}
-					{values.showLoads ? <LoadsList company={company} /> : <></>}
+					{values.showLoads ? <LoadsList company={company} account={account} /> : <></>}
 				</div>
 			</div>
 		)

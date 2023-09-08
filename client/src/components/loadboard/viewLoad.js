@@ -42,6 +42,7 @@ export class ViewLoad extends Component {
 			companyDirections: '',
 			companyComments: '',
 			available: '',
+			loadLog: [],
 		}
 	}
 	async componentDidMount() {
@@ -85,7 +86,26 @@ export class ViewLoad extends Component {
 				companyDirections: pPD.directions,
 				companyComments: pPD.comments,
 				available: selectedLoad.available,
+				loadLog: JSON.parse(selectedLoad.loadLog),
 			})
+		}
+	}
+
+	handleUpdateStatus = async (status, claimerStatus) => {
+		const update = {
+			loadStatus: status,
+			claimerStatus: claimerStatus,
+		}
+		try {
+			const res = await Api.put(
+				`${LoadsURL}/updateStatus/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`,
+				update
+			)
+			if (res.status === 200) {
+				window.location.reload()
+			}
+		} catch (error) {
+			console.log(error)
 		}
 	}
 
@@ -99,6 +119,22 @@ export class ViewLoad extends Component {
 			console.log(error)
 		}
 	}
+
+	handleUnclaim = async () => {
+		try {
+			const res = await Api.put(
+				`${LoadsURL}/unclaim/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`
+			)
+			if (res.status === 200) {
+				window.location.reload()
+			} else {
+				console.log(res)
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
 	render() {
 		const { ...values } = this.state
 		const { show, close, account } = this.props
@@ -225,8 +261,42 @@ export class ViewLoad extends Component {
 								</div>
 							</Card.Body>
 						</Card>
+						{account?.company === this.props.selectedLoad.companyId ? (
+							<Card className='loadCard'>
+								<Card.Header>Load Log</Card.Header>
+								<Card.Body>
+									{values.loadLog.map((log) => {
+										return (
+											<div key={log.id}>
+												<label htmlFor={log.event}>Event: </label>
+												<span id={log.event}>
+													{log.event} by {log.account.email} at {log.date}
+												</span>
+											</div>
+										)
+									})}
+								</Card.Body>
+							</Card>
+						) : (
+							<></>
+						)}
 					</div>
 				</Modal.Body>
+				{account?.id === this.props.selectedLoad.claimedBy ? (
+					<div className='loadButtonWrapper'>
+						<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
+						<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>
+							Departed From Shipper
+						</button>
+						<button onClick={() => this.handleUpdateStatus('unloading', 'At Consignee')}>Arrived At Consignee</button>
+						<button onClick={() => this.handleUpdateStatus('completed', 'Unloaded')}>Departed From Consignee</button>
+						<button className='red' onClick={this.handleUnclaim}>
+							Unclaim this load
+						</button>
+					</div>
+				) : (
+					<></>
+				)}
 				{account?.companyType != null && account?.companyType !== 'shipper' ? (
 					<Modal.Footer>
 						<button onClick={() => this.handleClaim(this.props.selectedLoad.loadNumber)}>Claim Load</button>

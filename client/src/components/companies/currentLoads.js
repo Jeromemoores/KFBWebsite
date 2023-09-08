@@ -3,8 +3,10 @@ import { Component } from 'react'
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
 
-import { ViewLoad } from './viewLoad'
+import { ViewLoad } from '../loadboard/viewLoad'
 import { Loader } from '../loader'
+
+import '../../style/newTableStyling.css'
 
 export class CurrentLoads extends Component {
 	constructor(props) {
@@ -52,12 +54,13 @@ export class CurrentLoads extends Component {
 	}
 	render() {
 		const { loads, loading } = this.state
+		const { account, company } = this.props
 		if (loading) {
 			return <Loader message={'Loading load list...'} />
 		}
 		return (
-			<div className='loadListWrapper'>
-				<table className='loadListTable'>
+			<div className='newTableWrapper'>
+				<table className='newTable'>
 					<thead>
 						<tr>
 							<th>Load Number</th>
@@ -99,7 +102,13 @@ export class CurrentLoads extends Component {
 					</tbody>
 				</table>
 				{this.state.selectedLoad.id ? (
-					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} />
+					<ViewLoad
+						selectedLoad={this.state.selectedLoad}
+						close={this.close}
+						show={this.show}
+						account={account}
+						company={company}
+					/>
 				) : (
 					<></>
 				)}

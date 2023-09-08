@@ -4,8 +4,6 @@ import { AddressAutofill } from '@mapbox/search-js-react'
 
 import { ListOfTrailerTypes } from '../../../data/trailers'
 
-import '../../../style/loads.css'
-
 import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
 

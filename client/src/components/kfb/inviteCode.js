@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import { Card } from 'react-bootstrap'
 
 import Api from '../../api/axios'
 import { KFBURL } from '../../api/config'

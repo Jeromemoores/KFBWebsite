@@ -56,8 +56,8 @@ export class LoadList extends Component {
 			return <Loader message={'Loading Load list...'} />
 		}
 		return (
-			<div className='loadListWrapper' style={{ margin: '2%' }}>
-				<table className='loadListTable'>
+			<div className='newTableWrapper' style={{ margin: '2%' }}>
+				<table className='newTable'>
 					<thead>
 						<tr>
 							<th>Load Number</th>
@@ -80,6 +80,7 @@ export class LoadList extends Component {
 									onClick={() => {
 										this.setSelectedLoad(load)
 									}}
+									className='hoverable'
 								>
 									<td>{pPUD.loadNumber ? pPUD.loadNumber : '-'}</td>
 									<td>

@@ -1,8 +1,6 @@
 import { Component } from 'react'
 import { PencilFill, TrashFill } from 'react-bootstrap-icons'
 
-import '../../style/employees.css'
-
 export class Employees extends Component {
 	constructor(props) {
 		super(props)
@@ -25,8 +23,8 @@ export class Employees extends Component {
 	render() {
 		const { listOfEmployees } = this.state
 		return (
-			<div className='employeeTableWrapper'>
-				<table className='employeeTable'>
+			<div className='newTableWrapper'>
+				<table className='newTable'>
 					<thead>
 						<tr>
 							<td>Name</td>
@@ -42,7 +40,7 @@ export class Employees extends Component {
 									<td>{employee.name}</td>
 									<td>{employee.email}</td>
 									<td>{employee.type}</td>
-									<td>
+									<td className='tdButton'>
 										<button>
 											<PencilFill />
 										</button>

@@ -1,8 +1,6 @@
 import { Component } from 'react'
 import { InfinitySpin } from 'react-loader-spinner'
 
-import '../../style/loading.css'
-
 export class Loader extends Component {
 	constructor(props) {
 		super(props)
