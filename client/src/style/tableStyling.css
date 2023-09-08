@@ -1,44 +1,45 @@
-.testWrapper {
+.newTableWrapper {
   margin-top: 2%;
-  border-radius: 5px;
-  border: 3px solid #333333!important;
+  border-radius: 3px;
+  border: 3px solid #333333;
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
 }
-.test {
-  width: 100%;
-  color: #b9b8b8;
+.newTable {
+  width: 100%; 
+  color: #b9b8b8; 
 }
-.test td, .test th {
+.newTable thead {
+  border-bottom: 2px solid #333333;
+}
+.newTable tbody tr{
+  transition-duration: 0.35s;
+}
+.newTable tbody .hoverable:hover {
+  cursor: pointer;
+  color: #121212;
+  background-color: #b9b8b8;
+  transition-duration: 0.35s;
+}
+.newTable tbody tr:nth-child(even) {
+  border-bottom: 2px solid #333333;
+}
+.newTable td, th {
   padding: 8px;
 }
-.test tr th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-}
-.test tbody tr {
-  border-bottom: 1px solid #636363;
-}
-.test tbody tr:nth-child(even) {
-  background-color: #333333;
-}
-.test tbody tr:hover{
-  background-color: #1e1e1e;
+.newTable th {
   color: white;
-  transition-duration: 0.5s;
 }
-.test button {
+.newTable .tdButton button {
   background-color: transparent;
   color: #b9b8b8;
   border-radius: 5px;
   padding: 5px 8px;
   margin-right: 5px;
   transition-duration: 0.5s;
-
 }
-.test button:hover {
+.newTable .tdButton button:hover{
   background-color: #886420;
   transition-duration: 0.5s;
   color: white;

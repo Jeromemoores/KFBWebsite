@@ -6,7 +6,7 @@ import { LoadsURL } from '../../api/config'
 import { ViewLoad } from '../loadboard/viewLoad'
 import { Loader } from '../loader'
 
-import '../../style/newTableStyling.css'
+import '../../style/tableStyling.css'
 
 export class CurrentLoads extends Component {
 	constructor(props) {
@@ -83,6 +83,7 @@ export class CurrentLoads extends Component {
 									onClick={() => {
 										this.setSelectedLoad(load)
 									}}
+									className='hoverable'
 								>
 									<td>{pPUD.loadNumber ? pPUD.loadNumber : '-'}</td>
 									<td>

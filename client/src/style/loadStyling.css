@@ -1,0 +1,98 @@
+.loadWrapper {
+  margin-top: 2%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 3px solid #333333;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  max-height: 85vh;
+  overflow-y: scroll;
+}
+*::-webkit-scrollbar{
+  width: 0;
+}
+.loadWrapper hr {
+  border: 2px solid #b9b8b8;
+  border-radius: 5px;
+}
+.loadWrapper h5 {
+  margin-left: 2%;
+  margin-top: 2%;
+}
+.loadInformation, .pickupDetails, .deliveryLocation, .deliveryDetails {
+  margin: 1% 2%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.loadWrapper input, .loadWrapper select, .loadWrapper textarea {
+  width: 280px;
+  margin: 8px 4px;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 2px solid #333333;
+  color: #b9b8b8;
+}
+.loadWrapper label, .loadWrapper label::after, .loadWrapper input:focus, .loadWrapper select:focus, .loadWrapper textarea:focus {
+  color: #b9b8b8!important;
+  background-color: transparent!important;
+}
+.loadWrapper select>option{
+  background-color: #121212!important;
+}
+.invis {
+  background-color: transparent;
+  border: 0;
+}
+.buttonWrapper {
+  text-align: center;
+}
+.buttonWrapper button {
+  width: 300px;
+  height: max-content;
+  font-weight: bold;
+  padding: 10px;
+  background-color: transparent;
+  color: #b9b8b8;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  transition-duration: 0.3s;
+}
+.buttonWrapper button:hover {
+  color: rgb(0, 131, 15);
+  border: 2px solid rgb(0, 68, 8);
+  transition-duration: 0.3s;
+}
+.loadButtonWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.loadButtonWrapper button {
+  width: 15%;
+  height: 50px;
+  background-color: #1d1d1d;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  transition-duration: 0.3s;
+  margin: 3% auto;
+  margin-bottom: 1%;
+  -webkit-box-shadow: 16px 17px 18px 0px rgba(0,0,0,0.57);
+  -moz-box-shadow: 16px 17px 18px 0px rgba(0,0,0,0.57);
+  box-shadow: 16px 17px 18px 0px rgba(0,0,0,0.57);
+}
+.loadButtonWrapper button:hover{
+  color: rgb(2, 223, 2);
+  background-color: #17281a;
+  border: 2px solid rgb(0, 61, 0);
+  transition-duration: 0.3s;
+}
+.loadButtonWrapper .red:hover {
+  color: rgb(223, 2, 2);
+  background-color: #281717;
+  border: 2px solid rgb(61, 0, 0);
+  transition-duration: 0.3s;
+}

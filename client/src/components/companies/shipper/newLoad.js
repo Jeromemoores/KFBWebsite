@@ -7,6 +7,8 @@ import { ListOfTrailerTypes } from '../../../data/trailers'
 import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
 
+import '../../../style/loadStyling.css'
+
 export class NewLoad extends Component {
 	constructor(props) {
 		super(props)
@@ -91,7 +93,7 @@ export class NewLoad extends Component {
 		const { ...values } = this.state
 		return (
 			<Form>
-				<div className='newLoadWrapper'>
+				<div className='loadWrapper'>
 					<h5>Load Information</h5>
 					<hr />
 					<div className='loadInformation'>

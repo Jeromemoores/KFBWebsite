@@ -4,7 +4,7 @@ import { Modal, Card } from 'react-bootstrap'
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
 
-import '../../style/viewLoad.css'
+import '../../style/newViewLoad.css'
 
 export class ViewLoad extends Component {
 	constructor(props) {
@@ -137,11 +137,11 @@ export class ViewLoad extends Component {
 
 	render() {
 		const { ...values } = this.state
-		const { show, close, account } = this.props
+		const { show, close, account, selectedLoad } = this.props
 		return (
 			<Modal show={show} onHide={close} fullscreen className='loadModal'>
 				<Modal.Header closeButton>
-					<Modal.Title>Viewing Load : {this.props.selectedLoad.loadNumber}</Modal.Title>
+					<Modal.Title>Viewing Load : {selectedLoad.loadNumber}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<div className='loadModalWrapper'>
@@ -261,8 +261,8 @@ export class ViewLoad extends Component {
 								</div>
 							</Card.Body>
 						</Card>
-						{account?.company === this.props.selectedLoad.companyId ? (
-							<Card className='loadCard'>
+						{account?.company === selectedLoad.companyId ? (
+							<Card className='loadCard overflow'>
 								<Card.Header>Load Log</Card.Header>
 								<Card.Body>
 									{values.loadLog.map((log) => {
@@ -282,7 +282,7 @@ export class ViewLoad extends Component {
 						)}
 					</div>
 				</Modal.Body>
-				{account?.id === this.props.selectedLoad.claimedBy ? (
+				{account?.company == selectedLoad.claimedBy ? (
 					<div className='loadButtonWrapper'>
 						<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>
@@ -297,9 +297,11 @@ export class ViewLoad extends Component {
 				) : (
 					<></>
 				)}
-				{account?.companyType != null && account?.companyType !== 'shipper' ? (
+				{account?.companyType != null &&
+				account?.company != selectedLoad.claimedBy &&
+				account?.companyType !== 'shipper' ? (
 					<Modal.Footer>
-						<button onClick={() => this.handleClaim(this.props.selectedLoad.loadNumber)}>Claim Load</button>
+						<button onClick={() => this.handleClaim(selectedLoad.loadNumber)}>Claim Load</button>
 					</Modal.Footer>
 				) : (
 					<></>
