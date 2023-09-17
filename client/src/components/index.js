@@ -10,6 +10,7 @@ export { CompanySignupForm } from './companies/companySignupForm'
 export { ShipperHomeComponent } from './companies/shipper/home'
 export { CarrierHomeComponent } from './companies/carrier/home'
 export { OwneropHomeComponent } from './companies/ownerop/home'
+export { KFBHomeComponent } from './kfb/home'
 
 export { LoadList } from './loadboard/loadList'
 

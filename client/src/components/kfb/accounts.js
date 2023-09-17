@@ -77,13 +77,13 @@ export class KFBAccountList extends Component {
 										<td>{account.level}</td>
 										<td className='td-buttons'>
 											<button>
-												<PencilFill /> Edit Access Level
+												<PencilFill />
 											</button>
 											<button>
-												<TrashFill /> Delete Account
+												<TrashFill />
 											</button>
 											<button>
-												<PassFill /> Password Reset
+												<PassFill />
 											</button>
 										</td>
 									</tr>

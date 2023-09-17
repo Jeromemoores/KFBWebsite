@@ -11,7 +11,7 @@ async function checkAccountandTokenandLevel(req, res, next) {
 		if (!account || !decodedToken) {
 			return res.status(401).json({ error: `Invalid or Expired token` })
 		}
-		if (account.level !== 100) {
+		if (account.level !== 100 && account.companyType !== 'kfb') {
 			return res.status(409).json({ error: `Account level is not permitted.` })
 		}
 		req.account = account

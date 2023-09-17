@@ -2,7 +2,7 @@ import { Component } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import { Loader, MainNavbar, Signout, CompanySignupForm, InviteCode, KFBLoadList, KFBAccountList, NoAccess } from '../../components'
-import { LandingPage, SignupPage, SigninPage, ShipperHome, CarrierHome, OwneropHome, LoadboardPage } from '../../pages'
+import { LandingPage, SignupPage, SigninPage, ShipperHome, CarrierHome, OwneropHome, LoadboardPage, KFBHome } from '../../pages'
 
 import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
@@ -78,19 +78,8 @@ export class WebsiteNavigation extends Component {
 						<Route path='/ownerop/home' element={<OwneropHome account={account} />} />
 
 						<Route path='/loadboard' element={<LoadboardPage account={account} />} />
-
-						{account?.level === 100 ? (
-							<Route path='/kfb/inviteCompany' element={<InviteCode />} />
-						) : (
-							<Route path='/kfb/loads' element={<NoAccess />} />
-						)}
 						{account?.level === 100 && account?.companyType === 'kfb' ? (
-							<Route path='kfb/loads' element={<KFBLoadList account={account} />} />
-						) : (
-							<Route path='/kfb/loads' element={<NoAccess />} />
-						)}
-						{account?.level === 100 && account?.companyType === 'kfb' ? (
-							<Route path='kfb/accounts' element={<KFBAccountList account={account} />} />
+							<Route path='/kfb-home' element={<KFBHome />} />
 						) : (
 							<Route path='/kfb/loads' element={<NoAccess />} />
 						)}

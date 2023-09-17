@@ -26,6 +26,24 @@
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
 }
+.kfb-default-table-header-button {
+  text-align: right;
+  margin: 1% 1% 0 0;
+}
+.kfb-default-table-header-button button{
+  width: max-content;
+  height: 50px;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #b9b8b8;
+  transition-duration: 0.5s;
+}
+.kfb-default-table-header-button button:hover{
+  transition-duration: 0.5s;
+  color: rgb(0, 255, 0);
+  border: 2px solid rgb(0, 255, 0);
+}
 .kfb-default-table {
   width: 100%;
   color: #b9b8b8;

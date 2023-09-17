@@ -14,8 +14,8 @@ router.post('/create/:authCode/:token', checkAccountandToken, async (req, res) =
 		if (existingCompany) {
 			return res.status(409).json({ error: `Company already exists with that name` })
 		}
-		if (!auth) {
-			return res.status(403).json({ error: `Invite code doesn't exist.` })
+		if (!auth || auth.used === 'true') {
+			return res.status(403).json({ error: `Invite code doesn't exist or was already used` })
 		}
 		const newCompany = await Companies.create({
 			name,
@@ -37,6 +37,7 @@ router.post('/create/:authCode/:token', checkAccountandToken, async (req, res) =
 		const companyId = newCompany.id
 		const companyType = newCompany.type
 		await Accounts.update({ companyId, companyType }, { where: { token } })
+		await Auth.update({ used: 'true' }, { where: { code: authCode } })
 	} catch (error) {
 		res.status(500).json({ error: `Something went wrong creating the company : ${error}` })
 	}
