@@ -134,3 +134,38 @@
   background-color: transparent!important;
   color: white!important;
 }
+
+/* CLAIMER BUTTONS FOR LOADS */
+.load-status-buttons-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 2% 1%;  
+  border-top: 3px solid #333333;
+  padding: 5px;
+  border-radius: 5px;
+}
+.load-status-buttons-wrapper button {
+  margin-top: 0.5%;
+  width: 18%;
+  height: 50px;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #b9b8b8;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  transition-duration: 0.5s;
+}
+.load-status-buttons-wrapper button:hover {
+  transition-duration: 0.5s;
+  color: green;
+  border: 2px solid green;
+}
+.load-status-buttons-wrapper .red:hover {
+  transition-duration: 0.5s;
+  color: red;
+  border: 2px solid red;
+
+}

@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Modal, Card } from 'react-bootstrap'
+import { Modal, Card, Badge } from 'react-bootstrap'
 
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
@@ -45,6 +45,8 @@ export class ViewLoad extends Component {
 			companyComments: '',
 			available: '',
 			loadLog: [],
+			loadStatus: '',
+			paid: {},
 		}
 	}
 	async componentDidMount() {
@@ -54,6 +56,7 @@ export class ViewLoad extends Component {
 			const pPL = JSON.parse(selectedLoad.pickupLocation)
 			const pPD = JSON.parse(selectedLoad.pickupDetails)
 			const pDD = JSON.parse(selectedLoad.deliveryDetails)
+			const pP = JSON.parse(selectedLoad.paid)
 			const pDDS = pDD.address.state
 			this.setState({
 				name: pPL.name ? pPL.name : '',
@@ -89,6 +92,11 @@ export class ViewLoad extends Component {
 				companyComments: pPD.comments,
 				available: selectedLoad.available,
 				loadLog: JSON.parse(selectedLoad.loadLog),
+				loadStatus: selectedLoad.loadStatus,
+				paid: {
+					broker: pP.broker,
+					carrier: pP.carrier,
+				},
 			})
 		}
 	}
@@ -214,6 +222,15 @@ export class ViewLoad extends Component {
 									<label htmlFor='available'>Is Load Available Now: </label>
 									<span id='available'>{values.available === 'true' ? 'Yes' : 'No'}</span>
 								</div>
+								<div>
+									<label htmlFor='loadStatus'>Load Status: </label>
+									<span id='loadStatus'>
+										{values.loadStatus === 'loading' && <Badge bg='primary'>Loading</Badge>}
+										{values.loadStatus === 'departed' && <Badge bg='info'>In Transit</Badge>}
+										{values.loadStatus === 'unloading' && <Badge bg='warning'>Unloading</Badge>}
+										{values.loadStatus === 'completed' && <Badge bg='success'>Completed</Badge>}
+									</span>
+								</div>
 							</Card.Body>
 						</Card>
 						<Card className='load-card'>
@@ -310,10 +327,47 @@ export class ViewLoad extends Component {
 						) : (
 							<></>
 						)}
+						{account?.company == selectedLoad.claimedBy && selectedLoad.loadStatus === 'completed' ? (
+							<Card className='load-card'>
+								<Card.Header>Payment Status</Card.Header>
+								<Card.Body>
+									<div>
+										<label htmlFor='paidBroker'>Paid KFB: </label>
+										<span id='paidBroker'>
+											{values.paid.broker === false ? (
+												<Badge bg='warning' text='dark'>
+													No
+												</Badge>
+											) : (
+												<Badge bg='success' text='dark'>
+													Yes
+												</Badge>
+											)}
+										</span>
+									</div>
+									<div>
+										<label htmlFor='paidCarrier'>Paid Carrier: </label>
+										<span id='paidCarrier'>
+											{values.paid.carrier === false ? (
+												<Badge bg='warning' text='dark'>
+													No
+												</Badge>
+											) : (
+												<Badge bg='success' text='dark'>
+													Yes
+												</Badge>
+											)}
+										</span>
+									</div>
+								</Card.Body>
+							</Card>
+						) : (
+							<></>
+						)}
 					</div>
 				</Modal.Body>
-				{account?.company == selectedLoad.claimedBy ? (
-					<div className='loadButtonWrapper'>
+				{account?.company == selectedLoad.claimedBy && selectedLoad.loadStatus !== 'completed' ? (
+					<div className='load-status-buttons-wrapper'>
 						<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>Departed From Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('unloading', 'At Consignee')}>Arrived At Consignee</button>

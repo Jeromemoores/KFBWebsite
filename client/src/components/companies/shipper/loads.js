@@ -116,11 +116,15 @@ export class LoadsList extends Component {
 									<td>{load.trackingNumber}</td>
 									<td>{pDD.name}</td>
 									<td>
-										{load.loadStatus === 'Available' && <Badge variant='info'>Available</Badge>}
-										{load.loadStatus === 'loading' && <Badge variant='primary'>Loading</Badge>}
-										{load.loadStatus === 'departed' && <Badge variant='info'>In Transit</Badge>}
-										{load.loadStatus === 'unloading' && <Badge variant='warning'>Unloading</Badge>}
-										{load.loadStatus === 'completed' && <Badge variant='success'>Completed</Badge>}
+										{load.loadStatus === 'Available' && (
+											<Badge bg='info' text='dark'>
+												Available
+											</Badge>
+										)}
+										{load.loadStatus === 'loading' && <Badge bg='primary'>Loading</Badge>}
+										{load.loadStatus === 'departed' && <Badge bg='info'>In Transit</Badge>}
+										{load.loadStatus === 'unloading' && <Badge bg='warning'>Unloading</Badge>}
+										{load.loadStatus === 'completed' && <Badge bg='success'>Completed</Badge>}
 									</td>
 									<td>{pLI.miles}</td>
 									<td>{pLI.rate}</td>

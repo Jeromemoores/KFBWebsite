@@ -193,11 +193,22 @@ router.get('/available', async (req, res) => {
 	}
 })
 
-router.get('/claimedBy/:token', checkAccountandToken, async (req, res) => {
+router.get('/claimedBy/:token/uncompleted', checkAccountandToken, async (req, res) => {
 	const account = await req.account
 	const company = await Companies.findOne({ where: { id: account.companyId } })
 	try {
-		const loads = await Loads.findAll({ where: { claimedBy: company.id } })
+		const loads = await Loads.findAll({ where: { claimedBy: company.id, loadStatus: { [Op.ne]: 'completed' } } })
+		res.status(200).json(loads)
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong getting claimed loads : ${error}` })
+	}
+})
+
+router.get('/claimedBy/:token/completed', checkAccountandToken, async (req, res) => {
+	const account = await req.account
+	const company = await Companies.findOne({ where: { id: account.companyId } })
+	try {
+		const loads = await Loads.findAll({ where: { claimedBy: company.id, loadStatus: 'completed' } })
 		res.status(200).json(loads)
 	} catch (error) {
 		res.status(500).json({ error: `Something went wrong getting claimed loads : ${error}` })

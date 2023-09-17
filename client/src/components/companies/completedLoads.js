@@ -10,7 +10,7 @@ import { ListOfTrailerTypes } from '../../data/trailers'
 
 import '../../style/tables.css'
 
-export class CurrentLoads extends Component {
+export class CompletedLoads extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -41,7 +41,7 @@ export class CurrentLoads extends Component {
 			loading: true,
 		})
 		try {
-			const res = await Api.get(`${LoadsURL}/claimedBy/${sessionStorage.getItem('token')}/uncompleted`)
+			const res = await Api.get(`${LoadsURL}/claimedBy/${sessionStorage.getItem('token')}/completed`)
 			this.setState({
 				loads: res.data,
 			})
