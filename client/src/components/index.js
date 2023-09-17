@@ -16,3 +16,5 @@ export { LoadList } from './loadboard/loadList'
 export { Loader } from './loader'
 
 export { InviteCode } from './kfb/inviteCode'
+export { KFBLoadList } from './kfb/loads'
+export { KFBAccountList } from './kfb/accounts'

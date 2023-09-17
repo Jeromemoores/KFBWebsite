@@ -1,11 +1,11 @@
-.loadboard-wrapper {
+.kfb-default-table-page-wrapper {
   display: flex;
   flex-direction: column;
 }
-.loads-search-input {
+.kfb-default-table-search-input {
   text-align: center;
 }
-.loads-search-input input {
+.kfb-default-table-search-input input {
   width: 33%;
   padding: 5px;
   margin-top: 1%;
@@ -14,8 +14,9 @@
   border-radius: 5px;
   background-color: transparent;
   color: #b9b8b8;
+  margin-bottom: 2%;
 }
-.loads-search-input input::placeholder {
+.kfb-default-table-search-input input::placeholder {
   color: #b9b8b8;
 }
 .kfb-default-table-wrapper {

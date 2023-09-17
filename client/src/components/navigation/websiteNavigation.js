@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { Loader, MainNavbar, Signout, CompanySignupForm, InviteCode } from '../../components'
+import { Loader, MainNavbar, Signout, CompanySignupForm, InviteCode, KFBLoadList, KFBAccountList } from '../../components'
 import { LandingPage, SignupPage, SigninPage, ShipperHome, CarrierHome, OwneropHome, LoadboardPage } from '../../pages'
 
 import Api from '../../api/axios'
@@ -80,6 +80,16 @@ export class WebsiteNavigation extends Component {
 						<Route path='/loadboard' element={<LoadboardPage account={account} />} />
 
 						{account?.level === 100 ? <Route path='/kfb/inviteCompany' element={<InviteCode />} /> : <></>}
+						{account?.level === 100 && account?.companyType === 'kfb' ? (
+							<Route path='kfb/loads' element={<KFBLoadList account={account} />} />
+						) : (
+							<></>
+						)}
+						{account?.level === 100 && account?.companyType === 'kfb' ? (
+							<Route path='kfb/accounts' element={<KFBAccountList account={account} />} />
+						) : (
+							<></>
+						)}
 					</Routes>
 				</section>
 			</Router>

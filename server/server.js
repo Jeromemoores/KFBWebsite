@@ -29,6 +29,9 @@ app.use('/load', LoadsRouter)
 const KFBRouter = require('./routes/auth')
 app.use('/kfb', KFBRouter)
 
+const DataRouter = require('./routes/kfb')
+app.use('/kfb/data', DataRouter)
+
 db.sequelize.sync().then(() => {
 	app.listen(PORT, () => {
 		console.log(`Server Running on ${PORT}`)
