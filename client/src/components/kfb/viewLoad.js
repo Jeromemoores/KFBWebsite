@@ -48,7 +48,7 @@ export class KFBViewLoad extends Component {
 	}
 	async componentDidMount() {
 		const selectedLoad = await this.props.selectedLoad
-		if (selectedLoad != {}) {
+		if (Object.keys(selectedLoad).length !== 0) {
 			const pLI = JSON.parse(selectedLoad.loadInformation)
 			const pPL = JSON.parse(selectedLoad.pickupLocation)
 			const pPD = JSON.parse(selectedLoad.pickupDetails)
@@ -105,7 +105,7 @@ export class KFBViewLoad extends Component {
 
 	render() {
 		const { ...values } = this.state
-		const { show, close, account, selectedLoad } = this.props
+		const { show, close, selectedLoad } = this.props
 		return (
 			<Modal show={show} onHide={close} fullscreen className='load-modal-edit'>
 				<Modal.Header closeButton>

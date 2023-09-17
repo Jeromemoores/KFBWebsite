@@ -387,7 +387,7 @@ export class ViewLoad extends Component {
 						)}
 					</div>
 				</Modal.Body>
-				{account?.company == selectedLoad.claimedBy && selectedLoad.loadStatus !== 'completed' ? (
+				{Number(account?.company) === Number(selectedLoad.claimedBy) && selectedLoad.loadStatus !== 'completed' ? (
 					<div className='load-status-buttons-wrapper'>
 						<button onClick={() => this.handleUpdateStatus('deadHead', 'In transit to Shipper')}>In Transit To Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
@@ -401,7 +401,7 @@ export class ViewLoad extends Component {
 				) : (
 					<></>
 				)}
-				{account?.companyType != null && account?.company != selectedLoad.claimedBy && account?.companyType !== 'shipper' ? (
+				{account?.companyType !== null && Number(account?.company) !== Number(selectedLoad.claimedBy) && account?.companyType !== 'shipper' ? (
 					<Modal.Footer>
 						<button onClick={() => this.handleClaim(selectedLoad.loadNumber)}>Claim Load</button>
 					</Modal.Footer>
