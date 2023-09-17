@@ -7,16 +7,16 @@ const { Accounts, Companies } = require('../models')
 const { SECRET } = require('../config')
 
 router.post('/signup', async (req, res) => {
-	const { name, email, password, companyAuth } = req.body
+	const { name, email, password, inviteCode } = req.body
 	try {
 		const existingEmail = await Accounts.findOne({ where: { email } })
 		let companyId = null
 		let companyEmployees = []
 		let companyType = null
-		if (companyAuth) {
-			const company = await Companies.findOne({ where: { authCode: companyAuth } })
+		if (inviteCode) {
+			const company = await Companies.findOne({ where: { inviteCode } })
 			if (!company) {
-				return res.status(409).json({ error: `Invalid authentication code.` })
+				return res.status(409).json({ error: `Invalid invite code.` })
 			}
 			companyId = company.id
 			companyType = company.companyType

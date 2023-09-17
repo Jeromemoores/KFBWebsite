@@ -31,38 +31,20 @@ export class SignupForm extends Component {
 		return (
 			<div className='signupform'>
 				<FloatingLabel label='First Name'>
-					<Form.Control
-						type='first-name'
-						name='firstName'
-						value={values.firstName}
-						onChange={handleChange('firstName')}
-						placeholder=''
-					/>
+					<Form.Control type='first-name' name='firstName' value={values.firstName} onChange={handleChange('firstName')} placeholder='' />
 				</FloatingLabel>
 				<FloatingLabel label='Last Name'>
-					<Form.Control
-						type='last-name'
-						name='lastName'
-						value={values.lastName}
-						onChange={handleChange('lastName')}
-						placeholder=''
-					/>
+					<Form.Control type='last-name' name='lastName' value={values.lastName} onChange={handleChange('lastName')} placeholder='' />
 				</FloatingLabel>
 				<FloatingLabel label='Email'>
-					<Form.Control
-						type='email'
-						name='email'
-						value={values.email}
-						onChange={handleChange('email')}
-						placeholder=''
-					/>
+					<Form.Control type='email' name='email' value={values.email} onChange={handleChange('email')} placeholder='' />
 				</FloatingLabel>
-				<FloatingLabel label='Company Join Code'>
+				<FloatingLabel label='Company Invite Code'>
 					<Form.Control
 						type='text'
-						name='companyAuth'
-						value={values.companyAuth}
-						onChange={handleChange('companyAuth')}
+						name='inviteCode'
+						value={values.inviteCode}
+						onChange={handleChange('inviteCode')}
 						placeholder='Only fill out if joining a company.'
 					/>
 				</FloatingLabel>

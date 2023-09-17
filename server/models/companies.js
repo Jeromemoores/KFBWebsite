@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.JSON(),
 			allowNull: false,
 		},
-		authCode: {
+		inviteCode: {
 			type: DataTypes.UUID,
 			defaultValue: DataTypes.UUIDV4,
 		},
