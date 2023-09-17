@@ -26,12 +26,12 @@ export class OwneropHomeComponent extends Component {
 		const { company, account } = this.props
 
 		return (
-			<div className='homeWrapper'>
-				<div className='homeSide'>
+			<div className='home-wrapper'>
+				<div className='home-side'>
 					<button onClick={() => this.toggleState('currentLoads')}>View Current Loads</button>
 					<button onClick={() => this.toggleState('completedLoads')}>View Completed Loads</button>
 				</div>
-				<div className='homeContent'>
+				<div className='home-content'>
 					{values.currentLoads ? <CurrentLoads company={company} account={account} /> : <></>}
 					{values.completedLoads ? <CompletedLoads company={company} account={account} /> : <></>}
 				</div>

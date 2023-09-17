@@ -27,13 +27,13 @@ export class KFBHomeComponent extends Component {
 	render() {
 		const { ...values } = this.state
 		return (
-			<div className='homeWrapper'>
-				<div className='homeSide'>
+			<div className='home-wrapper'>
+				<div className='home-side'>
 					<button onClick={() => this.toggleState('loads')}>View Loads</button>
 					<button onClick={() => this.toggleState('accounts')}>View Accounts</button>
 					<button onClick={() => this.toggleState('companyJoin')}>Show Invitation Codes</button>
 				</div>
-				<div className='homeContent'>
+				<div className='home-content'>
 					{values.loads ? <KFBLoadList /> : <></>}
 					{values.accounts ? <KFBAccountList /> : <></>}
 					{values.companyJoin ? <InviteCode /> : <></>}

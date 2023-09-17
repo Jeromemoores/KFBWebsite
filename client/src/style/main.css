@@ -25,12 +25,12 @@ a, p, span, h1, h2, h3, h4, h5 {
 }
 
 /* COMPANY HOME PAGE STYLING */
-.homeWrapper {
+.home-wrapper {
   display: flex;
   flex-direction: row;
   margin-top: 2%;
 }
-.homeSide {
+.home-side {
   display: flex;
   flex-direction: column;
   width: max-content;
@@ -41,7 +41,7 @@ a, p, span, h1, h2, h3, h4, h5 {
   border-left: 0;
   height: max-content;
 }
-.homeSide button {
+.home-side button {
   height: 60px;
   margin: 10px;
   color: #b9b8b8;
@@ -50,12 +50,12 @@ a, p, span, h1, h2, h3, h4, h5 {
   border-radius: 5px;
   transition-duration: 0.3s;
 }
-.homeSide button:hover {
+.home-side button:hover {
   color: white;
   border: 2px solid white;
   transition-duration: 0.3s;
 }
-.homeContent {
+.home-content {
   margin-left: 3%;
   width: 75%;
 }

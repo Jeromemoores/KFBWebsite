@@ -1,22 +1,22 @@
 /* USER SIGNUP */
-.signupform {
+.sign-up-form {
   margin: 5% 30%;
   display: flex;
   flex-direction: column;
   color: #b9b8b8!important;
 }
-.signupform input {
+.sign-up-form input {
   margin-bottom: 2%;
   background-color: #121212;
   color: white!important;
   background-color: transparent;
   border: 2px solid #333333;
 }
-.signupform input:focus, .signupform input:focus {
+.sign-up-form input:focus, .sign-up-form input:focus {
   color: #b9b8b8!important;
   background-color: transparent!important;
 }
-.signupSubmit button {
+.sign-up-submit button {
   width: 100%;
   height: 50px;
   background-color: #1d1d1d;
@@ -25,18 +25,18 @@
   color: #b9b8b8;
   transition-duration: 0.3s;
 }
-.signupSubmit button:hover {
+.sign-up-submit button:hover {
   color: rgb(2, 223, 2);
   background-color: #17281a;
   border: 2px solid rgb(0, 61, 0);
   transition-duration: 0.3s;
 }
-.signupSubmit button:disabled, .signupSubmit button[disabled] {
+.sign-up-submit button:disabled, .sign-up-submit button[disabled] {
   color: black;
   background-color: rgb(80, 0, 0);
   border: 2px solid rgb(80, 0, 0);
 }
-.showPasswordButton {
+.show-password-button {
   position: absolute;
   top: 45%;
   right: 10px;
@@ -46,29 +46,29 @@
   color: #333333;
   background-color: transparent;
 }
-.showPasswordButton::after {
+.show-password-button::after {
   color: white!important;
 }
 
 /* COMPANY SIGNUP */
-.companySignup {
+.company-sign-up {
   margin: 5% 30%;
   display: flex;
   flex-direction: column;
   color: #b9b8b8!important;
 }
-.companySignup input {
+.company-sign-up input {
   margin-bottom: 2%;
   background-color: #121212;
   color: white!important;
   background-color: transparent;
   border: 2px solid #333333;
 }
-.companySignup input:focus, .companySignup input:focus {
+.company-sign-up input:focus, .company-sign-up input:focus {
   color: #b9b8b8!important;
   background-color: transparent!important;
 }
-.companySignup button {
+.company-sign-up button {
   width: 100%;
   height: 50px;
   background-color: #1d1d1d;
@@ -77,13 +77,13 @@
   color: #b9b8b8;
   transition-duration: 0.3s;
 }
-.companySignup button:hover {
+.company-sign-up button:hover {
   color: rgb(2, 223, 2);
   background-color: #17281a;
   border: 2px solid rgb(0, 61, 0);
   transition-duration: 0.3s;
 }
-.companySignup button:disabled, .companySignup button[disabled] {
+.company-sign-up button:disabled, .company-sign-up button[disabled] {
   color: black;
   background-color: rgb(80, 0, 0);
   border: 2px solid rgb(80, 0, 0);

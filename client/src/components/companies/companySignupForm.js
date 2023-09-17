@@ -112,7 +112,7 @@ export class CompanySignupForm extends Component {
 			return <Loader message={'Awaiting Company Creation'} />
 		}
 		return (
-			<div className='companySignup'>
+			<div className='company-sign-up'>
 				<Form>
 					<FloatingLabel label='Company Name'>
 						<Form.Control type='text' name='name' value={values.name} onChange={this.handleChange('name')} placeholder='' />

@@ -31,14 +31,14 @@ export class CarrierHomeComponent extends Component {
 		const { ...values } = this.state
 		const { company, account } = this.props
 		return (
-			<div className='homeWrapper'>
-				<div className='homeSide'>
+			<div className='home-wrapper'>
+				<div className='home-side'>
 					<button onClick={() => this.toggleState('employees')}>View Employees</button>
 					<button onClick={() => this.toggleState('currentLoads')}>View Current Loads</button>
 					<button onClick={() => this.toggleState('completedLoads')}>View Completed Loads</button>
 					<button onClick={() => this.toggleState('inviteCode')}>Show Invitation Code</button>
 				</div>
-				<div className='homeContent'>
+				<div className='home-content'>
 					{values.employees ? <Employees company={company} /> : <></>}
 					{values.inviteCode ? <InviteCode company={company} /> : <></>}
 					{values.currentLoads ? <CurrentLoads company={company} account={account} /> : <></>}

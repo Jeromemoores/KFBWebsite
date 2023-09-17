@@ -58,7 +58,7 @@ export class WebsiteNavigation extends Component {
 		}
 		return (
 			<Router>
-				<section id='MainNavbar'>
+				<section id='main-navbar'>
 					<MainNavbar account={account} />
 				</section>
 				<section id='PageElements'>

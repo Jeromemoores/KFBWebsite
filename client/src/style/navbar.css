@@ -1,38 +1,38 @@
-#MainNavbar {
+#main-navbar {
   border-bottom: 3px solid #333333;
   border-radius: 5px;
   width: 99.7%;
   margin: auto;
 }
-.MainNavbar {
+.main-navbar {
   margin: 0% 2%;
 }
-.MainNavbar .navbar-brand {
+.main-navbar .navbar-brand {
   font-size: large;
   font-weight: bold;
 }
-.MainNavbar a {
+.main-navbar a {
   transition-duration: 0.3s;
   font-size: 14px;
 }
-.MainNavbar a:hover {
+.main-navbar a:hover {
   color: white!important;
   transition-duration: 0.3s;
 }
-.MainNavbar .dropdown-menu-end {
+.main-navbar .dropdown-menu-end {
   background-color: #121212;
   border: 3px solid #333333!important;
   border-radius: 5px;
 }
-.MainNavbar .dropdown-item {
+.main-navbar .dropdown-item {
   color: white;
   transition-duration: 0.3s;
 }
-.MainNavbar .dropdown-item:hover {
+.main-navbar .dropdown-item:hover {
   background-color: #121212;
   color: rgb(0,44,175);
   transition-duration: 0.3s;
 }
-.MainNavbar .dropdown-divider {
+.main-navbar .dropdown-divider {
   border-top: 3px solid #333333;
 }

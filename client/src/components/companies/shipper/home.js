@@ -31,14 +31,14 @@ export class ShipperHomeComponent extends Component {
 		const { ...values } = this.state
 		const { company, account } = this.props
 		return (
-			<div className='homeWrapper'>
-				<div className='homeSide'>
+			<div className='home-wrapper'>
+				<div className='home-side'>
 					<button onClick={() => this.toggleState('viewEmployees')}>View Employees</button>
 					<button onClick={() => this.toggleState('newLoad')}>Post a new load</button>
 					<button onClick={() => this.toggleState('showLoads')}>View Loads</button>
 					<button onClick={() => this.toggleState('showInviteCode')}>Show Invitation Code</button>
 				</div>
-				<div className='homeContent'>
+				<div className='home-content'>
 					{values.viewEmployees ? <Employees company={company} /> : <></>} {values.showAuthCode ? <InviteCode company={company} /> : <></>}
 					{values.newLoad ? <NewLoad /> : <></>}
 					{values.showLoads ? <LoadsList company={company} account={account} /> : <></>}
