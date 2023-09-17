@@ -51,7 +51,7 @@ export class ViewLoad extends Component {
 	}
 	async componentDidMount() {
 		const selectedLoad = await this.props.selectedLoad
-		if (selectedLoad != {}) {
+		if (Object.keys(selectedLoad).length !== 0) {
 			const pLI = JSON.parse(selectedLoad.loadInformation)
 			const pPL = JSON.parse(selectedLoad.pickupLocation)
 			const pPD = JSON.parse(selectedLoad.pickupDetails)
@@ -225,10 +225,31 @@ export class ViewLoad extends Component {
 								<div>
 									<label htmlFor='loadStatus'>Load Status: </label>
 									<span id='loadStatus'>
-										{values.loadStatus === 'loading' && <Badge bg='primary'>Loading</Badge>}
-										{values.loadStatus === 'departed' && <Badge bg='info'>In Transit</Badge>}
-										{values.loadStatus === 'unloading' && <Badge bg='warning'>Unloading</Badge>}
-										{values.loadStatus === 'completed' && <Badge bg='success'>Completed</Badge>}
+										{values.loadStatus === 'available' && (
+											<Badge bg='primary' text='dark'>
+												Available
+											</Badge>
+										)}
+										{values.loadStatus === 'loading' && (
+											<Badge bg='primary' text='dark'>
+												Loading
+											</Badge>
+										)}
+										{values.loadStatus === 'departed' && (
+											<Badge bg='info' text='dark'>
+												In Transit
+											</Badge>
+										)}
+										{values.loadStatus === 'unloading' && (
+											<Badge bg='warning' text='dark'>
+												Unloading
+											</Badge>
+										)}
+										{values.loadStatus === 'completed' && (
+											<Badge bg='success' text='dark'>
+												Completed
+											</Badge>
+										)}
 									</span>
 								</div>
 							</Card.Body>
@@ -327,7 +348,7 @@ export class ViewLoad extends Component {
 						) : (
 							<></>
 						)}
-						{account?.company == selectedLoad.claimedBy && selectedLoad.loadStatus === 'completed' ? (
+						{account?.company === selectedLoad.claimedBy && selectedLoad.loadStatus === 'completed' ? (
 							<Card className='load-card'>
 								<Card.Header>Payment Status</Card.Header>
 								<Card.Body>

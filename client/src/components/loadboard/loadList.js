@@ -73,8 +73,8 @@ export class LoadList extends Component {
 		if (loading) return <Loader message={'Loading Load list...'} />
 
 		return (
-			<div className='loadboard-wrapper'>
-				<div className='loads-search-input'>
+			<div className='kfb-default-table-page-wrapper'>
+				<div className='kfb-default-table-search-input'>
 					<input type='text' placeholder='Search...' value={searchQuery} onChange={this.handleSearchChange} />
 				</div>
 				<div className='kfb-default-table-wrapper' style={{ margin: '2%' }}>

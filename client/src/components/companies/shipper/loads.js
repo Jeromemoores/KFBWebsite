@@ -92,13 +92,13 @@ export class LoadsList extends Component {
 			return <Loader message={'Loading list of loads.'} />
 		}
 		const statusDetails = {
-			Available: { color: 'info', text: 'Available', tooltip: false },
-			claimed: { color: 'success', text: 'Load Claimed', tooltip: true },
+			available: { color: 'info', text: 'Available', tooltip: false, textColor: 'dark' },
+			claimed: { color: 'success', text: 'Load Claimed', tooltip: true, textColor: 'dark' },
 			deadHead: { color: 'info', text: 'In Transit', tooltip: true, textColor: 'dark' },
-			loading: { color: 'primary', text: 'Loading', tooltip: true },
+			loading: { color: 'primary', text: 'Loading', tooltip: true, textColor: 'dark' },
 			departed: { color: 'info', text: 'In Transit', tooltip: true, textColor: 'dark' },
 			unloading: { color: 'warning', text: 'Unloading', tooltip: true, textColor: 'dark' },
-			completed: { color: 'success', text: 'Completed', tooltip: true },
+			completed: { color: 'success', text: 'Completed', tooltip: true, textColor: 'dark' },
 		}
 		return (
 			<div className='kfb-default-table-wrapper'>

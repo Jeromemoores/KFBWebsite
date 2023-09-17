@@ -141,6 +141,7 @@ router.put('/unclaim/:loadNumber/:token', checkAccountandToken, async (req, res)
 			loadLog: [...parsedLog, newLoadLog],
 			available: 'true',
 			loadStatus: 'available',
+			claimedOn: null,
 		}
 		const updatedLoad = await Loads.update(fullUpdate, { returning: true, where: { loadNumber } })
 		res.status(200).json({ message: `Load was unclaimed.`, data: updatedLoad })
@@ -160,6 +161,9 @@ router.put('/claim/:loadNumber/:token', checkAccountandToken, async (req, res) =
 	}
 	if (!load) {
 		return res.status(404).json({ error: `No load found with that load number` })
+	}
+	if (load.claimedBy !== null) {
+		return res.status(409).json({ error: `Load was already claimed.` })
 	}
 	const date = new Date().toISOString()
 	try {
