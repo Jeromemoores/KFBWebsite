@@ -1,7 +1,30 @@
-.newTableWrapper {
+.loadListWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.inputWrapper {
+  text-align: center;
+}
+.inputWrapper input {
   margin-top: 2%;
-  border-radius: 3px;
+  width: 50%;
+  height: 50px;
   border: 3px solid #333333;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: transparent;
+  border: 2px solid #333333;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  color: #b9b8b8;
+}
+.inputWrapper input::placeholder {
+  color: #b9b8b8;
+}
+.tableWrapper {
+  border-radius: 5px;
+  border: 2px solid #333333;
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
@@ -9,6 +32,9 @@
 .newTable {
   width: 100%; 
   color: #b9b8b8; 
+}
+.newTable .trailerType, .newTable .hazmat {
+  display: table-cell;
 }
 .newTable thead {
   border-bottom: 2px solid #333333;
@@ -22,7 +48,7 @@
   background-color: #b9b8b8;
   transition-duration: 0.35s;
 }
-.newTable tbody tr:nth-child(even) {
+.newTable tbody tr {
   border-bottom: 2px solid #333333;
 }
 .newTable td, th {
@@ -43,4 +69,10 @@
   background-color: #886420;
   transition-duration: 0.5s;
   color: white;
+}
+
+@media (max-width: 864px) {
+  .newTable .trailerType, .newTable .hazmat {
+    display: none;
+  }
 }

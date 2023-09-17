@@ -124,7 +124,7 @@ export class LoadsList extends Component {
 									</td>
 									<td>{pLI.miles}</td>
 									<td>{pLI.rate}</td>
-									<td>{pLI.miles * pLI.rate}</td>
+									<td>${pLI.miles * pLI.rate}</td>
 									<td className='tdButton'>
 										<button>
 											<PencilFill onClick={() => this.setEditedLoad(load)} />

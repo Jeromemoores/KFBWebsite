@@ -5,6 +5,8 @@ import { AddressAutofill } from '@mapbox/search-js-react'
 import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
 
+import '../../../style/newLoadStyling.css'
+
 export class EditLoad extends Component {
 	constructor(props) {
 		super(props)
@@ -152,7 +154,7 @@ export class EditLoad extends Component {
 		const { ...values } = this.state
 		const { setShow, setClose, editLoad } = this.props
 		return (
-			<Modal show={setShow} onHide={setClose} fullscreen>
+			<Modal show={setShow} onHide={setClose} fullscreen className='editLoadModal'>
 				<Modal.Header closeButton>
 					<Modal.Title>Editing Load : {editLoad.loadNumber} </Modal.Title>
 				</Modal.Header>
@@ -242,7 +244,7 @@ export class EditLoad extends Component {
 									<label htmlFor='requiredPictures'>Securement Pictures Required: </label>
 									<span id='requiredPictures'>{values.requiredPictures === 'true' ? 'Yes' : 'No'}</span>
 								</div>
-								<FloatingLabel label='Is Load Available Now'>
+								<FloatingLabel label='Available Now'>
 									<Form.Select onChange={this.handleChange('available')} name='available'>
 										<option value={values.available}>{values.available === 'true' ? 'Yes' : 'No'}</option>
 										<option value='false'>No</option>

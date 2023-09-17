@@ -1,10 +1,10 @@
 import { Component } from 'react'
-
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
-
 import { ViewLoad } from './viewLoad'
 import { Loader } from '../loader'
+
+import { ListOfTrailerTypes } from '../../data/trailers'
 
 export class LoadList extends Component {
 	constructor(props) {
@@ -14,96 +14,109 @@ export class LoadList extends Component {
 			selectedLoad: {},
 			show: false,
 			loading: false,
+			searchQuery: '',
 		}
 	}
-	async componentDidMount() {
-		await this.fetchLoads()
-	}
-	async fetchLoads() {
-		this.setState({
-			loading: true,
-		})
+
+	componentDidMount = async () => {
+		this.setState({ loading: true })
 		const res = await Api.get(`${LoadsURL}/available`)
 		this.setState({
-			loads: res.data,
-		})
-		setTimeout(() => {
-			this.setState({
-				loading: false,
-			})
-		}, 2000)
-	}
-	setSelectedLoad = (load) => {
-		this.setState({
-			selectedLoad: load,
-		})
-	}
-	close = () => {
-		this.setState({
-			selectedLoad: {},
-			show: false,
+			loads: res.data.map((load) => {
+				return {
+					...load,
+					parsedPickupDetails: JSON.parse(load.pickupDetails),
+					parsedPickupLocation: JSON.parse(load.pickupLocation),
+					parsedDeliveryDetails: JSON.parse(load.deliveryDetails),
+					parsedLoadInformation: JSON.parse(load.loadInformation),
+				}
+			}),
+			loading: false,
 		})
 	}
-	show = () => {
-		this.setState({
-			show: true,
-		})
+
+	handleToggle = (load = {}) => {
+		this.setState((prevState) => ({ selectedLoad: load, show: !prevState.show }))
 	}
+
+	handleSearchChange = (e) => {
+		this.setState({ searchQuery: e.target.value })
+	}
+
+	getTrailerTypeName = (type) => {
+		const trailer = ListOfTrailerTypes.find((t) => t.type === type)
+		return trailer ? trailer.name : '-'
+	}
+
+	filterLoads = () => {
+		const { loads, searchQuery } = this.state
+		const searchStr = searchQuery.toLowerCase()
+
+		return loads.filter(
+			({ parsedPickupDetails, parsedPickupLocation, parsedDeliveryDetails, parsedLoadInformation }) => {
+				return (
+					(parsedPickupDetails.loadNumber && parsedPickupDetails.loadNumber.includes(searchStr)) ||
+					(parsedPickupLocation.city && parsedPickupLocation.city.toLowerCase().includes(searchStr)) ||
+					(parsedPickupLocation.state && parsedPickupLocation.state.toLowerCase().includes(searchStr)) ||
+					(parsedDeliveryDetails.address.city &&
+						parsedDeliveryDetails.address.city.toLowerCase().includes(searchStr)) ||
+					(parsedDeliveryDetails.address.state &&
+						parsedDeliveryDetails.address.state.toLowerCase().includes(searchStr)) ||
+					(parsedLoadInformation.trailerType && parsedLoadInformation.trailerType.toLowerCase().includes(searchStr)) ||
+					(parsedLoadInformation.hazmat && parsedLoadInformation.hazmat.toLowerCase().includes(searchStr)) ||
+					(parsedLoadInformation.miles && parsedLoadInformation.miles.toLowerCase().includes(searchStr))
+				)
+			}
+		)
+	}
+
 	render() {
-		const { loads, loading } = this.state
+		const { loading, searchQuery, selectedLoad, show } = this.state
 		const { account } = this.props
-		if (loading) {
-			return <Loader message={'Loading Load list...'} />
-		}
+
+		if (loading) return <Loader message={'Loading Load list...'} />
+
 		return (
-			<div className='newTableWrapper' style={{ margin: '2%' }}>
-				<table className='newTable'>
-					<thead>
-						<tr>
-							<th>Load Number</th>
-							<th>Shipper Location</th>
-							<th>Consignee Location</th>
-							<th>Hazmat</th>
-							<th>Trailer Type</th>
-							<th>Miles & Total</th>
-						</tr>
-					</thead>
-					<tbody>
-						{Object.values(loads).map((load) => {
-							const pPUD = JSON.parse(load.pickupDetails)
-							const pPUL = JSON.parse(load.pickupLocation)
-							const pDD = JSON.parse(load.deliveryDetails)
-							const pLI = JSON.parse(load.loadInformation)
-							return (
-								<tr
-									key={load.id}
-									onClick={() => {
-										this.setSelectedLoad(load)
-									}}
-									className='hoverable'
-								>
-									<td>{pPUD.loadNumber ? pPUD.loadNumber : '-'}</td>
+			<div className='loadListWrapper'>
+				<div className='inputWrapper'>
+					<input type='text' placeholder='Search...' value={searchQuery} onChange={this.handleSearchChange} />
+				</div>
+				<div className='tableWrapper' style={{ margin: '2%' }}>
+					<table className='newTable'>
+						<thead>
+							<tr>
+								<th>Load #</th>
+								<th>Shipper </th>
+								<th>Consignee </th>
+								<th className='hazmat'>Hazmat</th>
+								<th className='trailerType'>Trailer Type</th>
+								<th>Miles & Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							{this.filterLoads().map((load) => (
+								<tr key={load.id} onClick={() => this.handleToggle(load)} className='hoverable'>
+									<td>{load.parsedPickupDetails.loadNumber || '-'}</td>
 									<td>
-										{pPUL.city}, {pPUL.state}
+										{load.parsedPickupLocation.city}, {load.parsedPickupLocation.state}
 									</td>
 									<td>
-										{pDD.address.city}, {pDD.address.state}
+										{load.parsedDeliveryDetails.address.city}, {load.parsedDeliveryDetails.address.state}
 									</td>
-									<td>{pLI.hazmat === 'false' ? 'No' : 'Yes'}</td>
-									<td>{pLI.trailerType}</td>
+									<td className='hazmat'>{load.parsedLoadInformation.hazmat === 'false' ? 'No' : 'Yes'}</td>
+									<td className='trailerType'>{this.getTrailerTypeName(load.parsedLoadInformation.trailerType)}</td>
 									<td>
-										{pLI.miles} ${pLI.miles * pLI.rate}
+										{load.parsedLoadInformation.miles} $
+										{load.parsedLoadInformation.miles * load.parsedLoadInformation.rate}
 									</td>
 								</tr>
-							)
-						})}
-					</tbody>
-				</table>
-				{account?.id && this.state.selectedLoad.id ? (
-					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} account={account} />
-				) : (
-					<></>
-				)}
+							))}
+						</tbody>
+					</table>
+					{account?.id && selectedLoad.id ? (
+						<ViewLoad selectedLoad={selectedLoad} close={() => this.handleToggle()} show={show} account={account} />
+					) : null}
+				</div>
 			</div>
 		)
 	}

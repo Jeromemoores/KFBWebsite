@@ -47,7 +47,7 @@ export class ViewLoad extends Component {
 	}
 	async componentDidMount() {
 		const selectedLoad = await this.props.selectedLoad
-		if (selectedLoad !== {}) {
+		if (selectedLoad != {}) {
 			const pLI = JSON.parse(selectedLoad.loadInformation)
 			const pPL = JSON.parse(selectedLoad.pickupLocation)
 			const pPD = JSON.parse(selectedLoad.pickupDetails)
