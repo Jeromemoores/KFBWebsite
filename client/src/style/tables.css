@@ -1,0 +1,66 @@
+.loadboard-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.loads-search-input {
+  text-align: center;
+}
+.loads-search-input input {
+  width: 33%;
+  padding: 5px;
+  margin-top: 1%;
+  height: 45px;
+  border: 3px solid #333333;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #b9b8b8;
+}
+.loads-search-input input::placeholder {
+  color: #b9b8b8;
+}
+.kfb-default-table-wrapper {
+  border-radius: 5px;
+  border: 2px solid #333333;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  margin-top: 1%!important;
+}
+.kfb-default-table {
+  width: 100%;
+  color: #b9b8b8;
+}
+.kfb-default-table thead {
+  border-bottom: 2px solid #333333;
+}
+.kfb-default-table thead th {
+  color: white;
+}
+.kfb-default-table td, .kfb-default-table th {
+  padding: 8px;
+}
+.kfb-default-table .hoverable {
+  transition-duration: 0.3s;
+  cursor: pointer;
+}
+.kfb-default-table .hoverable:hover {
+  color: #333333;
+  background-color: #b9b8b8;
+  transition-duration: 0.3s;
+}
+.kfb-default-table tbody tr {
+  border-bottom: 2px solid #333333;
+}
+.td-buttons button {
+  background-color: transparent;
+  color: #b9b8b8;
+  border-radius: 5px;
+  padding: 5px 8px;
+  margin-right: 5px;
+  transition-duration: 0.5s;
+}
+.td-buttons button:hover {
+  background-color: #886420;
+  transition-duration: 0.5s;
+  color: white;
+}

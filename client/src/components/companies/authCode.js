@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import '../../style/companyAuth.css'
+import '../../style/auth.css'
 
 export class AuthCode extends Component {
 	copyToClip = async () => {

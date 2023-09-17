@@ -5,7 +5,9 @@ import { AddressAutofill } from '@mapbox/search-js-react'
 import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
 
-import '../../../style/newLoadStyling.css'
+import { ListOfTrailerTypes } from '../../../data/trailers'
+
+import '../../../style/loads.css'
 
 export class EditLoad extends Component {
 	constructor(props) {
@@ -138,10 +140,7 @@ export class EditLoad extends Component {
 			available: values.available,
 		}
 		try {
-			const res = await Api.put(
-				`${LoadsURL}/update/${editLoad.loadNumber}/${sessionStorage.getItem('token')}`,
-				updatedLoad
-			)
+			const res = await Api.put(`${LoadsURL}/update/${editLoad.loadNumber}/${sessionStorage.getItem('token')}`, updatedLoad)
 			console.log(res)
 			if (res.status === 200) {
 				window.location.href = '/shipper/home'
@@ -150,17 +149,21 @@ export class EditLoad extends Component {
 			console.log(`Something went wrong ${error}`)
 		}
 	}
+	getTrailerNames = (type) => {
+		const trailer = ListOfTrailerTypes.find((t) => t.type === type)
+		return trailer ? trailer.name : ' - '
+	}
 	render() {
 		const { ...values } = this.state
 		const { setShow, setClose, editLoad } = this.props
 		return (
-			<Modal show={setShow} onHide={setClose} fullscreen className='editLoadModal'>
+			<Modal show={setShow} onHide={setClose} fullscreen className='load-modal-edit'>
 				<Modal.Header closeButton>
 					<Modal.Title>Editing Load : {editLoad.loadNumber} </Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<div className='loadModalWrapper'>
-						<Card className='loadCard'>
+					<div className='load-modal-wrapper'>
+						<Card className='load-card'>
 							<Card.Header>Pickup Location</Card.Header>
 							<Card.Body>
 								<div>
@@ -189,7 +192,7 @@ export class EditLoad extends Component {
 								</div>
 							</Card.Body>
 						</Card>
-						<Card className='loadCard'>
+						<Card className='load-card'>
 							<Card.Header>Load Information</Card.Header>
 							<Card.Body>
 								<FloatingLabel label='Product Type'>
@@ -216,25 +219,13 @@ export class EditLoad extends Component {
 								</div>
 								<div>
 									<label htmlFor='trailerType'>Trailer Type: </label>
-									<span id='trailerType'>{values.trailerType}</span>
+									<span id='trailerType'>{this.getTrailerNames(values.trailerType)}</span>
 								</div>
 								<FloatingLabel label='Rate'>
-									<Form.Control
-										type='number'
-										name='rate'
-										value={values.rate}
-										onChange={this.handleChange('rate')}
-										placeholder={values.rate}
-									/>
+									<Form.Control type='number' name='rate' value={values.rate} onChange={this.handleChange('rate')} placeholder={values.rate} />
 								</FloatingLabel>
 								<FloatingLabel label='Miles'>
-									<Form.Control
-										type='number'
-										name='miles'
-										value={values.miles}
-										onChange={this.handleChange('miles')}
-										placeholder={values.miles}
-									/>
+									<Form.Control type='number' name='miles' value={values.miles} onChange={this.handleChange('miles')} placeholder={values.miles} />
 								</FloatingLabel>
 								<div>
 									<label htmlFor='securements'>Required Securements: </label>
@@ -253,7 +244,7 @@ export class EditLoad extends Component {
 								</FloatingLabel>
 							</Card.Body>
 						</Card>
-						<Card className='loadCard'>
+						<Card className='load-card'>
 							<Card.Header>Pickup Details</Card.Header>
 							<Card.Body>
 								<div>
@@ -269,26 +260,14 @@ export class EditLoad extends Component {
 									<span id='comments'>{values.comments}</span>
 								</div>
 								<FloatingLabel label='Pick-up Date'>
-									<Form.Control
-										type='date'
-										name='pickupDate'
-										value={values.pickupDate}
-										onChange={this.handleChange('pickupDate')}
-										placeholder=''
-									/>
+									<Form.Control type='date' name='pickupDate' value={values.pickupDate} onChange={this.handleChange('pickupDate')} placeholder='' />
 								</FloatingLabel>
 								<FloatingLabel label='Pick-up Time'>
-									<Form.Control
-										type='time'
-										name='pickupTime'
-										value={values.pickupTime}
-										onChange={this.handleChange('pickupTime')}
-										placeholder=''
-									/>
+									<Form.Control type='time' name='pickupTime' value={values.pickupTime} onChange={this.handleChange('pickupTime')} placeholder='' />
 								</FloatingLabel>
 							</Card.Body>
 						</Card>
-						<Card className='loadCard'>
+						<Card className='load-card'>
 							<Card.Header>Delivery Location</Card.Header>
 							<Card.Body>
 								<FloatingLabel label='Company Name'>
@@ -354,7 +333,7 @@ export class EditLoad extends Component {
 								</FloatingLabel>
 							</Card.Body>
 						</Card>
-						<Card className='loadCard'>
+						<Card className='load-card'>
 							<Card.Header>Delivery Details</Card.Header>
 							<Card.Body>
 								<div>

@@ -6,7 +6,7 @@ import { LoadsURL } from '../../api/config'
 import { ViewLoad } from '../loadboard/viewLoad'
 import { Loader } from '../loader'
 
-import '../../style/tableStyling.css'
+import '../../style/tables.css'
 
 export class CurrentLoads extends Component {
 	constructor(props) {
@@ -59,8 +59,8 @@ export class CurrentLoads extends Component {
 			return <Loader message={'Loading load list...'} />
 		}
 		return (
-			<div className='newTableWrapper'>
-				<table className='newTable'>
+			<div className='kfb-default-table-wrapper'>
+				<table className='kfb-default-table'>
 					<thead>
 						<tr>
 							<th>Load Number</th>
@@ -103,13 +103,7 @@ export class CurrentLoads extends Component {
 					</tbody>
 				</table>
 				{this.state.selectedLoad.id ? (
-					<ViewLoad
-						selectedLoad={this.state.selectedLoad}
-						close={this.close}
-						show={this.show}
-						account={account}
-						company={company}
-					/>
+					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} account={account} company={company} />
 				) : (
 					<></>
 				)}

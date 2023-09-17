@@ -4,7 +4,9 @@ import { Modal, Card } from 'react-bootstrap'
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
 
-import '../../style/viewLoad.css'
+import { ListOfTrailerTypes } from '../../data/trailers'
+
+import '../../style/loads.css'
 
 export class ViewLoad extends Component {
 	constructor(props) {
@@ -97,10 +99,7 @@ export class ViewLoad extends Component {
 			claimerStatus: claimerStatus,
 		}
 		try {
-			const res = await Api.put(
-				`${LoadsURL}/updateStatus/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`,
-				update
-			)
+			const res = await Api.put(`${LoadsURL}/updateStatus/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`, update)
 			if (res.status === 200) {
 				window.location.reload()
 			}
@@ -122,9 +121,7 @@ export class ViewLoad extends Component {
 
 	handleUnclaim = async () => {
 		try {
-			const res = await Api.put(
-				`${LoadsURL}/unclaim/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`
-			)
+			const res = await Api.put(`${LoadsURL}/unclaim/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`)
 			if (res.status === 200) {
 				window.location.reload()
 			} else {
@@ -134,18 +131,51 @@ export class ViewLoad extends Component {
 			console.log(error)
 		}
 	}
+	getTrailerNames = (type) => {
+		const trailer = ListOfTrailerTypes.find((t) => t.type === type)
+		return trailer ? trailer.name : ' - '
+	}
 
 	render() {
 		const { ...values } = this.state
 		const { show, close, account, selectedLoad } = this.props
 		return (
-			<Modal show={show} onHide={close} fullscreen className='loadModal'>
+			<Modal show={show} onHide={close} fullscreen className='load-modal-edit'>
 				<Modal.Header closeButton>
 					<Modal.Title>Viewing Load : {selectedLoad.loadNumber}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<div className='loadModalWrapper'>
-						<Card className='loadCard'>
+					<div className='load-modal-wrapper'>
+						<Card className='load-card'>
+							<Card.Header>Pickup Location</Card.Header>
+							<Card.Body>
+								<div>
+									<label htmlFor='name'>Company Name: </label>
+									<span id='name'>{values.name}</span>
+								</div>
+								<div>
+									<label htmlFor='street'>Street: </label>
+									<span id='street'>{values.street}</span>
+								</div>
+								<div>
+									<label htmlFor='street'>Building Number: </label>
+									<span id='suite'>{values.suite}</span>
+								</div>
+								<div>
+									<label htmlFor='city'>City: </label>
+									<span id='city'>{values.city}</span>
+								</div>
+								<div>
+									<label htmlFor='state'>State: </label>
+									<span id='state'>{values.state}</span>
+								</div>
+								<div>
+									<label htmlFor='postal'>Postal: </label>
+									<span id='postal'>{values.postal}</span>
+								</div>
+							</Card.Body>
+						</Card>
+						<Card className='load-card'>
 							<Card.Header>Load Information</Card.Header>
 							<Card.Body>
 								<div>
@@ -162,7 +192,7 @@ export class ViewLoad extends Component {
 								</div>
 								<div>
 									<label htmlFor='trailerType'>Trailer Type: </label>
-									<span id='trailerType'>{values.trailerType}</span>
+									<span id='trailerType'>{this.getTrailerNames(values.trailerType)}</span>
 								</div>
 								<div>
 									<label htmlFor='rate'>Rate: </label>
@@ -186,7 +216,7 @@ export class ViewLoad extends Component {
 								</div>
 							</Card.Body>
 						</Card>
-						<Card className='loadCard'>
+						<Card className='load-card'>
 							<Card.Header>Pickup Details</Card.Header>
 							<Card.Body>
 								<div>
@@ -211,7 +241,7 @@ export class ViewLoad extends Component {
 								</div>
 							</Card.Body>
 						</Card>
-						<Card className='loadCard'>
+						<Card className='load-card'>
 							<Card.Header>Delivery Location</Card.Header>
 							<Card.Body>
 								<div>
@@ -240,7 +270,7 @@ export class ViewLoad extends Component {
 								</div>
 							</Card.Body>
 						</Card>
-						<Card className='loadCard'>
+						<Card className='load-card'>
 							<Card.Header>Delivery Details</Card.Header>
 							<Card.Body>
 								<div>
@@ -262,7 +292,7 @@ export class ViewLoad extends Component {
 							</Card.Body>
 						</Card>
 						{account?.company === selectedLoad.companyId ? (
-							<Card className='loadCard overflow'>
+							<Card className='load-card-log overflow'>
 								<Card.Header>Load Log</Card.Header>
 								<Card.Body>
 									{values.loadLog.map((log) => {
@@ -285,9 +315,7 @@ export class ViewLoad extends Component {
 				{account?.company == selectedLoad.claimedBy ? (
 					<div className='loadButtonWrapper'>
 						<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
-						<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>
-							Departed From Shipper
-						</button>
+						<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>Departed From Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('unloading', 'At Consignee')}>Arrived At Consignee</button>
 						<button onClick={() => this.handleUpdateStatus('completed', 'Unloaded')}>Departed From Consignee</button>
 						<button className='red' onClick={this.handleUnclaim}>
@@ -297,9 +325,7 @@ export class ViewLoad extends Component {
 				) : (
 					<></>
 				)}
-				{account?.companyType != null &&
-				account?.company != selectedLoad.claimedBy &&
-				account?.companyType !== 'shipper' ? (
+				{account?.companyType != null && account?.company != selectedLoad.claimedBy && account?.companyType !== 'shipper' ? (
 					<Modal.Footer>
 						<button onClick={() => this.handleClaim(selectedLoad.loadNumber)}>Claim Load</button>
 					</Modal.Footer>

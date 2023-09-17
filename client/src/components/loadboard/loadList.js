@@ -52,22 +52,18 @@ export class LoadList extends Component {
 		const { loads, searchQuery } = this.state
 		const searchStr = searchQuery.toLowerCase()
 
-		return loads.filter(
-			({ parsedPickupDetails, parsedPickupLocation, parsedDeliveryDetails, parsedLoadInformation }) => {
-				return (
-					(parsedPickupDetails.loadNumber && parsedPickupDetails.loadNumber.includes(searchStr)) ||
-					(parsedPickupLocation.city && parsedPickupLocation.city.toLowerCase().includes(searchStr)) ||
-					(parsedPickupLocation.state && parsedPickupLocation.state.toLowerCase().includes(searchStr)) ||
-					(parsedDeliveryDetails.address.city &&
-						parsedDeliveryDetails.address.city.toLowerCase().includes(searchStr)) ||
-					(parsedDeliveryDetails.address.state &&
-						parsedDeliveryDetails.address.state.toLowerCase().includes(searchStr)) ||
-					(parsedLoadInformation.trailerType && parsedLoadInformation.trailerType.toLowerCase().includes(searchStr)) ||
-					(parsedLoadInformation.hazmat && parsedLoadInformation.hazmat.toLowerCase().includes(searchStr)) ||
-					(parsedLoadInformation.miles && parsedLoadInformation.miles.toLowerCase().includes(searchStr))
-				)
-			}
-		)
+		return loads.filter(({ parsedPickupDetails, parsedPickupLocation, parsedDeliveryDetails, parsedLoadInformation }) => {
+			return (
+				(parsedPickupDetails.loadNumber && parsedPickupDetails.loadNumber.includes(searchStr)) ||
+				(parsedPickupLocation.city && parsedPickupLocation.city.toLowerCase().includes(searchStr)) ||
+				(parsedPickupLocation.state && parsedPickupLocation.state.toLowerCase().includes(searchStr)) ||
+				(parsedDeliveryDetails.address.city && parsedDeliveryDetails.address.city.toLowerCase().includes(searchStr)) ||
+				(parsedDeliveryDetails.address.state && parsedDeliveryDetails.address.state.toLowerCase().includes(searchStr)) ||
+				(parsedLoadInformation.trailerType && parsedLoadInformation.trailerType.toLowerCase().includes(searchStr)) ||
+				(parsedLoadInformation.hazmat && parsedLoadInformation.hazmat.toLowerCase().includes(searchStr)) ||
+				(parsedLoadInformation.miles && parsedLoadInformation.miles.toLowerCase().includes(searchStr))
+			)
+		})
 	}
 
 	render() {
@@ -77,19 +73,19 @@ export class LoadList extends Component {
 		if (loading) return <Loader message={'Loading Load list...'} />
 
 		return (
-			<div className='loadListWrapper'>
-				<div className='inputWrapper'>
+			<div className='loadboard-wrapper'>
+				<div className='loads-search-input'>
 					<input type='text' placeholder='Search...' value={searchQuery} onChange={this.handleSearchChange} />
 				</div>
-				<div className='tableWrapper' style={{ margin: '2%' }}>
-					<table className='newTable'>
+				<div className='kfb-default-table-wrapper' style={{ margin: '2%' }}>
+					<table className='kfb-default-table hoverable'>
 						<thead>
 							<tr>
 								<th>Load #</th>
 								<th>Shipper </th>
 								<th>Consignee </th>
-								<th className='hazmat'>Hazmat</th>
-								<th className='trailerType'>Trailer Type</th>
+								<th>Hazmat</th>
+								<th>Trailer Type</th>
 								<th>Miles & Total</th>
 							</tr>
 						</thead>
@@ -103,11 +99,10 @@ export class LoadList extends Component {
 									<td>
 										{load.parsedDeliveryDetails.address.city}, {load.parsedDeliveryDetails.address.state}
 									</td>
-									<td className='hazmat'>{load.parsedLoadInformation.hazmat === 'false' ? 'No' : 'Yes'}</td>
-									<td className='trailerType'>{this.getTrailerTypeName(load.parsedLoadInformation.trailerType)}</td>
+									<td>{load.parsedLoadInformation.hazmat === 'false' ? 'No' : 'Yes'}</td>
+									<td>{this.getTrailerTypeName(load.parsedLoadInformation.trailerType)}</td>
 									<td>
-										{load.parsedLoadInformation.miles} $
-										{load.parsedLoadInformation.miles * load.parsedLoadInformation.rate}
+										{load.parsedLoadInformation.miles} ${load.parsedLoadInformation.miles * load.parsedLoadInformation.rate}
 									</td>
 								</tr>
 							))}

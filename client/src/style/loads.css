@@ -1,0 +1,136 @@
+/* NEW LOAD FORM */
+.load-form-wrapper {
+  text-align: center;
+}
+.load-form-wrapper button {
+  margin: 2% 1%;
+  width: 20%;
+  height: 50px;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #b9b8b8;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  transition-duration: 0.5s;
+}
+#next:hover {
+  transition-duration: 0.5s;
+  color: green;
+  border: 2px solid rgb(0, 66, 0);
+}
+#prev:hover{
+  transition-duration: 0.5s;
+  color: rgb(0, 0, 220);
+  border: 2px solid rgb(0, 0, 75);
+}
+#submit:hover {
+  transition-duration: 0.5s;
+  color: rgb(0, 255, 0);
+  border: 2px solid rgb(0, 255, 0);
+}
+#submit:disabled {
+  border: 3px solid #282828!important;
+  color: #282828!important;
+  cursor: not-allowed;
+}
+.step-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 42%;
+  margin: auto;
+}
+.step-input-wrapper h3 {
+  text-align: left;
+}
+.step-input-wrapper input, .step-input-wrapper select, .step-input-wrapper textarea {
+  margin-bottom: 2%;
+  border: 2px solid #333333;
+}
+.step-input-wrapper input, .step-input-wrapper select, .step-input-wrapper textarea, .step-input-wrapper label, .load-form-wrapper label::after, .step-input-wrapper input:focus, .step-input-wrapper textarea:focus {
+  background-color: transparent!important;
+  color: #b9b8b8!important;
+}
+.step-input-wrapper .text-danger {
+  font-size: 10px;
+  text-align: left;
+  margin-top: -2%;
+  margin-bottom: 2%;
+  margin-left: 2%;
+}
+
+/* EDIT LOAD */
+.load-modal-edit .modal-content {
+  background-color: #121212;
+}
+.load-modal-edit .modal-header, .load-modal-edit .modal-footer {
+  border: 0;
+}
+.load-modal-edit .modal-header {
+  color: white;
+  margin: 0 5%;
+}
+.load-modal-edit .modal-footer button {
+  margin: 2% 1%;
+  width: 20%;
+  height: 50px;
+  border: 2px solid #333333;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #b9b8b8;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+  transition-duration: 0.5s;
+}
+.load-modal-edit .modal-footer button:hover {
+  transition-duration: 0.5s;
+  color: rgb(0, 255, 0);
+  border: 2px solid rgb(0, 255, 0);
+}
+.load-modal-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.load-modal-wrapper .load-card {
+  height: max-content;
+  width: 18vw;
+  margin-right: 1.2%;
+  background-color: transparent;
+  border: 0;
+}
+.load-card .card-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+.load-modal-wrapper .load-card-log {
+  height: max-content;
+  width: 97vw;
+  background-color: transparent;
+  border: 0;
+}
+.load-card .card-header, .load-card-log .card-header {
+  border: 0;
+  padding-bottom: 2px;
+  color: white;
+  border-bottom: 2px solid #333333;
+  border-radius: 5px;
+}
+.load-card input, .load-card select {
+  background-color: transparent;
+  border: 2px solid #333333;
+  color: #b9b8b8;
+  margin-bottom: 2px;
+}
+.load-card input:focus, .load-card label, .load-card label::after, .load-card-log label {
+  background-color: transparent!important;  
+  color: white!important;
+  margin-bottom: 1%;
+}
+.load-card select {
+  background-color: transparent!important;
+  color: white!important;
+}

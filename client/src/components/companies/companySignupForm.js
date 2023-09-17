@@ -7,7 +7,7 @@ import { Loader } from '../../components'
 import Api from '../../api/axios'
 import { CompanyURL } from '../../api/config'
 
-import '../../style/companysignup.css'
+import '../../style/signup.css'
 
 export class CompanySignupForm extends Component {
 	constructor(props) {
@@ -91,10 +91,7 @@ export class CompanySignupForm extends Component {
 				additional8: values.additional8,
 			},
 		}
-		const response = await Api.post(
-			`${CompanyURL}/create/${values.authCode}/${sessionStorage.getItem('token')}`,
-			newCompany
-		)
+		const response = await Api.post(`${CompanyURL}/create/${values.authCode}/${sessionStorage.getItem('token')}`, newCompany)
 		if (response.status === 200) {
 			setTimeout(() => {
 				this.setState({
@@ -118,13 +115,7 @@ export class CompanySignupForm extends Component {
 			<div className='companySignup'>
 				<Form>
 					<FloatingLabel label='Company Name'>
-						<Form.Control
-							type='text'
-							name='name'
-							value={values.name}
-							onChange={this.handleChange('name')}
-							placeholder=''
-						/>
+						<Form.Control type='text' name='name' value={values.name} onChange={this.handleChange('name')} placeholder='' />
 					</FloatingLabel>
 					<AddressAutofill accessToken='pk.eyJ1IjoiaGV5aXRzbWVqIiwiYSI6ImNsZWNrZTBnMzAwNnczb3FvaTJyNHZ0cmkifQ.ggiC-ULgV-LGObqZzLuW2g'>
 						<FloatingLabel label='Street'>
@@ -180,42 +171,18 @@ export class CompanySignupForm extends Component {
 						/>
 					</FloatingLabel>
 					<FloatingLabel label='Company Contact Name'>
-						<Form.Control
-							type='text'
-							name='contactName'
-							value={values.contactName}
-							onChange={this.handleChange('contactName')}
-							placeholder=''
-						/>
+						<Form.Control type='text' name='contactName' value={values.contactName} onChange={this.handleChange('contactName')} placeholder='' />
 					</FloatingLabel>
 					<FloatingLabel label='Company Contact Email or Number'>
-						<Form.Control
-							type='text'
-							name='contact'
-							value={values.contact}
-							onChange={this.handleChange('contact')}
-							placeholder=''
-						/>
+						<Form.Control type='text' name='contact' value={values.contact} onChange={this.handleChange('contact')} placeholder='' />
 					</FloatingLabel>
 					<FloatingLabel label='Paste Auth Code'>
-						<Form.Control
-							type='text'
-							name='authCode'
-							value={values.authCode}
-							onChange={this.handleChange('authCode')}
-							placeholder=''
-						/>
+						<Form.Control type='text' name='authCode' value={values.authCode} onChange={this.handleChange('authCode')} placeholder='' />
 					</FloatingLabel>
 					{values.applicationType !== 'shipper' ? (
 						<>
 							<FloatingLabel label='DOT Number | MC Number'>
-								<Form.Control
-									type='text'
-									name='dotNumber'
-									value={values.dotNumber}
-									onChange={this.handleChange('dotNumber')}
-									placeholder=''
-								/>
+								<Form.Control type='text' name='dotNumber' value={values.dotNumber} onChange={this.handleChange('dotNumber')} placeholder='' />
 							</FloatingLabel>
 						</>
 					) : (

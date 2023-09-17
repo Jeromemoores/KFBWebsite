@@ -91,8 +91,8 @@ export class LoadsList extends Component {
 			return <Loader message={'Loading list of loads.'} />
 		}
 		return (
-			<div className='newTableWrapper'>
-				<table className='newTable'>
+			<div className='kfb-default-table-wrapper'>
+				<table className='kfb-default-table'>
 					<thead>
 						<tr>
 							<th>Load Number</th>
@@ -125,7 +125,7 @@ export class LoadsList extends Component {
 									<td>{pLI.miles}</td>
 									<td>{pLI.rate}</td>
 									<td>${pLI.miles * pLI.rate}</td>
-									<td className='tdButton'>
+									<td className='td-buttons'>
 										<button>
 											<PencilFill onClick={() => this.setEditedLoad(load)} />
 										</button>
@@ -141,16 +141,8 @@ export class LoadsList extends Component {
 						})}
 					</tbody>
 				</table>
-				{selectedLoad?.id ? (
-					<ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} account={account} />
-				) : (
-					<></>
-				)}
-				{editLoad?.id ? (
-					<EditLoad editLoad={this.state.editLoad} setClose={this.setClose} setShow={this.setShow} account={account} />
-				) : (
-					<></>
-				)}
+				{selectedLoad?.id ? <ViewLoad selectedLoad={this.state.selectedLoad} close={this.close} show={this.show} account={account} /> : <></>}
+				{editLoad?.id ? <EditLoad editLoad={this.state.editLoad} setClose={this.setClose} setShow={this.setShow} account={account} /> : <></>}
 			</div>
 		)
 	}
