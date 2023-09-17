@@ -20,11 +20,10 @@
 }
 .kfb-default-table-wrapper {
   border-radius: 5px;
-  border: 2px solid #333333;
+  border: 3px solid #333333;
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
-  margin-top: 1%!important;
 }
 .kfb-default-table {
   width: 100%;

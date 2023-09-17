@@ -12,6 +12,7 @@ router.post('/signup', async (req, res) => {
 		const existingEmail = await Accounts.findOne({ where: { email } })
 		let companyId = null
 		let companyEmployees = []
+		let companyType = null
 		if (companyAuth) {
 			const company = await Companies.findOne({ where: { authCode: companyAuth } })
 			if (!company) {

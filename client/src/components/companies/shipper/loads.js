@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Badge } from 'react-bootstrap'
+import { Badge, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { PencilFill, TrashFill, EyeFill } from 'react-bootstrap-icons'
 
 import { ViewLoad } from '../../loadboard/viewLoad'
@@ -84,11 +84,21 @@ export class LoadsList extends Component {
 			console.log(response)
 		}
 	}
+
 	render() {
 		const { loadList, loading, selectedLoad, editLoad } = this.state
 		const { account } = this.props
 		if (loading) {
 			return <Loader message={'Loading list of loads.'} />
+		}
+		const statusDetails = {
+			Available: { color: 'info', text: 'Available', tooltip: false },
+			claimed: { color: 'success', text: 'Load Claimed', tooltip: true },
+			deadHead: { color: 'info', text: 'In Transit', tooltip: true, textColor: 'dark' },
+			loading: { color: 'primary', text: 'Loading', tooltip: true },
+			departed: { color: 'info', text: 'In Transit', tooltip: true, textColor: 'dark' },
+			unloading: { color: 'warning', text: 'Unloading', tooltip: true, textColor: 'dark' },
+			completed: { color: 'success', text: 'Completed', tooltip: true },
 		}
 		return (
 			<div className='kfb-default-table-wrapper'>
@@ -116,15 +126,20 @@ export class LoadsList extends Component {
 									<td>{load.trackingNumber}</td>
 									<td>{pDD.name}</td>
 									<td>
-										{load.loadStatus === 'Available' && (
-											<Badge bg='info' text='dark'>
-												Available
-											</Badge>
-										)}
-										{load.loadStatus === 'loading' && <Badge bg='primary'>Loading</Badge>}
-										{load.loadStatus === 'departed' && <Badge bg='info'>In Transit</Badge>}
-										{load.loadStatus === 'unloading' && <Badge bg='warning'>Unloading</Badge>}
-										{load.loadStatus === 'completed' && <Badge bg='success'>Completed</Badge>}
+										{statusDetails[load.loadStatus] &&
+											(statusDetails[load.loadStatus].tooltip ? (
+												<OverlayTrigger
+													overlay={<Tooltip id={`tooltip-${load.loadStatus}`}>{load.claimerStatus || 'Unknown Driver Status'}</Tooltip>}
+												>
+													<Badge bg={statusDetails[load.loadStatus].color} text={statusDetails[load.loadStatus].textColor || ''}>
+														{statusDetails[load.loadStatus].text}
+													</Badge>
+												</OverlayTrigger>
+											) : (
+												<Badge bg={statusDetails[load.loadStatus].color} text={statusDetails[load.loadStatus].textColor || ''}>
+													{statusDetails[load.loadStatus].text}
+												</Badge>
+											))}
 									</td>
 									<td>{pLI.miles}</td>
 									<td>{pLI.rate}</td>

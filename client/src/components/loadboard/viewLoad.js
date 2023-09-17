@@ -368,6 +368,7 @@ export class ViewLoad extends Component {
 				</Modal.Body>
 				{account?.company == selectedLoad.claimedBy && selectedLoad.loadStatus !== 'completed' ? (
 					<div className='load-status-buttons-wrapper'>
+						<button onClick={() => this.handleUpdateStatus('deadHead', 'In transit to Shipper')}>In Transit To Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('loading', 'At Shipper')}>Arrived At Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('departed', 'In transit to Consignee')}>Departed From Shipper</button>
 						<button onClick={() => this.handleUpdateStatus('unloading', 'At Consignee')}>Arrived At Consignee</button>

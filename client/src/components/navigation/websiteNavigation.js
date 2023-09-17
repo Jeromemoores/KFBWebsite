@@ -68,20 +68,14 @@ export class WebsiteNavigation extends Component {
 						<Route path='/sign-in' element={<SigninPage account={account} />} />
 						<Route path='/sign-out' element={<Signout account={account} />} />
 
-						<Route
-							path='/shipper/sign-up'
-							element={<CompanySignupForm account={account} applicationType='shipper' />}
-						/>
+						<Route path='/shipper/sign-up' element={<CompanySignupForm account={account} applicationType='shipper' />} />
 						<Route path='/shipper/home' element={<ShipperHome account={account} />} />
 
-						<Route
-							path='/carrier/sign-up'
-							element={<CompanySignupForm account={account} applicationType='carrier' />}
-						/>
+						<Route path='/carrier/sign-up' element={<CompanySignupForm account={account} applicationType='carrier' />} />
 						<Route path='/carrier/home' element={<CarrierHome account={account} />} />
 
 						<Route path='/ownerop/sign-up' element={<CompanySignupForm applicationType='ownerop' />} />
-						<Route path='/ownerop/home' element={<OwneropHome />} />
+						<Route path='/ownerop/home' element={<OwneropHome account={account} />} />
 
 						<Route path='/loadboard' element={<LoadboardPage account={account} />} />
 
