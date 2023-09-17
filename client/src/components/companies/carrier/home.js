@@ -1,9 +1,9 @@
 import { Component } from 'react'
 
 import { Employees } from '../employees'
-import { AuthCode } from '../authCode'
 import { CurrentLoads } from '../currentLoads'
 import { CompletedLoads } from '../completedLoads'
+import { InviteCode } from '../inviteCode'
 
 export class CarrierHomeComponent extends Component {
 	constructor(props) {
@@ -40,7 +40,7 @@ export class CarrierHomeComponent extends Component {
 				</div>
 				<div className='homeContent'>
 					{values.employees ? <Employees company={company} /> : <></>}
-					{values.inviteCode ? <AuthCode company={company} /> : <></>}
+					{values.inviteCode ? <InviteCode company={company} /> : <></>}
 					{values.currentLoads ? <CurrentLoads company={company} account={account} /> : <></>}
 					{values.completedLoads ? <CompletedLoads company={company} account={account} /> : <></>}
 				</div>

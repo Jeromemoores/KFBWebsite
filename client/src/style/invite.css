@@ -1,5 +1,4 @@
-.authCodeWrapper {
-  margin-top: 2%;
+.invite-code-page-wrapper {
   border: 3px solid #333333;
   border-radius: 5px;
   width: fit-content;
@@ -8,7 +7,7 @@
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
 }
-.authCode {
+.invite-code-wrapper {
   display: flex;
   flex-direction: row;
 }
@@ -16,10 +15,10 @@
   border: 2px solid #b9b8b8;
   border-radius: 3px;
 }
-.authCode p {
+.invite-code-wrapper p {
   margin: auto;
 }
-.authCode button {
+.invite-code-wrapper button {
   background-color: transparent;
   color: #b9b8b8;
   border: 2px solid #333333;
@@ -28,7 +27,7 @@
   padding: 5px 8px;
   margin-left: 10px;
 }
-.authCode button:hover {
+.invite-code-wrapper button:hover {
   color: white;
   border: 2px solid white;
   transition-duration: 0.3s;

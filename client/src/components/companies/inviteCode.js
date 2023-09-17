@@ -1,8 +1,8 @@
 import { Component } from 'react'
 
-import '../../style/auth.css'
+import '../../style/invite.css'
 
-export class AuthCode extends Component {
+export class InviteCode extends Component {
 	copyToClip = async () => {
 		const { company } = this.props
 		try {
@@ -14,10 +14,10 @@ export class AuthCode extends Component {
 	render() {
 		const { company } = this.props
 		return (
-			<div className='authCodeWrapper'>
+			<div className='invite-code-page-wrapper'>
 				<h5>Invitation Code</h5>
-				<hr className='styledHr' />
-				<div className='authCode'>
+				<hr className='styled-hr' />
+				<div className='invite-code-wrapper'>
 					<p>{company.authCode}</p>
 					<button onClick={this.copyToClip}>Copy Code</button>
 				</div>

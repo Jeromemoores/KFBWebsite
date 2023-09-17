@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-import { AuthCode } from '../authCode'
+import { InviteCode } from '../inviteCode'
 import { Employees } from '../employees'
 import { NewLoad } from './newLoad'
 import { LoadsList } from './loads'
@@ -12,7 +12,7 @@ export class ShipperHomeComponent extends Component {
 			newLoad: false,
 			viewEmployees: false,
 			showLoads: false,
-			showAuthCode: false,
+			showInviteCode: false,
 		}
 	}
 	updateState = (newState) => {
@@ -20,7 +20,7 @@ export class ShipperHomeComponent extends Component {
 			newLoad: false,
 			viewEmployees: false,
 			showLoads: false,
-			showAuthCode: false,
+			showInviteCode: false,
 			...newState,
 		})
 	}
@@ -36,11 +36,10 @@ export class ShipperHomeComponent extends Component {
 					<button onClick={() => this.toggleState('viewEmployees')}>View Employees</button>
 					<button onClick={() => this.toggleState('newLoad')}>Post a new load</button>
 					<button onClick={() => this.toggleState('showLoads')}>View Loads</button>
-					<button onClick={() => this.toggleState('showAuthCode')}>Show Invitation Code</button>
+					<button onClick={() => this.toggleState('showInviteCode')}>Show Invitation Code</button>
 				</div>
 				<div className='homeContent'>
-					{values.viewEmployees ? <Employees company={company} /> : <></>}{' '}
-					{values.showAuthCode ? <AuthCode company={company} /> : <></>}
+					{values.viewEmployees ? <Employees company={company} /> : <></>} {values.showAuthCode ? <InviteCode company={company} /> : <></>}
 					{values.newLoad ? <NewLoad /> : <></>}
 					{values.showLoads ? <LoadsList company={company} account={account} /> : <></>}
 				</div>
