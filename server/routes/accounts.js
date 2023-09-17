@@ -18,6 +18,7 @@ router.post('/signup', async (req, res) => {
 				return res.status(409).json({ error: `Invalid authentication code.` })
 			}
 			companyId = company.id
+			companyType = company.companyType
 			companyEmployees = JSON.parse(company.employees)
 		}
 		if (existingEmail) {
@@ -31,6 +32,7 @@ router.post('/signup', async (req, res) => {
 			password: hashedPassword,
 			ipAddress: '0.0.0.0:0000',
 			companyId: companyId,
+			companyType: companyType,
 		})
 		if (companyId) {
 			const newEmployee = {
