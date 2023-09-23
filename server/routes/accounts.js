@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const { Accounts, Companies } = require('../models')
+const { checkAccountandToken } = require('../middleware/account')
 const { SECRET } = require('../config')
 
 router.post('/signup', async (req, res) => {
@@ -72,12 +73,10 @@ router.put('/signin', async (req, res) => {
 	}
 })
 
-router.get('/byToken/:token', async (req, res) => {
-	const { token } = req.params
+router.get('/byToken/:token', checkAccountandToken, async (req, res) => {
+	const account = req.account
 	try {
-		const decodedToken = jwt.verify(token, SECRET)
-		const account = await Accounts.findOne({ where: { token } })
-		if (!decodedToken || !account) {
+		if (!account) {
 			return res.status(401).json({ error: `Invalid or Expired token. Please sign in.` })
 		} else {
 			const response = {
@@ -95,12 +94,10 @@ router.get('/byToken/:token', async (req, res) => {
 	}
 })
 
-router.put('/signout/:token', async (req, res) => {
-	const { token } = req.params
+router.put('/signout/:token', checkAccountandToken, async (req, res) => {
+	const account = req.account
 	try {
-		const decodedToken = jwt.verify(token, SECRET)
-		const account = Accounts.findOne({ where: { token } })
-		if (!decodedToken || !account) {
+		if (!account) {
 			return res.status(401).json({ error: `Invalid or Expired token.` })
 		}
 		await Accounts.update({ token: null }, { where: { token } })
