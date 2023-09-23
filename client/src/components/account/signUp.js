@@ -3,7 +3,6 @@ import { Form, FloatingLabel } from 'react-bootstrap'
 import { Eye, EyeFill } from 'react-bootstrap-icons'
 
 import '../../style/signup.css'
-import { Formik } from 'formik'
 
 export class SignupForm extends Component {
 	constructor(props) {

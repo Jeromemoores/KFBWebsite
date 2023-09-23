@@ -1,5 +1,8 @@
 import { Component } from 'react'
 import { Navigate } from 'react-router-dom'
+import { Formik, Form } from 'formik'
+
+import { SigninSchema } from '../../schemas/signupSchema'
 
 import { SigninForm, Loader } from '../../components'
 import Api from '../../api/axios'
@@ -14,16 +17,15 @@ export class SigninPage extends Component {
 			passwordConfirm: '',
 			loading: false,
 		}
+		this.handleFormikSubmit = this.handleFormikSubmit.bind(this)
 	}
 	handleChange = (input) => (e) => {
 		this.setState({ [input]: e.currentTarget.value })
 	}
-	handleSubmit = async (e) => {
-		e.preventDefault()
+	handleFormikSubmit = async (values) => {
 		this.setState({
 			loading: true,
 		})
-		const { ...values } = this.state
 		const account = {
 			email: values.email,
 			password: values.password,
@@ -56,7 +58,13 @@ export class SigninPage extends Component {
 				{account ? (
 					<Navigate to='/' replace={true} />
 				) : (
-					<SigninForm values={values} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+					<Formik initialValues={this.state} validationSchema={SigninSchema} onSubmit={this.handleFormikSubmit}>
+						{(props) => (
+							<Form>
+								<SigninForm {...props} />
+							</Form>
+						)}
+					</Formik>
 				)}
 			</>
 		)
