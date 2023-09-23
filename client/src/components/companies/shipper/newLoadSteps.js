@@ -89,13 +89,35 @@ export class StepTwo extends Component {
 				<FloatingLabel label='Comments'>
 					<Form.Control type='text' as='textarea' name='comments' value={values.comments} onChange={handleChange} placeholder='' />
 				</FloatingLabel>
-				<FloatingLabel label='Pick-up Date'>
-					<Form.Control type='date' name='pickupDate' value={values.pickupDate} onChange={handleChange} placeholder='' onBlur={handleBlur} />
-					{errors.pickupDate && touched.pickupDate && <div className='text-danger'>{errors.pickupDate}</div>}
+				<FloatingLabel label='Pick-up Date Start'>
+					<Form.Control
+						type='date'
+						name='pickupDateStart'
+						value={values.pickupDateStart}
+						onChange={handleChange}
+						placeholder=''
+						onBlur={handleBlur}
+					/>
+					{errors.pickupDateStart && touched.pickupDateStart && <div className='text-danger'>{errors.pickupDateStart}</div>}
 				</FloatingLabel>
-				<FloatingLabel label='Pick-up Time'>
-					<Form.Control type='time' name='pickupTime' value={values.pickupTime} onChange={handleChange} onBlur={handleBlur} placeholder='' />
-					{errors.pickupTime && touched.pickupTime && <div className='text-danger'>{errors.pickupTime}</div>}
+				<FloatingLabel label='Pick-up Date End'>
+					<Form.Control type='date' name='pickupDateEnd' value={values.pickupDateEnd} onChange={handleChange} placeholder='' onBlur={handleBlur} />
+					{errors.pickupDateEnd && touched.pickupDateEnd && <div className='text-danger'>{errors.pickupDateEnd}</div>}
+				</FloatingLabel>
+				<FloatingLabel label='Pick-up Time Start'>
+					<Form.Control
+						type='time'
+						name='pickupTimeStart'
+						value={values.pickupTimeStart}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						placeholder=''
+					/>
+					{errors.pickupTimeStart && touched.pickupTimeStart && <div className='text-danger'>{errors.pickupTimeStart}</div>}
+				</FloatingLabel>
+				<FloatingLabel label='Pick-up Time End'>
+					<Form.Control type='time' name='pickupTimeEnd' value={values.pickupTimeEnd} onChange={handleChange} onBlur={handleBlur} placeholder='' />
+					{errors.pickupTimeEnd && touched.pickupTimeEnd && <div className='text-danger'>{errors.pickupTimeEnd}</div>}
 				</FloatingLabel>
 			</div>
 		)
@@ -195,13 +217,49 @@ export class StepFour extends Component {
 				<FloatingLabel label='Comments'>
 					<Form.Control type='text' as='textarea' name='companyComments' value={values.companyComments} onChange={handleChange} placeholder='' />
 				</FloatingLabel>
-				<FloatingLabel label='Delivery Date'>
-					<Form.Control type='date' name='deliveryDate' value={values.deliveryDate} onChange={handleChange} onBlur={handleBlur} placeholder='' />
-					{errors.deliveryDate && touched.deliveryDate && <div className='text-danger'>{errors.deliveryDate}</div>}
+				<FloatingLabel label='Delivery Date Start'>
+					<Form.Control
+						type='date'
+						name='deliveryDateStart'
+						value={values.deliveryDateStart}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						placeholder=''
+					/>
+					{errors.deliveryDateStart && touched.deliveryDateStart && <div className='text-danger'>{errors.deliveryDateStart}</div>}
 				</FloatingLabel>
-				<FloatingLabel label='Delivery Time'>
-					<Form.Control type='time' name='deliveryTime' value={values.deliveryTime} onChange={handleChange} onBlur={handleBlur} placeholder='' />
-					{errors.deliveryTime && touched.deliveryTime && <div className='text-danger'>{errors.deliveryTime}</div>}
+				<FloatingLabel label='Delivery Date End'>
+					<Form.Control
+						type='date'
+						name='deliveryDateEnd'
+						value={values.deliveryDateEnd}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						placeholder=''
+					/>
+					{errors.deliveryDateEnd && touched.deliveryDateEnd && <div className='text-danger'>{errors.deliveryDateEnd}</div>}
+				</FloatingLabel>
+				<FloatingLabel label='Delivery Time Start'>
+					<Form.Control
+						type='time'
+						name='deliveryTimeStart'
+						value={values.deliveryTimeStart}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						placeholder=''
+					/>
+					{errors.deliveryTimeStart && touched.deliveryTimeStart && <div className='text-danger'>{errors.deliveryTimeStart}</div>}
+				</FloatingLabel>
+				<FloatingLabel label='Delivery Time End'>
+					<Form.Control
+						type='time'
+						name='deliveryTimeEnd'
+						value={values.deliveryTimeEnd}
+						onChange={handleChange}
+						onBlur={handleBlur}
+						placeholder=''
+					/>
+					{errors.deliveryTimeEnd && touched.deliveryTimeEnd && <div className='text-danger'>{errors.deliveryTimeEnd}</div>}
 				</FloatingLabel>
 			</div>
 		)

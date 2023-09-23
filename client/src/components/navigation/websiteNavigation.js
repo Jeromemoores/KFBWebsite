@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
-import { Loader, MainNavbar, Signout, CompanySignupForm, InviteCode, KFBLoadList, KFBAccountList, NoAccess } from '../../components'
+import { Loader, MainNavbar, Signout, CompanySignupForm, NoAccess } from '../../components'
 import { LandingPage, SignupPage, SigninPage, ShipperHome, CarrierHome, OwneropHome, LoadboardPage, KFBHome } from '../../pages'
 
 import Api from '../../api/axios'
@@ -28,18 +28,18 @@ export class WebsiteNavigation extends Component {
 		try {
 			await this.fetchAccount()
 		} catch (error) {
-			console.log(error) // Set front end error handling here
+			console.log(error)
 		}
 	}
 
 	fetchAccount = async () => {
 		try {
-			this.setState({ isFetchingAccount: true }) // Set isFetchingAccount to true before making the request
+			this.setState({ isFetchingAccount: true })
 			if (sessionStorage.getItem('token') !== null) {
 				const res = await Api.get(`${AccountURL}/byToken/${sessionStorage.getItem('token')}`)
 				this.setState({
 					account: res.data,
-					isFetchingAccount: false, // Set isFetchingAccount to false after a successful request
+					isFetchingAccount: false,
 				})
 			} else {
 				this.setState({
@@ -48,7 +48,7 @@ export class WebsiteNavigation extends Component {
 			}
 		} catch (error) {
 			console.log(error)
-			this.setState({ isFetchingAccount: false }) // Set isFetchingAccount to false in case of an error
+			this.setState({ isFetchingAccount: false })
 		}
 	}
 	render() {

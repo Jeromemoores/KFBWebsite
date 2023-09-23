@@ -17,8 +17,10 @@ export class NewLoad extends Component {
 			productType: '',
 			trailerType: {},
 			hazmat: '',
-			pickupTime: '', // Change to optional range
-			pickupDate: '', // Change to optional range
+			pickupTimeStart: '',
+			pickupTimeEnd: '',
+			pickupDateStart: '',
+			pickupDateEnd: '',
 			securements: '',
 			requiredPictures: '',
 			miles: '',
@@ -33,8 +35,10 @@ export class NewLoad extends Component {
 			companyCity: '',
 			companyPostal: '',
 			companyState: '',
-			deliveryTime: '', // change to optional range
-			deliveryDate: '', // change to optional range
+			deliveryTimeStart: '',
+			deliveryTimeEnd: '',
+			deliveryDateStart: '',
+			deliveryDateEnd: '',
 			companyDirections: '',
 			companyComments: '',
 			available: '',
@@ -66,8 +70,8 @@ export class NewLoad extends Component {
 				loadNumber: values.loadNumber,
 				directions: values.directions,
 				comments: values.comments,
-				time: values.pickupTime,
-				date: values.pickupDate,
+				time: `${values.pickupTimeStart} - ${values.pickupTimeEnd}`,
+				date: `${values.pickupDateStart} - ${values.pickupDateEnd}`,
 			},
 			deliveryDetails: {
 				name: values.companyName,
@@ -78,8 +82,8 @@ export class NewLoad extends Component {
 					state: values.companyState,
 					postal: values.companyPostal,
 				},
-				time: values.deliveryTime,
-				date: values.deliveryDate,
+				time: `${values.deliveryTimeStart} - ${values.deliveryTimeEnd}`,
+				date: `${values.deliveryDateStart} - ${values.deliveryDateEnd}`,
 				directions: values.companyDirections,
 				comments: values.companyComments,
 			},
