@@ -6,7 +6,7 @@ export class InviteCode extends Component {
 	copyToClip = async () => {
 		const { company } = this.props
 		try {
-			await navigator.clipboard.writeText(company.authCode)
+			await navigator.clipboard.writeText(company.inviteCode)
 			SuccessfullToast('Invite code copied')
 		} catch (error) {
 			ErrorToast(`Something went wrong: ${error}`)
@@ -19,7 +19,7 @@ export class InviteCode extends Component {
 				<h5>Invitation Code</h5>
 				<hr className='styled-hr' />
 				<div className='invite-code-wrapper'>
-					<p>{company.authCode}</p>
+					<p>{company.inviteCode}</p>
 					<button onClick={this.copyToClip}>Copy Code</button>
 				</div>
 			</div>

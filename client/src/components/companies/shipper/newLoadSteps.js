@@ -10,55 +10,71 @@ export class StepOne extends Component {
 		return (
 			<div className='step-input-wrapper'>
 				<h3>Load Information</h3>
-				<FloatingLabel label='Product Type'>
-					<Form.Control type='text' name='productType' value={values.productType} onChange={handleChange} onBlur={handleBlur} placeholder='' />
-					{errors.productType && touched.productType && <div className='text-danger'>{errors.productType}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Product Weight'>
-					<Form.Control type='text' name='productWeight' value={values.productWeight} onChange={handleChange} onBlur={handleBlur} placeholder='' />
-					{errors.productWeight && touched.productWeight && <div className='text-danger'>{errors.productWeight}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Hazmat'>
-					<Form.Select onChange={handleChange} onBlur={handleBlur} name='hazmat' value={values.hazmat}>
-						<option>-</option>
-						<option value='false'>No</option>
-						<option value='true'>Yes</option>
-					</Form.Select>
-					{errors.hazmat && touched.hazmat && <div className='text-danger'>{errors.hazmat}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Trailer Type'>
-					<Form.Select onChange={handleChange} name='trailerType' onBlur={handleBlur} value={values.trailerType}>
-						{ListOfTrailerTypes.map((trailer) => {
-							return (
-								<option value={trailer.type} key={trailer.id}>
-									{trailer.name}
-								</option>
-							)
-						})}
-					</Form.Select>
-					{errors.trailerType && touched.trailerType && <div className='text-danger'>{errors.trailerType}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Rate'>
-					<Form.Control type='number' name='rate' value={values.rate} onChange={handleChange} placeholder='' onBlur={handleBlur} />
-					{errors.rate && touched.rate && <div className='text-danger'>{errors.rate}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Miles'>
-					<Form.Control type='number' name='miles' value={values.miles} onChange={handleChange} placeholder='' onBlur={handleBlur} />
-					{errors.miles && touched.miles && <div className='text-danger'>{errors.miles}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Required Securements'>
-					<Form.Control type='text' name='securements' value={values.securements} onChange={handleChange} onBlur={handleBlur} placeholder='' />
-					{errors.securements && touched.securements && <div className='text-danger'>{errors.securements}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Securement Picutres Required'>
-					<Form.Select onChange={handleChange} onBlur={handleBlur} name='requiredPictures' value={values.requiredPictures}>
-						<option>-</option>
-						<option value='false'>No</option>
-						<option value='true'>Yes</option>
-					</Form.Select>
-					{errors.requiredPictures && touched.requiredPictures && <div className='text-danger'>{errors.requiredPictures}</div>}
-				</FloatingLabel>
-				<FloatingLabel label='Is Load Available Now'>
+				<div className='step-input-sections'>
+					<FloatingLabel label='Product Type' style={{ width: '48%' }}>
+						<Form.Control type='text' name='productType' value={values.productType} onChange={handleChange} onBlur={handleBlur} placeholder='' />
+						{errors.productType && touched.productType && <div className='text-danger'>{errors.productType}</div>}
+					</FloatingLabel>
+					<FloatingLabel label='Product Weight' style={{ width: '48%' }}>
+						<Form.Control type='text' name='productWeight' value={values.productWeight} onChange={handleChange} onBlur={handleBlur} placeholder='' />
+						{errors.productWeight && touched.productWeight && <div className='text-danger'>{errors.productWeight}</div>}
+					</FloatingLabel>
+				</div>
+				<div className='step-input-sections'>
+					<FloatingLabel label='Hazmat' style={{ width: '48%' }}>
+						<Form.Select onChange={handleChange} onBlur={handleBlur} name='hazmat' value={values.hazmat}>
+							<option>-</option>
+							<option value='false'>No</option>
+							<option value='true'>Yes</option>
+						</Form.Select>
+						{errors.hazmat && touched.hazmat && <div className='text-danger'>{errors.hazmat}</div>}
+					</FloatingLabel>
+
+					<FloatingLabel label='Trailer Type' style={{ width: '48%' }}>
+						<Form.Select
+							onChange={handleChange}
+							name='trailerType'
+							onBlur={handleBlur}
+							value={values.trailerType}
+							multiple
+							style={{ height: '260px' }}
+						>
+							{ListOfTrailerTypes.map((trailer) => {
+								return (
+									<option value={trailer.type} key={trailer.id}>
+										{trailer.name}
+									</option>
+								)
+							})}
+						</Form.Select>
+						{errors.trailerType && touched.trailerType && <div className='text-danger'>{errors.trailerType}</div>}
+					</FloatingLabel>
+				</div>
+				<div className='step-input-sections'>
+					<FloatingLabel label='Rate' style={{ width: '48%' }}>
+						<Form.Control type='number' name='rate' value={values.rate} onChange={handleChange} placeholder='' onBlur={handleBlur} />
+						{errors.rate && touched.rate && <div className='text-danger'>{errors.rate}</div>}
+					</FloatingLabel>
+					<FloatingLabel label='Miles' style={{ width: '48%' }}>
+						<Form.Control type='number' name='miles' value={values.miles} onChange={handleChange} placeholder='' onBlur={handleBlur} />
+						{errors.miles && touched.miles && <div className='text-danger'>{errors.miles}</div>}
+					</FloatingLabel>
+				</div>
+				<div className='step-input-sections'>
+					<FloatingLabel label='Required Securements' style={{ width: '48%' }}>
+						<Form.Control type='text' name='securements' value={values.securements} onChange={handleChange} onBlur={handleBlur} placeholder='' />
+						{errors.securements && touched.securements && <div className='text-danger'>{errors.securements}</div>}
+					</FloatingLabel>
+					<FloatingLabel label='Securement Picutres Required' style={{ width: '48%' }}>
+						<Form.Select onChange={handleChange} onBlur={handleBlur} name='requiredPictures' value={values.requiredPictures}>
+							<option>-</option>
+							<option value='false'>No</option>
+							<option value='true'>Yes</option>
+						</Form.Select>
+						{errors.requiredPictures && touched.requiredPictures && <div className='text-danger'>{errors.requiredPictures}</div>}
+					</FloatingLabel>
+				</div>
+				<FloatingLabel label='Is Load Available Now' style={{ width: '97%', margin: '0 auto' }}>
 					<Form.Select onChange={handleChange} onBlur={handleBlur} name='available' value={values.available}>
 						<option>-</option>
 						<option value='false'>No</option>

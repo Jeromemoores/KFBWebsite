@@ -44,4 +44,21 @@ router.get('/allLoads/:token', checkAccountandTokenandLevel, async (req, res) =>
 	}
 })
 
+router.delete('/delete/:id/:token', checkAccountandTokenandLevel, async (req, res) => {
+	const account = req.account
+	const { id } = req.params
+	if (!account) {
+		res.status(403).json({ error: 'You cannot complete this task.' })
+	}
+	try {
+		const load = await Loads.findOne({ where: { id } })
+		if (!load) {
+			res.status(404).json({ error: `No load found with that load id` })
+		}
+		await Loads.destroy({ where: { id } })
+		res.status(200).json({ message: 'Load deleted ' })
+	} catch (error) {
+		res.status(500).json({ error: 'Something went wrong deleting that load' })
+	}
+})
 module.exports = router

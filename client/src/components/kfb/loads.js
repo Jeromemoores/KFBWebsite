@@ -1,7 +1,8 @@
 import { Component } from 'react'
-import { TrashFill } from 'react-bootstrap-icons'
+import { TrashFill, EyeFill } from 'react-bootstrap-icons'
 import { Loader } from '../loader'
 
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
 import { KFBViewLoad } from './viewLoad'
 
 import { ListOfTrailerTypes } from '../../data/trailers'
@@ -17,22 +18,34 @@ export class KFBLoadList extends Component {
 			loading: false,
 		}
 	}
-	componentDidMount = async () => {
+	fetchLoads = async () => {
 		this.setState({ loading: true })
-		const res = await Api.get(`${DATAURL}/allLoads/${sessionStorage.getItem('token')}`)
-		this.setState({
-			loads: res.data.map((load) => {
-				return {
-					...load,
-					parsedPickupDetails: JSON.parse(load.pickupDetails),
-					parsedPickupLocation: JSON.parse(load.pickupLocation),
-					parsedDeliveryDetails: JSON.parse(load.deliveryDetails),
-					parsedLoadInformation: JSON.parse(load.loadInformation),
-					parsedPaidInformation: JSON.parse(load.paid),
-				}
-			}),
-			loading: false,
-		})
+		try {
+			const res = await Api.get(`${DATAURL}/allLoads/${sessionStorage.getItem('token')}`)
+			if (res.status === 200) {
+				this.setState({
+					loads: res.data.map((load) => {
+						return {
+							...load,
+							PPD: JSON.parse(load.pickupDetails),
+							PPL: JSON.parse(load.pickupLocation),
+							PDD: JSON.parse(load.deliveryDetails),
+							PLI: JSON.parse(load.loadInformation),
+							PPI: JSON.parse(load.paid),
+						}
+					}),
+					loading: false,
+				})
+				SuccessfullToast('Loads were retrieved... Setting Data')
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
+			}
+		} catch (error) {
+			ErrorToast(`Something went wrong: ${error}`)
+		}
+	}
+	componentDidMount = async () => {
+		this.fetchLoads()
 	}
 	handleSearchChange = (e) => {
 		this.setState({ searchQuery: e.target.value })
@@ -44,21 +57,35 @@ export class KFBLoadList extends Component {
 		const trailer = ListOfTrailerTypes.find((t) => t.type === type)
 		return trailer ? trailer.name : '-'
 	}
+	deleteLoad = async (load) => {
+		try {
+			const res = await Api.delete(`${DATAURL}/delete/${load.id}/${sessionStorage.getItem('token')}`)
+			if (res.status === 200) {
+				SuccessfullToast(`Load ${load.id} was deleted`)
+				this.fetchLoads()
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
+			}
+		} catch (error) {
+			ErrorToast(`Something went wrong: ${error}`)
+		}
+	}
+
 	filterLoads = () => {
 		const { loads, searchQuery } = this.state
 		const searchStr = searchQuery.toLowerCase()
 
 		return loads.filter((load) => {
-			const { parsedPickupDetails, parsedPickupLocation, parsedDeliveryDetails, parsedLoadInformation } = load
+			const { PPD, PPL, PDD, PLI } = load
 
 			return (
-				(parsedPickupDetails.loadNumber && parsedPickupDetails.loadNumber.includes(searchStr)) ||
-				(parsedPickupLocation.city && parsedPickupLocation.city.toLowerCase().includes(searchStr)) ||
-				(parsedPickupLocation.state && parsedPickupLocation.state.toLowerCase().includes(searchStr)) ||
-				(parsedDeliveryDetails.address.city && parsedDeliveryDetails.address.city.toLowerCase().includes(searchStr)) ||
-				(parsedDeliveryDetails.address.state && parsedDeliveryDetails.address.state.toLowerCase().includes(searchStr)) ||
-				(parsedLoadInformation.trailerType && parsedLoadInformation.trailerType.toLowerCase().includes(searchStr)) ||
-				(parsedLoadInformation.hazmat && parsedLoadInformation.hazmat.toLowerCase().includes(searchStr)) ||
+				(PPD.loadNumber && PPD.loadNumber.includes(searchStr)) ||
+				(PPL.city && PPL.city.toLowerCase().includes(searchStr)) ||
+				(PPL.state && PPL.state.toLowerCase().includes(searchStr)) ||
+				(PDD.address.city && PDD.address.city.toLowerCase().includes(searchStr)) ||
+				(PDD.address.state && PDD.address.state.toLowerCase().includes(searchStr)) ||
+				(PLI.trailerType && PLI.trailerType.toLowerCase().includes(searchStr)) ||
+				(PLI.hazmat && PLI.hazmat.toLowerCase().includes(searchStr)) ||
 				(load.loadNumber && load.loadNumber.toLowerCase().includes(searchStr)) ||
 				(load.trackingNumber && load.trackingNumber.toLowerCase().includes(searchStr))
 			)
@@ -90,17 +117,20 @@ export class KFBLoadList extends Component {
 						</thead>
 						<tbody>
 							{this.filterLoads().map((load) => (
-								<tr key={load.id} onClick={() => this.handleToggle(load)} className='hoverable'>
+								<tr key={load.id} className={`${load.companyId === 0 ? 'dark-red-bg' : ''}`}>
 									<td>{load.loadNumber}</td>
 									<td>{load.companyId}</td>
-									<td>{load.parsedPickupDetails.loadNumber || '-'}</td>
-									<td>{load.parsedPickupLocation.name}</td>
-									<td>{load.parsedDeliveryDetails.name}</td>
+									<td>{load.PPD.loadNumber || '-'}</td>
+									<td>{load.PPL.name}</td>
+									<td>{load.PDD.name}</td>
 									<td>{load.trackingNumber}</td>
-									<td>{load.parsedPaidInformation.broker === false ? 'No' : 'Yes'}</td>
-									<td>{load.parsedPaidInformation.carrier === false ? 'No' : 'Yes'}</td>
+									<td>{load.PPI.broker === false ? 'No' : 'Yes'}</td>
+									<td>{load.PPI.carrier === false ? 'No' : 'Yes'}</td>
 									<td className='td-buttons'>
-										<button>
+										<button onClick={() => this.handleToggle(load)}>
+											<EyeFill />
+										</button>
+										<button onClick={() => this.deleteLoad(load)}>
 											<TrashFill />
 										</button>
 									</td>

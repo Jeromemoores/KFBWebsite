@@ -8,13 +8,13 @@
 .kfb-default-table-search-input input {
   width: 33%;
   padding: 5px;
-  margin-top: 1%;
+  /* margin-top: 1%; */
   height: 45px;
   border: 3px solid #333333;
   border-radius: 5px;
   background-color: transparent;
   color: #b9b8b8;
-  margin-bottom: 2%;
+  /* margin-bottom: 2%; */
 }
 .kfb-default-table-search-input input::placeholder {
   color: #b9b8b8;
@@ -56,6 +56,18 @@
 }
 .kfb-default-table td, .kfb-default-table th {
   padding: 8px;
+}
+.kfb-default-table .dark-red-bg {
+  background-color: rgb(52, 0, 0);
+}
+.kfb-default-table .custom-td {
+  max-width: 150px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+.kfb-default-table .custom-td .cell-content {
+  max-height: 55px;
+  overflow: auto;
 }
 .kfb-default-table .hoverable {
   transition-duration: 0.3s;

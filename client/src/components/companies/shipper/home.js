@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { PeopleFill, Envelope, ViewList, PlusLg } from 'react-bootstrap-icons'
 
 import { InviteCode } from '../inviteCode'
 import { Employees } from '../employees'
@@ -13,6 +14,7 @@ export class ShipperHomeComponent extends Component {
 			viewEmployees: false,
 			showLoads: false,
 			showInviteCode: false,
+			isSideHovered: false,
 		}
 	}
 	updateState = (newState) => {
@@ -27,21 +29,33 @@ export class ShipperHomeComponent extends Component {
 	toggleState = (stateKey) => {
 		this.updateState({ [stateKey]: !this.state[stateKey] })
 	}
+	handleSideHover = (isHovered) => {
+		this.setState({ isSideHovered: isHovered })
+	}
 	render() {
-		const { ...values } = this.state
+		const { isSideHovered, ...values } = this.state
 		const { company, account } = this.props
 		return (
 			<div className='home-wrapper'>
 				<div className='home-side'>
-					<button onClick={() => this.toggleState('viewEmployees')}>View Employees</button>
-					<button onClick={() => this.toggleState('newLoad')}>Post a new load</button>
-					<button onClick={() => this.toggleState('showLoads')}>View Loads</button>
-					<button onClick={() => this.toggleState('showInviteCode')}>Show Invitation Code</button>
+					<button onClick={() => this.toggleState('viewEmployees')}>
+						<span>View Employees</span> <PeopleFill />
+					</button>
+					<button onClick={() => this.toggleState('newLoad')}>
+						<span>Post New Load</span> <PlusLg />
+					</button>
+					<button onClick={() => this.toggleState('showLoads')}>
+						<span>View Loads</span> <ViewList />
+					</button>
+					<button onClick={() => this.toggleState('showInviteCode')}>
+						<span>View Invite Code</span> <Envelope />
+					</button>
 				</div>
 				<div className='home-content'>
-					{values.viewEmployees ? <Employees company={company} /> : <></>} {values.showAuthCode ? <InviteCode company={company} /> : <></>}
-					{values.newLoad ? <NewLoad /> : <></>}
-					{values.showLoads ? <LoadsList company={company} account={account} /> : <></>}
+					{values.viewEmployees ? <Employees company={company} /> : null}
+					{values.showInviteCode ? <InviteCode company={company} /> : null}
+					{values.newLoad ? <NewLoad /> : null}
+					{values.showLoads ? <LoadsList company={company} account={account} /> : null}
 				</div>
 			</div>
 		)

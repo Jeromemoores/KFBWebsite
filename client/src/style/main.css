@@ -33,13 +33,31 @@ a, p, span, h1, h2, h3, h4, h5 {
 .home-side {
   display: flex;
   flex-direction: column;
-  width: max-content;
+  width: 5%;
   height: max-content;
   margin-left: 1%;
   border: 3px solid #333333;
   border-radius: 10px;
   border-left: 0;
-  height: max-content;
+  transition-duration: 1s;
+}
+.home-side:hover {
+  width: 13%;
+  transition-duration: 1s;
+}
+.home-side span {
+  display: none;
+}
+.home-side button svg {
+  display: initial;
+  margin: 10px;
+}
+.home-side:hover span {
+  display: block;
+  width: 180px;
+}
+.home-side:hover svg {
+  display: none;
 }
 .home-side button {
   height: 60px;
@@ -56,16 +74,8 @@ a, p, span, h1, h2, h3, h4, h5 {
   transition-duration: 0.3s;
 }
 .home-content {
-  margin-left: 3%;
-  width: 75%;
-}
-
-
-/* RANDOM STYLING FOR ANYPAGES */
-.text-danger {
-  font-size: 10px;
-  text-align: left;
-  margin-top: -2%;
-  margin-bottom: 2%;
+  flex: 1 1 auto;
   margin-left: 2%;
+  margin-right: 2%;
+  /* width: calc(100% - 5% - 10%); */
 }

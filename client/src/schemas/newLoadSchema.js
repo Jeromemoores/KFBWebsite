@@ -3,7 +3,7 @@ import * as Yup from 'yup'
 export const LoadSchema = Yup.object().shape({
 	productWeight: Yup.string().required('Product Weight is required'),
 	productType: Yup.string().required('Product Type is required'),
-	trailerType: Yup.string().required('Trailer Type is required'),
+	trailerType: Yup.array().required('Trailer Type is required'),
 	hazmat: Yup.boolean().nullable().required('Hazmat selection is required'),
 	pickupTimeStart: Yup.string().required('Pickup Time is required'),
 	pickupTimeEnd: Yup.string(),

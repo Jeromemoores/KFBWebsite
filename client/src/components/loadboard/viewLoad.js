@@ -22,7 +22,7 @@ export class ViewLoad extends Component {
 
 			productWeight: '',
 			productType: '',
-			trailerType: '',
+			trailerType: [],
 			hazmat: '',
 			pickupTime: '', // Change to optional range
 			pickupDate: '', // Change to optional range
@@ -168,28 +168,22 @@ export class ViewLoad extends Component {
 							<Card.Header>Pickup Location</Card.Header>
 							<Card.Body>
 								<div>
-									<label htmlFor='name'>Company Name: </label>
-									<span id='name'>{values.name}</span>
+									<label htmlFor='name'>Company Name: </label> <span id='name'>{values.name}</span>
 								</div>
 								<div>
-									<label htmlFor='street'>Street: </label>
-									<span id='street'>{values.street}</span>
+									<label htmlFor='street'>Street: </label> <span id='street'>{values.street}</span>
 								</div>
 								<div>
-									<label htmlFor='street'>Building Number: </label>
-									<span id='suite'>{values.suite}</span>
+									<label htmlFor='street'>Building Number: </label> <span id='suite'>{values.suite}</span>
 								</div>
 								<div>
-									<label htmlFor='city'>City: </label>
-									<span id='city'>{values.city}</span>
+									<label htmlFor='city'>City: </label> <span id='city'>{values.city}</span>
 								</div>
 								<div>
-									<label htmlFor='state'>State: </label>
-									<span id='state'>{values.state}</span>
+									<label htmlFor='state'>State: </label> <span id='state'>{values.state}</span>
 								</div>
 								<div>
-									<label htmlFor='postal'>Postal: </label>
-									<span id='postal'>{values.postal}</span>
+									<label htmlFor='postal'>Postal: </label> <span id='postal'>{values.postal}</span>
 								</div>
 							</Card.Body>
 						</Card>
@@ -197,43 +191,40 @@ export class ViewLoad extends Component {
 							<Card.Header>Load Information</Card.Header>
 							<Card.Body>
 								<div>
-									<label htmlFor='productType'>Product Type: </label>
-									<span id='productType'>{values.productType}</span>
+									<label htmlFor='productType'>Product Type: </label> <span id='productType'>{values.productType}</span>
 								</div>
 								<div>
-									<label htmlFor='productWeight'>Product Weight: </label>
-									<span id='productWeight'>{values.productWeight} lbs</span>
+									<label htmlFor='productWeight'>Product Weight: </label> <span id='productWeight'>{values.productWeight} lbs</span>
 								</div>
 								<div>
-									<label htmlFor='hazmat'>Hazmat: </label>
-									<span id='hazmat'>{values.hazmat === 'false' ? 'No' : 'Yes'}</span>
+									<label htmlFor='hazmat'>Hazmat: </label> <span id='hazmat'>{values.hazmat === 'false' ? 'No' : 'Yes'}</span>
 								</div>
 								<div>
-									<label htmlFor='trailerType'>Trailer Type: </label>
-									<span id='trailerType'>{this.getTrailerNames(values.trailerType)}</span>
+									<label htmlFor='trailerType'>Trailer Types: </label>{' '}
+									<span id='trailerType'>
+										{Array.isArray(values.trailerType)
+											? values.trailerType.map((id) => this.getTrailerNames(id)).join(', ')
+											: this.getTrailerNames(values.trailerType)}
+									</span>
 								</div>
 								<div>
-									<label htmlFor='rate'>Rate: </label>
-									<span id='rate'>{values.rate}</span>
+									<label htmlFor='rate'>Rate: </label> <span id='rate'>{values.rate}</span>
 								</div>
 								<div>
-									<label htmlFor='miles'>Miles: </label>
-									<span id='miles'>{values.miles}</span>
+									<label htmlFor='miles'>Miles: </label> <span id='miles'>{values.miles}</span>
 								</div>
 								<div>
-									<label htmlFor='securements'>Required Securements: </label>
-									<span id='securements'>{values.securements}</span>
+									<label htmlFor='securements'>Required Securements: </label> <span id='securements'>{values.securements}</span>
 								</div>
 								<div>
-									<label htmlFor='requiredPictures'>Securement Pictures Required: </label>
+									<label htmlFor='requiredPictures'>Securement Pictures Required: </label>{' '}
 									<span id='requiredPictures'>{values.requiredPictures === 'true' ? 'Yes' : 'No'}</span>
 								</div>
 								<div>
-									<label htmlFor='available'>Is Load Available Now: </label>
-									<span id='available'>{values.available === 'true' ? 'Yes' : 'No'}</span>
+									<label htmlFor='available'>Is Load Available Now: </label> <span id='available'>{values.available === 'true' ? 'Yes' : 'No'}</span>
 								</div>
 								<div>
-									<label htmlFor='loadStatus'>Load Status: </label>
+									<label htmlFor='loadStatus'>Load Status: </label>{' '}
 									<span id='loadStatus'>
 										{values.loadStatus === 'available' && (
 											<Badge bg='primary' text='dark'>
@@ -268,24 +259,19 @@ export class ViewLoad extends Component {
 							<Card.Header>Pickup Details</Card.Header>
 							<Card.Body>
 								<div>
-									<label htmlFor='loadNumber'>Load Number: </label>
-									<span id='loadNumber'>{values.loadNumber}</span>
+									<label htmlFor='loadNumber'>Load Number: </label> <span id='loadNumber'>{values.loadNumber}</span>
 								</div>
 								<div>
-									<label htmlFor='directions'>Directions: </label>
-									<span id='directions'>{values.directions}</span>
+									<label htmlFor='directions'>Directions: </label> <span id='directions'>{values.directions}</span>
 								</div>
 								<div>
-									<label htmlFor='comments'>Comments: </label>
-									<span id='comments'>{values.comments}</span>
+									<label htmlFor='comments'>Comments: </label> <span id='comments'>{values.comments}</span>
 								</div>
 								<div>
-									<label htmlFor='pickupDate'>Pick-up Date: </label>
-									<span id='pickupDate'>{values.pickupDate}</span>
+									<label htmlFor='pickupDate'>Pick-up Date: </label> <span id='pickupDate'>{values.pickupDate}</span>
 								</div>
 								<div>
-									<label htmlFor='pickupTime'>Pick-up Time: </label>
-									<span id='pickupTime'>{values.pickupTime}</span>
+									<label htmlFor='pickupTime'>Pick-up Time: </label> <span id='pickupTime'>{values.pickupTime}</span>
 								</div>
 							</Card.Body>
 						</Card>
@@ -293,28 +279,22 @@ export class ViewLoad extends Component {
 							<Card.Header>Delivery Location</Card.Header>
 							<Card.Body>
 								<div>
-									<label htmlFor='companyName'>Company Name: </label>
-									<span id='companyName'>{values.companyName}</span>
+									<label htmlFor='companyName'>Company Name: </label> <span id='companyName'>{values.companyName}</span>
 								</div>
 								<div>
-									<label htmlFor='companyStreet'>Street: </label>
-									<span id='companyStreet'>{values.companyStreet}</span>
+									<label htmlFor='companyStreet'>Street: </label> <span id='companyStreet'>{values.companyStreet}</span>
 								</div>
 								<div>
-									<label htmlFor='companySuite'>Building Number: </label>
-									<span id='companySuite'>{values.companySuite}</span>
+									<label htmlFor='companySuite'>Building Number: </label> <span id='companySuite'>{values.companySuite}</span>
 								</div>
 								<div>
-									<label htmlFor='companyPostal'>Zip Code: </label>
-									<span id='companyPostal'>{values.companyPostal}</span>
+									<label htmlFor='companyPostal'>Zip Code: </label> <span id='companyPostal'>{values.companyPostal}</span>
 								</div>
 								<div>
-									<label htmlFor='companyCity'>City: </label>
-									<span id='companyCity'>{values.companyCity}</span>
+									<label htmlFor='companyCity'>City: </label> <span id='companyCity'>{values.companyCity}</span>
 								</div>
 								<div>
-									<label htmlFor='companyState'>State: </label>
-									<span id='companyState'>{values.companyState}</span>
+									<label htmlFor='companyState'>State: </label> <span id='companyState'>{values.companyState}</span>
 								</div>
 							</Card.Body>
 						</Card>
@@ -322,20 +302,16 @@ export class ViewLoad extends Component {
 							<Card.Header>Delivery Details</Card.Header>
 							<Card.Body>
 								<div>
-									<label htmlFor='companyDirections'>Directions: </label>
-									<span id='companyDirections'>{values.companyDirections}</span>
+									<label htmlFor='companyDirections'>Directions: </label> <span id='companyDirections'>{values.companyDirections}</span>
 								</div>
 								<div>
-									<label htmlFor='companyComments'>Comments: </label>
-									<span id='companyComments'>{values.companyComments}</span>
+									<label htmlFor='companyComments'>Comments: </label> <span id='companyComments'>{values.companyComments}</span>
 								</div>
 								<div>
-									<label htmlFor='deliveryDate'>Delivery Date: </label>
-									<span id='deliveryDate'>{values.deliveryDate}</span>
+									<label htmlFor='deliveryDate'>Delivery Date: </label> <span id='deliveryDate'>{values.deliveryDate}</span>
 								</div>
 								<div>
-									<label htmlFor='deliveryTime'>Delivery Time: </label>
-									<span id='deliveryTime'>{values.deliveryTime}</span>
+									<label htmlFor='deliveryTime'>Delivery Time: </label> <span id='deliveryTime'>{values.deliveryTime}</span>
 								</div>
 							</Card.Body>
 						</Card>
@@ -346,7 +322,7 @@ export class ViewLoad extends Component {
 									{values.loadLog.map((log) => {
 										return (
 											<div key={log.id}>
-												<label htmlFor={log.event}>Event: </label>
+												<label htmlFor={log.event}>Event: </label>{' '}
 												<span id={log.event}>
 													{log.event} by {log.account.email} at {log.date}
 												</span>
@@ -363,7 +339,7 @@ export class ViewLoad extends Component {
 								<Card.Header>Payment Status</Card.Header>
 								<Card.Body>
 									<div>
-										<label htmlFor='paidBroker'>Paid KFB: </label>
+										<label htmlFor='paidBroker'>Paid KFB: </label>{' '}
 										<span id='paidBroker'>
 											{values.paid.broker === false ? (
 												<Badge bg='warning' text='dark'>
@@ -377,7 +353,7 @@ export class ViewLoad extends Component {
 										</span>
 									</div>
 									<div>
-										<label htmlFor='paidCarrier'>Paid Carrier: </label>
+										<label htmlFor='paidCarrier'>Paid Carrier: </label>{' '}
 										<span id='paidCarrier'>
 											{values.paid.carrier === false ? (
 												<Badge bg='warning' text='dark'>

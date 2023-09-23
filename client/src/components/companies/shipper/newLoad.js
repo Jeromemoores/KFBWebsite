@@ -16,7 +16,7 @@ export class NewLoad extends Component {
 		this.state = {
 			productWeight: '',
 			productType: '',
-			trailerType: {},
+			trailerType: [],
 			hazmat: '',
 			pickupTimeStart: '',
 			pickupTimeEnd: '',
@@ -54,6 +54,16 @@ export class NewLoad extends Component {
 	}
 	handleChange = (input) => (e) => {
 		this.setState({ [input]: e.currentTarget.value })
+	}
+	handleTrailerChange = (e, formikProps) => {
+		const options = e.target.options
+		const values = []
+		for (let i = 0, l = options.length; i < l; i++) {
+			if (options[i].selected) {
+				values.push(options[i].value)
+			}
+		}
+		formikProps.setFieldValue(e.target.name, values)
 	}
 	handleFormikSubmit = async (values) => {
 		const newLoad = {
@@ -104,11 +114,11 @@ export class NewLoad extends Component {
 			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
-	renderStep = (formikProps) => {
+	renderStep = (formikProps, handleTrailerChange) => {
 		const StepComponents = [StepOne, StepTwo, StepThree, StepFour]
 		return (
 			<div className='load-form-wrapper'>
-				{React.createElement(StepComponents[formikProps.values.step - 1], { ...formikProps })}
+				{React.createElement(StepComponents[formikProps.values.step - 1], { handleTrailerChange, ...formikProps })}
 				{formikProps.values.step > 1 && (
 					<button type='button' onClick={(e) => this.changeStep('b', e, formikProps)} id='prev'>
 						Previous
@@ -129,7 +139,7 @@ export class NewLoad extends Component {
 	render() {
 		return (
 			<Formik initialValues={this.state} validationSchema={LoadSchema} onSubmit={this.handleFormikSubmit}>
-				{(formikProps) => <Form>{this.renderStep(formikProps)}</Form>}
+				{(formikProps) => <Form>{this.renderStep(formikProps, this.handleTrailerChange)}</Form>}
 			</Formik>
 		)
 	}

@@ -231,6 +231,20 @@ router.get('/claimedBy/:token/completed', checkAccountandToken, async (req, res)
 	}
 })
 
+router.get('/companyId/:companyId', async (req, res) => {
+	const { companyId } = req.params
+	try {
+		const company = await Companies.findOne({ where: { id: companyId } })
+		if (!company) {
+			return res.status(404).json({ error: `No company found with that id` })
+		}
+		const listOfLoads = await Loads.findAll({ where: { companyId } })
+		res.status(200).json(listOfLoads)
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong getting loads :${error}` })
+	}
+})
+
 router.put('/archive/:loadNumber/:token', checkAccountandToken, async (req, res) => {
 	const account = await req.account
 	const { loadNumber } = req.params
@@ -261,20 +275,6 @@ router.put('/archive/:loadNumber/:token', checkAccountandToken, async (req, res)
 		res.status(200).json({ message: 'Load as been archieved.', data: updatedLoad })
 	} catch (error) {
 		res.status(500).json({ error: `Something went wrong archiving that load. ${error}` })
-	}
-})
-
-router.get('/companyId/:companyId', async (req, res) => {
-	const { companyId } = req.params
-	try {
-		const company = await Companies.findOne({ where: { id: companyId } })
-		if (!company) {
-			return res.status(404).json({ error: `No company found with that id` })
-		}
-		const listOfLoads = await Loads.findAll({ where: { companyId } })
-		res.status(200).json(listOfLoads)
-	} catch (error) {
-		res.status(500).json({ error: `Something went wrong getting loads :${error}` })
 	}
 })
 

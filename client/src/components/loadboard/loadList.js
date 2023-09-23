@@ -30,10 +30,10 @@ export class LoadList extends Component {
 					loads: res.data.map((load) => {
 						return {
 							...load,
-							parsedPickupDetails: JSON.parse(load.pickupDetails),
-							parsedPickupLocation: JSON.parse(load.pickupLocation),
-							parsedDeliveryDetails: JSON.parse(load.deliveryDetails),
-							parsedLoadInformation: JSON.parse(load.loadInformation),
+							PPD: JSON.parse(load.pickupDetails),
+							PPL: JSON.parse(load.pickupLocation),
+							PDD: JSON.parse(load.deliveryDetails),
+							PLI: JSON.parse(load.loadInformation),
 						}
 					}),
 					loading: false,
@@ -58,25 +58,25 @@ export class LoadList extends Component {
 		this.setState({ searchQuery: e.target.value })
 	}
 
-	getTrailerTypeName = (type) => {
+	getTrailerNames = (type) => {
 		const trailer = ListOfTrailerTypes.find((t) => t.type === type)
-		return trailer ? trailer.name : '-'
+		return trailer ? trailer.name : ' - '
 	}
 
 	filterLoads = () => {
 		const { loads, searchQuery } = this.state
 		const searchStr = searchQuery.toLowerCase()
 
-		return loads.filter(({ parsedPickupDetails, parsedPickupLocation, parsedDeliveryDetails, parsedLoadInformation }) => {
+		return loads.filter(({ PPD, PPL, PDD, PLI }) => {
 			return (
-				(parsedPickupDetails.loadNumber && parsedPickupDetails.loadNumber.includes(searchStr)) ||
-				(parsedPickupLocation.city && parsedPickupLocation.city.toLowerCase().includes(searchStr)) ||
-				(parsedPickupLocation.state && parsedPickupLocation.state.toLowerCase().includes(searchStr)) ||
-				(parsedDeliveryDetails.address.city && parsedDeliveryDetails.address.city.toLowerCase().includes(searchStr)) ||
-				(parsedDeliveryDetails.address.state && parsedDeliveryDetails.address.state.toLowerCase().includes(searchStr)) ||
-				(parsedLoadInformation.trailerType && parsedLoadInformation.trailerType.toLowerCase().includes(searchStr)) ||
-				(parsedLoadInformation.hazmat && parsedLoadInformation.hazmat.toLowerCase().includes(searchStr)) ||
-				(parsedLoadInformation.miles && parsedLoadInformation.miles.toLowerCase().includes(searchStr))
+				(PPD.loadNumber && PPD.loadNumber.includes(searchStr)) ||
+				(PPL.city && PPL.city.toLowerCase().includes(searchStr)) ||
+				(PPL.state && PPL.state.toLowerCase().includes(searchStr)) ||
+				(PDD.address.city && PDD.address.city.toLowerCase().includes(searchStr)) ||
+				(PDD.address.state && PDD.address.state.toLowerCase().includes(searchStr)) ||
+				(PLI.trailerType && PLI.trailerType.toLowerCase().includes(searchStr)) ||
+				(PLI.hazmat && PLI.hazmat.toLowerCase().includes(searchStr)) ||
+				(PLI.miles && PLI.miles.toLowerCase().includes(searchStr))
 			)
 		})
 	}
@@ -100,24 +100,30 @@ export class LoadList extends Component {
 								<th>Shipper </th>
 								<th>Consignee </th>
 								<th>Hazmat</th>
-								<th>Trailer Type</th>
+								<th>Trailer Types</th>
 								<th>Miles & Total</th>
 							</tr>
 						</thead>
 						<tbody>
 							{this.filterLoads().map((load) => (
 								<tr key={load.id} onClick={() => this.handleToggle(load)} className='hoverable'>
-									<td>{load.parsedPickupDetails.loadNumber || '-'}</td>
+									<td>{load.PPD.loadNumber || '-'}</td>
 									<td>
-										{load.parsedPickupLocation.city}, {load.parsedPickupLocation.state}
+										{load.PPL.city}, {load.PPL.state}
 									</td>
 									<td>
-										{load.parsedDeliveryDetails.address.city}, {load.parsedDeliveryDetails.address.state}
+										{load.PDD.address.city}, {load.PDD.address.state}
 									</td>
-									<td>{load.parsedLoadInformation.hazmat === 'false' ? 'No' : 'Yes'}</td>
-									<td>{this.getTrailerTypeName(load.parsedLoadInformation.trailerType)}</td>
+									<td>{load.PLI.hazmat === 'false' ? 'No' : 'Yes'}</td>
+									<td className='custom-td'>
+										<div className='cell-content'>
+											{Array.isArray(load.PLI.trailerType)
+												? load.PLI.trailerType.map((type) => this.getTrailerNames(type)).join(', ')
+												: this.getTrailerNames(load.PLI.trailerType)}
+										</div>
+									</td>
 									<td>
-										{load.parsedLoadInformation.miles} ${load.parsedLoadInformation.miles * load.parsedLoadInformation.rate}
+										{load.PLI.miles} ${load.PLI.miles * load.PLI.rate}
 									</td>
 								</tr>
 							))}

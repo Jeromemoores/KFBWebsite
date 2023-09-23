@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { PeopleFill, ViewList, List, Envelope } from 'react-bootstrap-icons'
 
 import { Employees } from '../employees'
 import { CurrentLoads } from '../currentLoads'
@@ -13,6 +14,7 @@ export class CarrierHomeComponent extends Component {
 			currentLoads: false,
 			completedLoads: false,
 			inviteCode: false,
+			isSideHovered: false,
 		}
 	}
 	updateState = (newState) => {
@@ -27,16 +29,19 @@ export class CarrierHomeComponent extends Component {
 	toggleState = (stateKey) => {
 		this.updateState({ [stateKey]: !this.state[stateKey] })
 	}
+	handleSideHover = (isHovered) => {
+		this.setState({ isSideHovered: isHovered })
+	}
 	render() {
-		const { ...values } = this.state
+		const { isSideHovered, ...values } = this.state
 		const { company, account } = this.props
 		return (
 			<div className='home-wrapper'>
-				<div className='home-side'>
-					<button onClick={() => this.toggleState('employees')}>View Employees</button>
-					<button onClick={() => this.toggleState('currentLoads')}>View Current Loads</button>
-					<button onClick={() => this.toggleState('completedLoads')}>View Completed Loads</button>
-					<button onClick={() => this.toggleState('inviteCode')}>Show Invitation Code</button>
+				<div className='home-side' onMouseEnter={() => this.handleSideHover(true)} onMouseLeave={() => this.handleSideHover(false)}>
+					<button onClick={() => this.toggleState('employees')}>{isSideHovered ? 'View Employees' : <PeopleFill />}</button>
+					<button onClick={() => this.toggleState('currentLoads')}>{isSideHovered ? 'View Current Loads' : <ViewList />}</button>
+					<button onClick={() => this.toggleState('completedLoads')}>{isSideHovered ? 'View Completed Loads' : <List />}</button>
+					<button onClick={() => this.toggleState('inviteCode')}>{isSideHovered ? 'View Invite Code' : <Envelope />}</button>
 				</div>
 				<div className='home-content'>
 					{values.employees ? <Employees company={company} /> : <></>}
