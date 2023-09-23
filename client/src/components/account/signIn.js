@@ -29,15 +29,9 @@ export class SigninForm extends Component {
 			return <></>
 		}
 		return (
-			<div className='signupform'>
+			<div className='sign-up-form'>
 				<FloatingLabel label='Email'>
-					<Form.Control
-						type='email'
-						name='email'
-						value={values.email}
-						onChange={handleChange('email')}
-						placeholder=''
-					/>
+					<Form.Control type='email' name='email' value={values.email} onChange={handleChange('email')} placeholder='' />
 				</FloatingLabel>
 				<FloatingLabel label='Password'>
 					<Form.Control
@@ -47,7 +41,7 @@ export class SigninForm extends Component {
 						onChange={handleChange('password')}
 						placeholder=''
 					/>
-					<button className='showPasswordButton' onClick={this.handleShowPass}>
+					<button className='show-password-button' onClick={this.handleShowPass}>
 						{showPassword ? <Eye style={{ color: 'white' }} /> : <EyeFill />}
 					</button>
 				</FloatingLabel>
@@ -59,11 +53,11 @@ export class SigninForm extends Component {
 						onChange={handleChange('passwordConfirm')}
 						placeholder=''
 					/>
-					<button className='showPasswordButton' onClick={this.handleShowConfirmPass}>
+					<button className='show-password-button' onClick={this.handleShowConfirmPass}>
 						{showConfirmPassword ? <Eye style={{ color: 'white' }} /> : <EyeFill />}
 					</button>
 				</FloatingLabel>
-				<div className='signupSubmit'>
+				<div className='sign-up-submit'>
 					<button onClick={handleSubmit} disabled={values.password === values.passwordConfirm ? false : true}>
 						Submit
 					</button>
