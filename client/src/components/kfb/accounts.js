@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { PencilFill, TrashFill, PassFill } from 'react-bootstrap-icons'
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
 import { Loader } from '../loader'
 
 import Api from '../../api/axios'
@@ -15,13 +16,32 @@ export class KFBAccountList extends Component {
 		}
 	}
 
-	componentDidMount = async () => {
+	fetchAccounts = async () => {
 		this.setState({ loading: true })
-		const res = await Api.get(`${DATAURL}/allAccounts/${sessionStorage.getItem('token')}`)
-		this.setState({
-			accounts: res.data,
-			loading: false,
-		})
+
+		try {
+			const res = await Api.get(`${DATAURL}/allAccounts/${sessionStorage.getItem('token')}`)
+			if (res.status === 200) {
+				SuccessfullToast('Accounts were retrieved... Setting Data')
+				this.setState({
+					accounts: res.data,
+					loading: false,
+				})
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
+				this.setState({
+					loading: false,
+				})
+			}
+		} catch (error) {
+			ErrorToast(`Something went wrong: ${error}`)
+			this.setState({
+				loading: false,
+			})
+		}
+	}
+	componentDidMount = async () => {
+		this.fetchAccounts()
 	}
 	handleSearchChange = (e) => {
 		this.setState({ searchQuery: e.target.value })
