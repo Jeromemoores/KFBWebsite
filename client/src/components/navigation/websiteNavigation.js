@@ -17,21 +17,18 @@ export class WebsiteNavigation extends Component {
 		}
 	}
 	async componentDidMount() {
-		try {
+		if (sessionStorage.getItem('token') !== null) {
 			await this.fetchAccount()
-		} catch (error) {
-			console.log(error)
 		}
 	}
-
 	fetchAccount = async () => {
+		this.setState({ isFetchingAccount: true })
 		try {
-			this.setState({ isFetchingAccount: true })
-			if (sessionStorage.getItem('token') !== null) {
-				const res = await Api.get(`${AccountURL}/byToken/${sessionStorage.getItem('token')}`)
+			const res = await Api.get(`${AccountURL}/byToken/${sessionStorage.getItem('token')}`)
+			if (res.status === 200) {
 				this.setState({
-					account: res.data,
 					isFetchingAccount: false,
+					account: res.data,
 				})
 			} else {
 				this.setState({
@@ -39,8 +36,9 @@ export class WebsiteNavigation extends Component {
 				})
 			}
 		} catch (error) {
-			console.log(error)
-			this.setState({ isFetchingAccount: false })
+			this.setState({
+				isFetchingAccount: false,
+			})
 		}
 	}
 	render() {

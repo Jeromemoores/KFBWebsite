@@ -12,12 +12,13 @@ export class Employees extends Component {
 		}
 	}
 	async componentDidMount() {
-		const { company } = this.props
-
+		this.setEmployees()
+	}
+	setEmployees = async () => {
 		this.setState({
-			company: company,
+			company: this.props.company,
 		})
-		const parsedEmplopyees = JSON.parse(company?.employees)
+		const parsedEmplopyees = JSON.parse(this.props.company?.employees)
 		this.setState({
 			listOfEmployees: parsedEmplopyees,
 		})

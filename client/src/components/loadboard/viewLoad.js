@@ -119,10 +119,15 @@ export class ViewLoad extends Component {
 		try {
 			const res = await Api.put(`${LoadsURL}/updateStatus/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`, update)
 			if (res.status === 200) {
-				window.location.reload()
+				SuccessfullToast('Status updated successfully')
+				setTimeout(() => {
+					window.location.reload()
+				}, 2000)
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
 			}
 		} catch (error) {
-			console.log(error)
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 
@@ -130,10 +135,15 @@ export class ViewLoad extends Component {
 		try {
 			const res = await Api.put(`${LoadsURL}/claim/${loadId}/${sessionStorage.getItem('token')}`)
 			if (res.status === 200) {
-				window.location.href = '/loadboard'
+				SuccessfullToast(`Load ${loadId} claimed successfully.`)
+				setTimeout(() => {
+					window.location.href = '/loadboard'
+				}, 2000)
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
 			}
 		} catch (error) {
-			console.log(error)
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 
@@ -141,12 +151,15 @@ export class ViewLoad extends Component {
 		try {
 			const res = await Api.put(`${LoadsURL}/unclaim/${this.props.selectedLoad.loadNumber}/${sessionStorage.getItem('token')}`)
 			if (res.status === 200) {
-				window.location.reload()
+				SuccessfullToast('Load unclaimed.')
+				setTimeout(() => {
+					window.location.reload()
+				}, 2000)
 			} else {
-				console.log(res)
+				ErrorToast(`${res.status} : ${res.error}`)
 			}
 		} catch (error) {
-			console.log(error)
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 	getTrailerNames = (type) => {

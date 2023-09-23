@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { TrashFill, ClipboardPlusFill } from 'react-bootstrap-icons'
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
 import { Loader } from '../loader'
 
 import Api from '../../api/axios'
@@ -27,9 +28,24 @@ export class InviteCode extends Component {
 		}
 	}
 	componentDidMount = async () => {
+		this.getCodes()
+	}
+	getCodes = async () => {
 		this.setState({ loading: true })
-		const codes = await Api.get(`${KFBURL}/invites/${sessionStorage.getItem('token')}`)
-		this.setState({ codes: codes.data, loading: false })
+		try {
+			const res = await Api.get(`${KFBURL}/invites/${sessionStorage.getItem('token')}`)
+			if (res.status === 200) {
+				SuccessfullToast('Successfully retrieved list of invite codes')
+				this.setState({
+					loading: false,
+					codes: res.data,
+				})
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
+			}
+		} catch (error) {
+			ErrorToast(`Something went wrong: ${error}`)
+		}
 	}
 	copyToClip = async (code) => {
 		try {

@@ -74,10 +74,8 @@ export class KFBLoadList extends Component {
 	filterLoads = () => {
 		const { loads, searchQuery } = this.state
 		const searchStr = searchQuery.toLowerCase()
-
 		return loads.filter((load) => {
 			const { PPD, PPL, PDD, PLI } = load
-
 			return (
 				(PPD.loadNumber && PPD.loadNumber.includes(searchStr)) ||
 				(PPL.city && PPL.city.toLowerCase().includes(searchStr)) ||

@@ -18,14 +18,11 @@ export class LoadList extends Component {
 			searchQuery: '',
 		}
 	}
-
-	componentDidMount = async () => {
-		this.setState({
-			loading: true,
-		})
+	getLoads = async () => {
 		try {
 			const res = await Api.get(`${LoadsURL}/available`)
 			if (res.status === 200) {
+				SuccessfullToast('Sucessfull Message')
 				this.setState({
 					loads: res.data.map((load) => {
 						return {
@@ -38,35 +35,36 @@ export class LoadList extends Component {
 					}),
 					loading: false,
 				})
-				SuccessfullToast('Loads were retrieved... Setting Data')
 			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
 				this.setState({
 					loading: false,
 				})
-				ErrorToast(`${res.status} : ${res.error}`)
 			}
 		} catch (error) {
 			ErrorToast(`Something went wrong: ${error}`)
+			this.setState({
+				loading: false,
+			})
 		}
+	}
+	componentDidMount = async () => {
+		this.getLoads()
 	}
 
 	handleToggle = (load = {}) => {
 		this.setState((prevState) => ({ selectedLoad: load, show: !prevState.show }))
 	}
-
 	handleSearchChange = (e) => {
 		this.setState({ searchQuery: e.target.value })
 	}
-
 	getTrailerNames = (type) => {
 		const trailer = ListOfTrailerTypes.find((t) => t.type === type)
 		return trailer ? trailer.name : ' - '
 	}
-
 	filterLoads = () => {
 		const { loads, searchQuery } = this.state
 		const searchStr = searchQuery.toLowerCase()
-
 		return loads.filter(({ PPD, PPL, PDD, PLI }) => {
 			return (
 				(PPD.loadNumber && PPD.loadNumber.includes(searchStr)) ||
@@ -80,13 +78,10 @@ export class LoadList extends Component {
 			)
 		})
 	}
-
 	render() {
 		const { loading, searchQuery, selectedLoad, show } = this.state
 		const { account } = this.props
-
 		if (loading) return <Loader message={'Loading Load list...'} />
-
 		return (
 			<div className='kfb-default-table-page-wrapper'>
 				<div className='kfb-default-table-search-input'>

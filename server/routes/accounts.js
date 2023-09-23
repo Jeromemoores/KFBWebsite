@@ -101,9 +101,10 @@ router.put('/signout/:token', checkAccountandToken, async (req, res) => {
 		if (!account) {
 			return res.status(401).json({ error: `Invalid or Expired token.` })
 		}
-		await Accounts.update({ token: null }, { where: { token } })
+		await Accounts.update({ token: null }, { where: { token: account.token } })
+		res.status(200).json({ message: 'Signed out successfully' })
 	} catch (error) {
-		res.status(500).json({ error: `Something went wrong : ${error}` })
+		res.status(500).json({ error: `Something went wrong server : ${error}` })
 	}
 })
 

@@ -37,9 +37,7 @@ export class CurrentLoads extends Component {
 		})
 	}
 	async componentDidMount() {
-		this.setState({
-			loading: true,
-		})
+		this.setState({ loading: true })
 		try {
 			const res = await Api.get(`${LoadsURL}/claimedBy/${sessionStorage.getItem('token')}/uncompleted`)
 			if (res.status === 200) {

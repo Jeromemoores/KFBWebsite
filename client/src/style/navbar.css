@@ -3,9 +3,10 @@
   border-radius: 5px;
   width: 99.7%;
   margin: auto;
+  margin-bottom: 1%;
 }
 .main-navbar {
-  margin: 0% 2%;
+  margin: 0% 2% 0% 2%;
 }
 .main-navbar .navbar-brand {
   font-size: large;

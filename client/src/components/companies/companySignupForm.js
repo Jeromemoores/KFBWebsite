@@ -96,9 +96,7 @@ export class CompanySignupForm extends Component {
 		try {
 			const res = await Api.post(`${CompanyURL}/create/${values.authCode}/${sessionStorage.getItem('token')}`, newCompany)
 			if (res.status === 200) {
-				this.setState({
-					loading: false,
-				})
+				this.setState({ loading: false })
 				SuccessfullToast('Signing up was successfull... Redirecting')
 				setTimeout(() => {
 					window.location.href = '/'
