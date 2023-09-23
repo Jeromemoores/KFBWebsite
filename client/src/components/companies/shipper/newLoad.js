@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Formik, Form } from 'formik'
+import { ErrorToast, SuccessfullToast } from '../../alerts/toasts'
 
 import Api from '../../../api/axios'
 import { LoadsURL } from '../../../api/config'
@@ -92,10 +93,15 @@ export class NewLoad extends Component {
 		try {
 			const res = await Api.post(`${LoadsURL}/create/${sessionStorage.getItem('token')}`, newLoad)
 			if (res.status === 200) {
-				window.location.href = '/shipper/home'
+				SuccessfullToast('Load was created sucessfully... Refreshing Page')
+				setTimeout(() => {
+					window.location.href = '/shipper/home'
+				}, 2200)
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
 			}
 		} catch (error) {
-			console.log(`Something went wrong ${error}`)
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 	renderStep = (formikProps) => {

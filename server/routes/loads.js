@@ -188,6 +188,18 @@ router.put('/claim/:loadNumber/:token', checkAccountandToken, async (req, res) =
 	}
 })
 
+router.get('/trackingNumber/:trackingNumber', async (req, res) => {
+	try {
+		const load = await Loads.findOne({ where: { trackingNumber } })
+		if (!load) {
+			res.status(404).json({ error: `Load with that tracking number doesn't exist` })
+		}
+		res.status(200).json(load)
+	} catch (error) {
+		res.status(500).json({ error: `Something went wrong getting the load with that tracking number` })
+	}
+})
+
 router.get('/available', async (req, res) => {
 	try {
 		const loads = await Loads.findAll({ where: { available: 'true' } })

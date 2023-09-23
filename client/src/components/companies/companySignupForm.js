@@ -2,6 +2,8 @@ import { Component } from 'react'
 import { FloatingLabel, Form } from 'react-bootstrap'
 import { AddressAutofill } from '@mapbox/search-js-react'
 
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
+
 import { Loader } from '../../components'
 
 import Api from '../../api/axios'
@@ -91,16 +93,27 @@ export class CompanySignupForm extends Component {
 				additional8: values.additional8,
 			},
 		}
-		const response = await Api.post(`${CompanyURL}/create/${values.authCode}/${sessionStorage.getItem('token')}`, newCompany)
-		if (response.status === 200) {
-			setTimeout(() => {
+		try {
+			const res = await Api.post(`${CompanyURL}/create/${values.authCode}/${sessionStorage.getItem('token')}`, newCompany)
+			if (res.status === 200) {
 				this.setState({
 					loading: false,
 				})
-				window.location.href = '/'
-			}, 2000)
-		} else {
-			console.log(response)
+				SuccessfullToast('Signing up was successfull... Redirecting')
+				setTimeout(() => {
+					window.location.href = '/'
+				}, 2200)
+			} else {
+				this.setState({
+					loading: false,
+				})
+				ErrorToast(`${res.status} : ${res.error}`)
+			}
+		} catch (error) {
+			this.setState({
+				loading: false,
+			})
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 	handleChange = (input) => (e) => {

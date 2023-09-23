@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import { Loader, MainNavbar, Signout, CompanySignupForm, NoAccess } from '../../components'
 import { LandingPage, SignupPage, SigninPage, ShipperHome, CarrierHome, OwneropHome, LoadboardPage, KFBHome } from '../../pages'
@@ -13,15 +14,6 @@ export class WebsiteNavigation extends Component {
 		this.state = {
 			account: null,
 			isFetchingAccount: false,
-			error: {
-				message: '',
-				type: '',
-			},
-			notification: {
-				message: '',
-				type: '',
-				heading: '',
-			},
 		}
 	}
 	async componentDidMount() {
@@ -58,6 +50,7 @@ export class WebsiteNavigation extends Component {
 		}
 		return (
 			<Router>
+				<ToastContainer />
 				<section id='main-navbar'>
 					<MainNavbar account={account} />
 				</section>

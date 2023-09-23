@@ -2,6 +2,8 @@ import { Component } from 'react'
 import { Badge, Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { PencilFill, TrashFill, EyeFill } from 'react-bootstrap-icons'
 
+import { ErrorToast, SuccessfullToast } from '../../alerts/toasts'
+
 import { ViewLoad } from '../../loadboard/viewLoad'
 import { EditLoad } from './editLoad'
 import { Loader } from '../../loader'
@@ -57,31 +59,46 @@ export class LoadsList extends Component {
 		this.setState({
 			loading: true,
 		})
-		const { company } = this.props
-		const response = await Api.get(`${LoadsURL}/companyId/${company?.id}`)
-		this.setState({
-			loadList: response.data,
-		})
-		setTimeout(() => {
-			this.setState({
-				loading: false,
-			})
-		}, 2000)
+		try {
+			const res = await Api.get(`${LoadsURL}/companyId/${this.props.company?.id}`)
+			if (res.status === 200) {
+				SuccessfullToast('Loads were retrieved... Setting Data')
+				this.setState({
+					loadList: res.data,
+					loading: false,
+				})
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
+			}
+		} catch (error) {
+			ErrorToast(`Something went wrong: ${error}`)
+		}
 	}
 	handleArchive = async (load) => {
 		this.setState({
 			loading: true,
 		})
-		const response = await Api.put(`${LoadsURL}/archive/${load.loadNumber}/${sessionStorage.getItem('token')}`)
-		if (response.status === 200) {
-			setTimeout(() => {
+		try {
+			const res = await Api.put(`${LoadsURL}/archive/${load.loadNumber}/${sessionStorage.getItem('token')}`)
+			if (res.status === 200) {
 				this.setState({
 					loading: false,
 				})
-			}, 2000)
-			window.location.reload()
-		} else {
-			console.log(response)
+				SuccessfullToast('Load was archived... Refreshing page')
+				setTimeout(() => {
+					window.location.reload()
+				}, 2500)
+			} else {
+				this.setState({
+					loading: false,
+				})
+				ErrorToast(`${res.status} : ${res.error}`)
+			}
+		} catch (error) {
+			this.setState({
+				loading: false,
+			})
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 
@@ -145,11 +162,11 @@ export class LoadsList extends Component {
 									<td>{pLI.rate}</td>
 									<td>${pLI.miles * pLI.rate}</td>
 									<td className='td-buttons'>
-										<button>
-											<PencilFill onClick={() => this.setEditedLoad(load)} />
+										<button onClick={() => this.setEditedLoad(load)}>
+											<PencilFill />
 										</button>
-										<button>
-											<TrashFill onClick={() => this.handleArchive(load)} />
+										<button onClick={() => this.handleArchive(load)}>
+											<TrashFill />
 										</button>
 										<button onClick={() => this.setSelectedLoad(load)}>
 											<EyeFill />

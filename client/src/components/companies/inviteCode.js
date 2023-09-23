@@ -1,5 +1,5 @@
 import { Component } from 'react'
-
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
 import '../../style/invite.css'
 
 export class InviteCode extends Component {
@@ -7,8 +7,9 @@ export class InviteCode extends Component {
 		const { company } = this.props
 		try {
 			await navigator.clipboard.writeText(company.authCode)
+			SuccessfullToast('Invite code copied')
 		} catch (error) {
-			console.log(`Error copying code :${error}`)
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 	render() {

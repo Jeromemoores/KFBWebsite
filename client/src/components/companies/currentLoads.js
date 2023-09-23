@@ -1,5 +1,5 @@
 import { Component } from 'react'
-
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
 
@@ -42,16 +42,24 @@ export class CurrentLoads extends Component {
 		})
 		try {
 			const res = await Api.get(`${LoadsURL}/claimedBy/${sessionStorage.getItem('token')}/uncompleted`)
-			this.setState({
-				loads: res.data,
-			})
-			setTimeout(() => {
+			if (res.status === 200) {
+				SuccessfullToast('Loads were retrieved... Setting Data')
+				this.setState({
+					loads: res.data,
+					loading: false,
+				})
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
 				this.setState({
 					loading: false,
 				})
-			}, 2000)
+			}
 		} catch (error) {
-			console.log(error)
+			ErrorToast(`Something went wrong: ${error}`)
+
+			this.setState({
+				loading: false,
+			})
 		}
 	}
 	getTrailerTypeName = (type) => {

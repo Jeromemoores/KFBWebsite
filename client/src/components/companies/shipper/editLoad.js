@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { FloatingLabel, Form, Modal, Card } from 'react-bootstrap'
+import { ErrorToast, SuccessfullToast } from '../../alerts/toasts'
 import { AddressAutofill } from '@mapbox/search-js-react'
 
 import Api from '../../../api/axios'
@@ -141,12 +142,16 @@ export class EditLoad extends Component {
 		}
 		try {
 			const res = await Api.put(`${LoadsURL}/update/${editLoad.loadNumber}/${sessionStorage.getItem('token')}`, updatedLoad)
-			console.log(res)
 			if (res.status === 200) {
-				window.location.href = '/shipper/home'
+				SuccessfullToast('Load was updated sucessfully ... Reloading Page')
+				setTimeout(() => {
+					window.location.href = '/shipper/home'
+				}, 2200)
+			} else {
+				ErrorToast(`${res.status} : ${res.error}`)
 			}
 		} catch (error) {
-			console.log(`Something went wrong ${error}`)
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 	getTrailerNames = (type) => {

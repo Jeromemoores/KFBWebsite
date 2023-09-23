@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { Modal, Card, Badge } from 'react-bootstrap'
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
 
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
@@ -50,54 +51,63 @@ export class ViewLoad extends Component {
 		}
 	}
 	async componentDidMount() {
-		const selectedLoad = await this.props.selectedLoad
-		if (Object.keys(selectedLoad).length !== 0) {
-			const pLI = JSON.parse(selectedLoad.loadInformation)
-			const pPL = JSON.parse(selectedLoad.pickupLocation)
-			const pPD = JSON.parse(selectedLoad.pickupDetails)
-			const pDD = JSON.parse(selectedLoad.deliveryDetails)
-			const pP = JSON.parse(selectedLoad.paid)
-			const pDDS = pDD.address.state
-			this.setState({
-				name: pPL.name ? pPL.name : '',
-				street: pPL.street,
-				suite: pPL.suite,
-				city: pPL.city,
-				state: pPL.state,
-				postal: pPL.postal,
+		try {
+			const selectedLoad = await this.props.selectedLoad
+			if (selectedLoad) {
+				SuccessfullToast('Load was retrieved... Setting Data')
+				if (Object.keys(selectedLoad).length !== 0) {
+					const pLI = JSON.parse(selectedLoad.loadInformation)
+					const pPL = JSON.parse(selectedLoad.pickupLocation)
+					const pPD = JSON.parse(selectedLoad.pickupDetails)
+					const pDD = JSON.parse(selectedLoad.deliveryDetails)
+					const pP = JSON.parse(selectedLoad.paid)
+					const pDDS = pDD.address.state
+					this.setState({
+						name: pPL.name ? pPL.name : '',
+						street: pPL.street,
+						suite: pPL.suite,
+						city: pPL.city,
+						state: pPL.state,
+						postal: pPL.postal,
 
-				productWeight: pLI.productWeight,
-				productType: pLI.productType,
-				trailerType: pLI.trailerType,
-				hazmat: pLI.hazmat,
-				pickupTime: pPD.time, // Change to optional range
-				pickupDate: pPD.date, // Change to optional range
-				securements: pLI.securements,
-				requiredPictures: pLI.requiredPictures,
-				miles: pLI.miles,
-				rate: pLI.rate,
-				loadNumber: pPD.loadNumber,
-				directions: pPD.directions,
-				comments: pPD.comments,
+						productWeight: pLI.productWeight,
+						productType: pLI.productType,
+						trailerType: pLI.trailerType,
+						hazmat: pLI.hazmat,
+						pickupTime: pPD.time, // Change to optional range
+						pickupDate: pPD.date, // Change to optional range
+						securements: pLI.securements,
+						requiredPictures: pLI.requiredPictures,
+						miles: pLI.miles,
+						rate: pLI.rate,
+						loadNumber: pPD.loadNumber,
+						directions: pPD.directions,
+						comments: pPD.comments,
 
-				companyName: pDD.name,
-				companyStreet: pDD.address.street,
-				companySuite: pDD.address.suite,
-				companyCity: pDD.address.city,
-				companyPostal: pDD.address.postal,
-				companyState: pDDS,
-				deliveryTime: pPD.time, // change to optional range
-				deliveryDate: pPD.date, // change to optional range
-				companyDirections: pPD.directions,
-				companyComments: pPD.comments,
-				available: selectedLoad.available,
-				loadLog: JSON.parse(selectedLoad.loadLog),
-				loadStatus: selectedLoad.loadStatus,
-				paid: {
-					broker: pP.broker,
-					carrier: pP.carrier,
-				},
-			})
+						companyName: pDD.name,
+						companyStreet: pDD.address.street,
+						companySuite: pDD.address.suite,
+						companyCity: pDD.address.city,
+						companyPostal: pDD.address.postal,
+						companyState: pDDS,
+						deliveryTime: pPD.time, // change to optional range
+						deliveryDate: pPD.date, // change to optional range
+						companyDirections: pPD.directions,
+						companyComments: pPD.comments,
+						available: selectedLoad.available,
+						loadLog: JSON.parse(selectedLoad.loadLog),
+						loadStatus: selectedLoad.loadStatus,
+						paid: {
+							broker: pP.broker,
+							carrier: pP.carrier,
+						},
+					})
+				}
+			} else {
+				ErrorToast('No load was selected')
+			}
+		} catch (error) {
+			ErrorToast(`Something went wrong: ${error}`)
 		}
 	}
 

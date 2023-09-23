@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { ErrorToast, SuccessfullToast } from '../alerts/toasts'
 import Api from '../../api/axios'
 import { LoadsURL } from '../../api/config'
 import { ViewLoad } from './viewLoad'
@@ -19,20 +20,34 @@ export class LoadList extends Component {
 	}
 
 	componentDidMount = async () => {
-		this.setState({ loading: true })
-		const res = await Api.get(`${LoadsURL}/available`)
 		this.setState({
-			loads: res.data.map((load) => {
-				return {
-					...load,
-					parsedPickupDetails: JSON.parse(load.pickupDetails),
-					parsedPickupLocation: JSON.parse(load.pickupLocation),
-					parsedDeliveryDetails: JSON.parse(load.deliveryDetails),
-					parsedLoadInformation: JSON.parse(load.loadInformation),
-				}
-			}),
-			loading: false,
+			loading: true,
 		})
+		try {
+			const res = await Api.get(`${LoadsURL}/available`)
+			if (res.status === 200) {
+				this.setState({
+					loads: res.data.map((load) => {
+						return {
+							...load,
+							parsedPickupDetails: JSON.parse(load.pickupDetails),
+							parsedPickupLocation: JSON.parse(load.pickupLocation),
+							parsedDeliveryDetails: JSON.parse(load.deliveryDetails),
+							parsedLoadInformation: JSON.parse(load.loadInformation),
+						}
+					}),
+					loading: false,
+				})
+				SuccessfullToast('Loads were retrieved... Setting Data')
+			} else {
+				this.setState({
+					loading: false,
+				})
+				ErrorToast(`${res.status} : ${res.error}`)
+			}
+		} catch (error) {
+			ErrorToast(`Something went wrong: ${error}`)
+		}
 	}
 
 	handleToggle = (load = {}) => {
