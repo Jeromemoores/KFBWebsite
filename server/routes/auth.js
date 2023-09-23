@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 
 const { Auth } = require('../models')
-// const { checkAccountandToken } = require('../middleware/account')
 const { checkAccountandTokenandLevel } = require('../middleware/kfb')
 
 router.post('/newInvite/:token', checkAccountandTokenandLevel, async (req, res) => {

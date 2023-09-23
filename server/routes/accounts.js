@@ -32,7 +32,7 @@ router.post('/signup', async (req, res) => {
 			name,
 			email,
 			password: hashedPassword,
-			ipAddress: '0.0.0.0:0000',
+			ipAddress: (req.headers['x-forwarded-for'] || '').split(',').shift() || req.ip,
 			companyId: companyId,
 			companyType: companyType,
 		})
@@ -65,7 +65,8 @@ router.put('/signin', async (req, res) => {
 		} else {
 			const auth = account.authId
 			const token = jwt.sign({ auth }, SECRET, { expiresIn: '1d' })
-			await Accounts.update({ token }, { where: { email } })
+			const ipAddress = (req.headers['x-forwarded-for'] || '').split(',').shift() || req.ip
+			await Accounts.update({ token, ipAddress }, { where: { email } })
 			res.status(200).json({ data: token })
 		}
 	} catch (error) {
