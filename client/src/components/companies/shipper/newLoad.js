@@ -118,7 +118,7 @@ export class NewLoad extends Component {
 	}
 	render() {
 		return (
-			<Formik initialValues={this.state} validationSchema={LoadSchema} onSubmit={this.handleFormikSubmit.bind(this)}>
+			<Formik initialValues={this.state} validationSchema={LoadSchema} onSubmit={this.handleFormikSubmit}>
 				{(formikProps) => <Form>{this.renderStep(formikProps)}</Form>}
 			</Formik>
 		)

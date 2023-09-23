@@ -52,13 +52,7 @@
   background-color: transparent!important;
   color: #b9b8b8!important;
 }
-.step-input-wrapper .text-danger {
-  font-size: 10px;
-  text-align: left;
-  margin-top: -2%;
-  margin-bottom: 2%;
-  margin-left: 2%;
-}
+
 
 /* EDIT LOAD */
 .load-modal-edit .modal-content {

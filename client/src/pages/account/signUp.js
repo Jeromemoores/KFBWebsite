@@ -1,6 +1,9 @@
 import { Component } from 'react'
+import { Formik, Form } from 'formik'
 
 import { SignupForm, Loader } from '../../components'
+
+import { SignupSchema } from '../../schemas/signupSchema'
 
 import Api from '../../api/axios'
 import { AccountURL } from '../../api/config'
@@ -18,17 +21,16 @@ export class SignupPage extends Component {
 			inviteCode: '',
 			loading: false,
 		}
+		this.handleFormikSubmit = this.handleFormikSubmit.bind(this)
 	}
 	handleChange = (input) => (e) => {
 		this.setState({ [input]: e.currentTarget.value })
 	}
 
-	handleSubmit = async (e) => {
-		e.preventDefault()
+	handleFormikSubmit = async (values) => {
 		this.setState({
 			loading: true,
 		})
-		const { ...values } = this.state
 		const newAccount = {
 			name: values.firstName + ' ' + values.lastName,
 			email: values.email,
@@ -60,7 +62,13 @@ export class SignupPage extends Component {
 				{account ? (
 					<Navigate to='/' replace={true} />
 				) : (
-					<SignupForm values={values} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+					<Formik initialValues={this.state} validationSchema={SignupSchema} onSubmit={this.handleFormikSubmit}>
+						{(props) => (
+							<Form>
+								<SignupForm {...props} />
+							</Form>
+						)}
+					</Formik>
 				)}
 			</>
 		)
